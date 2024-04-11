@@ -17,7 +17,7 @@ class ClassroomFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "name" => $this->faker->unique()->sentence(rand(1, 3)),
         ];
     }
 }

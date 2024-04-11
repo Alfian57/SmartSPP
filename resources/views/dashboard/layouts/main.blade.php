@@ -1,9 +1,11 @@
 <!doctype html>
 <html class="no-js" lang="en">
 
-<x-dashboard::shared.head />
+<x-dashboard::shared.head title="{{ $title }}" />
 
 <body>
+    @include('sweetalert::alert')
+
     <div class="wrapper">
         <x-dashboard::shared.navbar />
 
