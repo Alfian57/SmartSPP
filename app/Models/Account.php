@@ -34,6 +34,13 @@ class Account extends Authenticatable
         'password',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'password' => "hashed",
+        ];
+    }
+
     public function accountable(): MorphTo
     {
         return $this->morphTo();

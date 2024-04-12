@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,15 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Admin $admin) {
+            $account = Account::factory()->makeOne();
+            $admin->account()->save($account);
+        });
     }
 }
