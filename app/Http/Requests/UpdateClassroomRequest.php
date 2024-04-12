@@ -23,7 +23,7 @@ class UpdateClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ['required', 'string', 'max:100', Rule::unique('classrooms')->ignore($this->classroom->id)],
+            'name' => ['required', 'string', 'max:100', Rule::unique('classrooms')->ignore($this->classroom->id)],
         ];
     }
 }

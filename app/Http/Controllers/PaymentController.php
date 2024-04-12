@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -23,20 +22,22 @@ class PaymentController extends Controller
     public function reject(Payment $payment)
     {
         $payment->update([
-            'status' => 'unvalidated'
+            'status' => 'unvalidated',
         ]);
 
-        toast("Berhasil menolak pembayaran", "success");
-        return redirect()->route("dashboard.payments.index");
+        toast('Berhasil menolak pembayaran', 'success');
+
+        return redirect()->route('dashboard.payments.index');
     }
 
     public function accept(Payment $payment)
     {
         $payment->update([
-            'status' => 'validated'
+            'status' => 'validated',
         ]);
 
-        toast("Berhasil menyetujui pembayaran", "success");
-        return redirect()->route("dashboard.payments.index");
+        toast('Berhasil menyetujui pembayaran', 'success');
+
+        return redirect()->route('dashboard.payments.index');
     }
 }

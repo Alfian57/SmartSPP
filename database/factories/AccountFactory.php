@@ -18,7 +18,7 @@ class AccountFactory extends Factory
     {
         return [
             'email' => $this->faker->unique->safeEmail,
-            'password' => "password",
+            'password' => 'password',
         ];
     }
 }

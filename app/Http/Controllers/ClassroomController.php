@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use App\Models\Classroom;
-use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
@@ -17,7 +16,7 @@ class ClassroomController extends Controller
             ->paginate();
 
         return view('dashboard.pages.classrooms.index', [
-            'title' => "Manajemen Kelas",
+            'title' => 'Manajemen Kelas',
             'classrooms' => $classrooms,
         ]);
     }
@@ -25,7 +24,7 @@ class ClassroomController extends Controller
     public function create()
     {
         return view('dashboard.pages.classrooms.create', [
-            'title' => "Manajemen Kelas",
+            'title' => 'Manajemen Kelas',
         ]);
     }
 
@@ -34,13 +33,14 @@ class ClassroomController extends Controller
         Classroom::create($request->validated());
 
         toast('Kelas berhasil ditambahkan', 'success');
+
         return redirect()->route('dashboard.classrooms.index');
     }
 
     public function edit(Classroom $classroom)
     {
         return view('dashboard.pages.classrooms.edit', [
-            'title' => "Manajemen Kelas",
+            'title' => 'Manajemen Kelas',
             'classroom' => $classroom,
         ]);
     }
@@ -50,6 +50,7 @@ class ClassroomController extends Controller
         $classroom->update($request->validated());
 
         toast('Kelas berhasil diperbarui', 'success');
+
         return redirect()->route('dashboard.classrooms.index');
     }
 
@@ -58,6 +59,7 @@ class ClassroomController extends Controller
         $classroom->delete();
 
         toast('Kelas berhasil dihapus', 'success');
+
         return redirect()->route('dashboard.classrooms.index');
     }
 }

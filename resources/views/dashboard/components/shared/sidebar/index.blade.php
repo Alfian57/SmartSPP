@@ -31,6 +31,10 @@
                 <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
                     <i class="ik ik-bar-chart-2"></i><span>Data Pembayaran</span>
                 </x-dashboard::shared.sidebar.item>
+
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Tagihan Saya</span>
+                </x-dashboard::shared.sidebar.item>
             </nav>
         </div>
     </div>

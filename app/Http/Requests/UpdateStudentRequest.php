@@ -23,7 +23,7 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nisn' => ['required', 'size:10', Rule::unique("students", "nisn")->ignore($this->student->id)],
+            'nisn' => ['required', 'size:10', Rule::unique('students', 'nisn')->ignore($this->student->id)],
             'name' => ['required', 'string', 'max:100'],
             'gender' => ['required', 'in:male,female'],
             'date_of_birth' => ['required', 'date'],

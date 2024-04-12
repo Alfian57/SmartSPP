@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-class DashboardController extends Controller
+class MyBillController extends Controller
 {
     public function index()
     {
-        return 'Test';
+        return view('my-bills.index');
     }
 }

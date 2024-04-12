@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enum\Role;
+use App\Enums\Role;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -37,7 +37,7 @@ class Account extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password' => "hashed",
+            'password' => 'hashed',
         ];
     }
 

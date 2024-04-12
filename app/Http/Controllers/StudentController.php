@@ -17,7 +17,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::query()
-            ->with('classroom', 'bills', "payments")
+            ->with('classroom', 'bills', 'payments')
             // ->addSelect([
             //     'total_bill' => Bill::query()
             //         ->selectRaw('SUM(nominal)')
