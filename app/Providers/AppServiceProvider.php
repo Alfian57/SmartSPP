@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::anonymousComponentNamespace('auth.components', 'auth');
         Blade::anonymousComponentNamespace('app.components', 'app');
 
-        Paginator::useBootstrapFive();
-    }
+        Blade::directive('money', function ($amount) {
+            return "<?php echo 'Rp. ' . number_format($amount, 2); ?>";
+});
+
+Paginator::useBootstrapFive();
+}
 }

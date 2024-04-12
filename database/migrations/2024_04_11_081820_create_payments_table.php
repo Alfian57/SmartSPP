@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('nominal');
             $table->string('transfer_file');
-            $table->enum('status', ['validated', 'unvalidated']);
+            $table->enum('status', ['validated', 'unvalidated', 'pending'])->default('pending');
             $table->foreignUuid('bill_id')->references('id')->on('bills')->cascadeOnDelete();
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
             $table->enum('religion', ['islam', 'christianity', 'catholicism', 'hinduism', 'buddhism', 'confucianism']);
-            $table->enum('orphan_status', ['orphan', 'widowed', 'orphaned', 'none']);
+            $table->enum('orphan_status', ['orphan_both', 'orphan_father', 'orphan_mother', 'none']);
             $table->string('phone_number', 25);
             $table->text('address');
             $table->foreignUuid('classroom_id')->references('id')->on('classrooms')->cascadeOnDelete();

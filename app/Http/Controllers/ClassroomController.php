@@ -12,6 +12,7 @@ class ClassroomController extends Controller
     public function index()
     {
         $classrooms = Classroom::query()
+            ->withCount('students')
             ->latest()
             ->paginate();
 

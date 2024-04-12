@@ -21,18 +21,18 @@ class BillFactory extends Factory
         return [
             'nominal' => $this->faker->randomElement([300000, 500000]),
             'month' => $this->faker->randomElement(['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']),
-            'school_year' => $this->faker->year(),
-            'student_id' => function () {
-                return \App\Models\Student::inRandomOrder()->first()->id;
-            },
+            'school_year' => $this->faker->randomElement(['2018/2019', '2019/2020', '2020/2021', '2021/2022', '2022/2023']),
+            'disccount' => $this->faker->randomElement([0, 300000]),
+            'status' => $this->faker->randomElement(['paid-off', 'not-paid-off']),
         ];
     }
 
     public function configure(): static
     {
         return $this->afterCreating(function (Bill $bill) {
-            $payments = Payment::factory(5)->create();
-            $bill->payments()->save($payments);
+            Payment::factory(5)->create([
+                'bill_id' => $bill->id,
+            ]);
         });
     }
 }

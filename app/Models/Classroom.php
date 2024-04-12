@@ -13,7 +13,7 @@ class Classroom extends Model
 
     protected $guarded = ['id'];
 
-    public function student(): HasMany
+    public function students(): HasMany
     {
         return $this->hasMany(Student::class);
     }

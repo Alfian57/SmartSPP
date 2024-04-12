@@ -11,7 +11,7 @@
             @csrf
             @method('PUT')
             <x-dashboard::ui.input.text label="Nama" name="name" value="{{ old('name', $classroom->name) }}"
-                placeholder="Masukan Nama Kelas" />
+                placeholder="Masukan Nama Kelas" required />
 
             <x-dashboard::ui.button.submit>
                 Kirim

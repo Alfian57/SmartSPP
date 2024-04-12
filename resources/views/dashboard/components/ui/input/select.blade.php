@@ -3,9 +3,11 @@
         <label for="{{ $name }}">{{ $label }}</label>
     </div>
     <div class="col-12">
-        <input type="{{ $type ?? 'text' }}" id="{{ $name }}" name="{{ $name }}"
-            placeholder="{{ $placeholder }}" value="{{ $value }}" class="form-control"
-            @disabled(isset($disable))>
+        <select class="form-control form-select" name="{{ $name }}">
+            @foreach ($options as $key => $value)
+                <option value="{{ $key }}" @selected($selected == $key)>{{ $value }}</option>
+            @endforeach
+        </select>
         @error($name)
             <small class="form-text text-danger">{{ $message }}</small>
         @enderror

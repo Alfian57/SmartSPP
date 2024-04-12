@@ -16,17 +16,20 @@
                 </x-dashboard::shared.sidebar.item>
 
                 <div class="nav-lavel">Manajemen Data</div>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
                     <i class="ik ik-bar-chart-2"></i><span>Data Kelas</span>
                 </x-dashboard::shared.sidebar.item>
                 <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
                     <i class="ik ik-bar-chart-2"></i><span>Data Siswa</span>
                 </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.student-parents.index') }}">
                     <i class="ik ik-bar-chart-2"></i><span>Data Orang Tua</span>
                 </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.admins.index') }}">
                     <i class="ik ik-bar-chart-2"></i><span>Data Admin</span>
+                </x-dashboard::shared.sidebar.item>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Data Pembayaran</span>
                 </x-dashboard::shared.sidebar.item>
             </nav>
         </div>

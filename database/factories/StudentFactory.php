@@ -25,7 +25,7 @@ class StudentFactory extends Factory
             'gender' => $this->faker->randomElement(['male', 'female']),
             'date_of_birth' => $this->faker->date(),
             'religion' => $this->faker->randomElement(['islam', 'christianity', 'catholicism', 'hinduism', 'buddhism', 'confucianism']),
-            'orphan_status' => $this->faker->randomElement(['orphan', 'widowed', 'orphaned', 'none']),
+            'orphan_status' => $this->faker->randomElement(['orphan_both', 'orphan_father', 'orphan_mother', 'none']),
             'phone_number' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
             'classroom_id' => function () {
@@ -43,8 +43,9 @@ class StudentFactory extends Factory
             $account = Account::factory()->makeOne();
             $student->account()->save($account);
 
-            $bills = Bill::factory(3)->create();
-            $student->biils->save($bills);
+            Bill::factory(3)->create([
+                'student_id' => $student->id,
+            ]);
         });
     }
 }
