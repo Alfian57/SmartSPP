@@ -11,17 +11,23 @@
     <div class="sidebar-content">
         <div class="nav-container">
             <nav id="main-menu-navigation" class="navigation-main">
-                <div class="nav-item active">
-                    <a href="index.html"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
-                </div>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Dashboard</span>
+                </x-dashboard::shared.sidebar.item>
 
-                <div class="nav-lavel">Navigasi</div>
-                <div class="nav-item">
-                    <a href="index.html"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
-                </div>
-                <div class="nav-item">
-                    <a href="index.html"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
-                </div>
+                <div class="nav-lavel">Manajemen Data</div>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Data Kelas</span>
+                </x-dashboard::shared.sidebar.item>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Data Siswa</span>
+                </x-dashboard::shared.sidebar.item>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Data Orang Tua</span>
+                </x-dashboard::shared.sidebar.item>
+                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                    <i class="ik ik-bar-chart-2"></i><span>Data Admin</span>
+                </x-dashboard::shared.sidebar.item>
             </nav>
         </div>
     </div>
