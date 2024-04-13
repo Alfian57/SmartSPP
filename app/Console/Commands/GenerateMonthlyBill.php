@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Enums\Enum\BillStatus;
+use App\Mail\MonthlyBillMail;
 use App\Models\Student;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class GenerateMonthlyBill extends Command
 {
@@ -38,6 +40,8 @@ class GenerateMonthlyBill extends Command
                 'discount' => $student->studentParent->students->count() >= 2 ? config('spp.discount') : 0,
                 'status' => BillStatus::NotPaidOff->value,
             ]);
+
+            Mail::to($student->account->email)->queue(new MonthlyBillMail($student->name, config('spp.nominal')));
         });
     }
 }

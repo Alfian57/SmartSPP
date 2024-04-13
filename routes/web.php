@@ -19,11 +19,11 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function () {
-    Route::middleware('role:admin|student|student_parent')->group(function () {
-        Route::get('/index', [DashboardController::class, 'index'])->name('index');
-        Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
-        Route::post('/change-password', [DashboardController::class, 'changePassword'])->name('change-password');
-    });
+    Route::get('/index', [DashboardController::class, 'index'])->name('index');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::post('/change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('/admins', AdminController::class)->except('show');
@@ -47,5 +47,3 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::get('bill-informations', [BillInformationController::class, 'index'])->name('bill-informations.index');
     });
 });
-
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

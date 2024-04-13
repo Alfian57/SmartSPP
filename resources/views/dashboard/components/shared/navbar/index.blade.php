@@ -51,7 +51,8 @@
                         <a class="dropdown-item" href="{{ route('dashboard.profile') }}"><i
                                 class="ik ik-user dropdown-icon"></i>
                             Profil</a>
-                        <form action="{{ route('logout') }}" method="post" style="display: none" id="logout-form">
+                        <form action="{{ route('dashboard.logout') }}" method="post" style="display: none"
+                            id="logout-form">
                             @csrf
                         </form>
                         <a class="dropdown-item" href="#"
