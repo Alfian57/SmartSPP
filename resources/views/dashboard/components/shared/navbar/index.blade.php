@@ -52,7 +52,12 @@
                             Profile</a>
                         <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i>
                             Settings</a>
-                        <a class="dropdown-item" href="login.html"><i class="ik ik-power dropdown-icon"></i>
+                        <form action="{{ route('logout') }}" method="post" style="display: none" id="logout-form">
+                            @csrf
+                        </form>
+                        <a class="dropdown-item" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                class="ik ik-power dropdown-icon"></i>
                             Logout</a>
                     </div>
                 </div>

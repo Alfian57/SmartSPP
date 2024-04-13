@@ -6,6 +6,12 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>
+        <div class="d-flex justify-content-end mb-3">
+            <x-dashboard::ui.button href="{{ route('dashboard.my-bills.payments.create', $bill->id) }}">
+                Ajukan Pembayaran
+            </x-dashboard::ui.button>
+        </div>
+
         @if ($payments->isEmpty())
             <x-dashboard::shared.no-data />
         @else
@@ -13,7 +19,6 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Nama Siswa</th>
                         <th>Nominal</th>
                         <th>Bukti Transfer</th>
                         <th>Status Pembayaran</th>
@@ -25,14 +30,20 @@
                     @foreach ($payments as $payment)
                         <tr>
                             <x-dashboard::ui.table.table-iteration iteration="{{ $loop->iteration }}" />
-                            <td>{{ $payment->bill->student->name }}</td>
                             <td>
-                                @money($payment->bill->nominal)
+                                @money($payment->nominal)
                             </td>
 
                             <td class="text-danger font-weight-bold">
-                                <img src="{{ asset('storage/' . $payment->transfer_file) }}"
-                                    alt="Bukti rusak. Minta pihak terkait untuk upload ulang">
+                                @php
+                                    if ($payment->status != 'validated') {
+                                        $text = 'Bukti rusak. Silahkan upload ulang';
+                                    } else {
+                                        $text = 'Bukti rusak';
+                                    }
+                                @endphp
+                                <img src="{{ asset('storage/' . $payment->transfer_file) }}" alt="{{ $text }}"
+                                    style="width: 50px">
                             </td>
 
                             @if ($payment->status == 'pending')
@@ -47,19 +58,16 @@
 
                             <td class="d-flex">
                                 @if ($payment->status != 'validated')
-                                    <form action="{{ route('dashboard.payments.accept', $payment->id) }}" method="post"
-                                        class="mx-1">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success" href="">Terima</button>
-                                    </form>
-                                @endif
-
-                                @if ($payment->status != 'unvalidated')
-                                    <form action="{{ route('dashboard.payments.reject', $payment->id) }}" method="post"
-                                        class="mx-1">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger" href="">Tolak</button>
-                                    </form>
+                                    <div class="mx-1">
+                                        <x-dashboard::ui.table.table-edit-action
+                                            href="{{ route('dashboard.my-bills.payments.edit', [$bill->id, $payment->id]) }}" />
+                                    </div>
+                                    <div class="mx-1">
+                                        <x-dashboard::ui.table.table-delete-action
+                                            href="{{ route('dashboard.my-bills.payments.destroy', [$bill->id, $payment->id]) }}" />
+                                    </div>
+                                @else
+                                    <p class="text-primary">Tidak dapat diedit</p>
                                 @endif
                             </td>
                         </tr>

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -19,7 +18,7 @@ class AdminSeeder extends Seeder
 
         $admin->account()->create([
             'email' => 'alfian.admin@gmail.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
     }
 }

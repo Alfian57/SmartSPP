@@ -33,5 +33,7 @@ Route::prefix('dashboard')->as('dashboard.')->group(function () {
 
     // Parent
     Route::get('/my-bills', [MyBillController::class, 'index'])->name('my-bills.index');
-    Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ["as" => "my-bills"]);
+    Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ['as' => 'my-bills']);
 });
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

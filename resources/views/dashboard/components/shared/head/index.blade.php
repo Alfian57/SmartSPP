@@ -24,5 +24,7 @@
     <link rel="stylesheet" href="/dashboard/plugins/owl.carousel/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="/dashboard/plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="/dashboard/dist/css/theme.min.css">
-    <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="/dashboard/src/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    @livewireStyles
 </head>

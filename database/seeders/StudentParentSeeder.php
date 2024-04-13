@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Student;
 use App\Models\StudentParent;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StudentParentSeeder extends Seeder
@@ -19,7 +19,11 @@ class StudentParentSeeder extends Seeder
 
         $studentParent->account()->create([
             'email' => 'alfian.parent@gmail.com',
-            'password' => 'password'
+            'password' => 'password',
+        ]);
+
+        Student::factory()->count(2)->create([
+            'student_parent_id' => $studentParent->id,
         ]);
     }
 }

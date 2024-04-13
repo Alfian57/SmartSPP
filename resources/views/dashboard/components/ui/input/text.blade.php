@@ -3,8 +3,11 @@
         <label for="{{ $name }}">{{ $label }}</label>
     </div>
     <div class="col-12">
+        {{ $slot }}
+    </div>
+    <div class="col-12">
         <input type="{{ $type ?? 'text' }}" id="{{ $name }}" name="{{ $name }}"
-            placeholder="{{ $placeholder }}" value="{{ $value }}" class="form-control"
+            placeholder="{{ $placeholder ?? '' }}" value="{{ $value ?? '' }}" class="form-control"
             @disabled(isset($disable))>
         @error($name)
             <small class="form-text text-danger">{{ $message }}</small>
