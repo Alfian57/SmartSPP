@@ -43,9 +43,9 @@ class StudentFactory extends Factory
             $account = Account::factory()->makeOne();
             $student->account()->save($account);
 
-            Bill::factory(3)->create([
-                'student_id' => $student->id,
-            ]);
+            // Bill::factory(3)->create([
+            //     'student_id' => $student->id,
+            // ]);
         });
     }
 }
