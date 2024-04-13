@@ -51,8 +51,9 @@
                             <td class="text-capitalize">
                                 {{ $bill->month }}
                             </td>
+
                             <td>{{ $bill->school_year }}</td>
-                            <td>dasjdksajd</td>
+                            <td>{{ $bill->payments->count() }} Kali</td>
                             <td>dasjdksajd</td>
                             <td>
                                 @money($bill->nominal)

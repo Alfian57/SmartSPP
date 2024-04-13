@@ -32,7 +32,7 @@
 
                             <td class="text-danger font-weight-bold">
                                 <img src="{{ asset('storage/' . $payment->transfer_file) }}"
-                                    alt="Bukti rusak. Minta pihak terkait untuk upload ulang">
+                                    alt="Bukti rusak. Minta pihak terkait untuk upload ulang" style="width: 50px">
                             </td>
 
                             @if ($payment->status == 'pending')

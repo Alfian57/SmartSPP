@@ -20,8 +20,6 @@
                 value="{{ old('phone_number', $studentParent->phone_number) }}" placeholder="Masukan Nomor Telepon"
                 required />
 
-            <x-dashboard::shared.note.create-account />
-
             <x-dashboard::ui.button.submit>
                 Kirim
             </x-dashboard::ui.button.submit>

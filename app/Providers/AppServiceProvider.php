@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
+
         Blade::anonymousComponentNamespace('dashboard.components', 'dashboard');
         Blade::anonymousComponentNamespace('auth.components', 'auth');
         Blade::anonymousComponentNamespace('app.components', 'app');
@@ -28,7 +30,5 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('money', function ($amount) {
             return "<?php echo 'Rp. ' . number_format($amount, 2); ?>";
         });
-
-        Paginator::useBootstrapFive();
     }
 }

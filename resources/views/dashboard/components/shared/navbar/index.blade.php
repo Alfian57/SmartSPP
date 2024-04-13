@@ -48,10 +48,9 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar"
                             src="/dashboard/img/user.jpg" alt=""></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i>
-                            Profile</a>
-                        <a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i>
-                            Settings</a>
+                        <a class="dropdown-item" href="{{ route('dashboard.profile') }}"><i
+                                class="ik ik-user dropdown-icon"></i>
+                            Profil</a>
                         <form action="{{ route('logout') }}" method="post" style="display: none" id="logout-form">
                             @csrf
                         </form>

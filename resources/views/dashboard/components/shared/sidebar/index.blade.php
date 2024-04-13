@@ -16,25 +16,35 @@
                 </x-dashboard::shared.sidebar.item>
 
                 <div class="nav-lavel">Manajemen Data</div>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Data Kelas</span>
-                </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Data Siswa</span>
-                </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.student-parents.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Data Orang Tua</span>
-                </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.admins.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Data Admin</span>
-                </x-dashboard::shared.sidebar.item>
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Data Pembayaran</span>
-                </x-dashboard::shared.sidebar.item>
+                @if (auth()->user()->role() === \App\Enums\Role::ADMIN->value)
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Data Kelas</span>
+                    </x-dashboard::shared.sidebar.item>
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Data Siswa</span>
+                    </x-dashboard::shared.sidebar.item>
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.student-parents.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Data Orang Tua</span>
+                    </x-dashboard::shared.sidebar.item>
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.admins.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Data Admin</span>
+                    </x-dashboard::shared.sidebar.item>
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Data Pembayaran</span>
+                    </x-dashboard::shared.sidebar.item>
+                @endif
 
-                <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
-                    <i class="ik ik-bar-chart-2"></i><span>Tagihan Saya</span>
-                </x-dashboard::shared.sidebar.item>
+                @if (auth()->user()->role() === \App\Enums\Role::STUDENT_PARENT->value)
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Tagihan Saya</span>
+                    </x-dashboard::shared.sidebar.item>
+                @endif
+
+                @if (auth()->user()->role() === \App\Enums\Role::STUDENT->value)
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.bill-informations.index') }}">
+                        <i class="ik ik-bar-chart-2"></i><span>Informasi Tagihan</span>
+                    </x-dashboard::shared.sidebar.item>
+                @endif
             </nav>
         </div>
     </div>
