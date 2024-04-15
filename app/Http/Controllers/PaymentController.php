@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Enum\BillStatus;
+use App\Enums\Enum\PaymentStatus;
+use App\Models\Bill;
 use App\Models\Payment;
 
 class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::query()
-            ->with('bill', 'bill.student')
-            ->latest()
-            ->paginate(25);
-
         return view('dashboard.pages.payments.index', [
             'title' => 'Manajemen Pembayaran',
-            'payments' => $payments,
         ]);
     }
 
@@ -36,8 +33,24 @@ class PaymentController extends Controller
             'status' => 'validated',
         ]);
 
+        $this->checkBillStatus($payment->bill);
+
         toast('Berhasil menyetujui pembayaran', 'success');
 
         return redirect()->route('dashboard.payments.index');
+    }
+
+    private function checkBillStatus(Bill $bill)
+    {
+        $totalPaid = Payment::query()
+            ->where('bill_id', $bill->id)
+            ->where('status', PaymentStatus::VALIDATED->value)
+            ->sum('nominal');
+
+        if ($bill->nominal - $totalPaid - $bill->discount <= 0) {
+            $bill->update([
+                'status' => BillStatus::PaidOff->value,
+            ]);
+        }
     }
 }

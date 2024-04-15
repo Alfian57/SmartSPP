@@ -12,14 +12,8 @@ class StudentParentController extends Controller
 {
     public function index()
     {
-        $studentParents = StudentParent::query()
-            ->with('students')
-            ->latest()
-            ->paginate(25);
-
         return view('dashboard.pages.student-parents.index', [
             'title' => 'Manajemen Orang Tua',
-            'studentParents' => $studentParents,
         ]);
     }
 

@@ -12,36 +12,7 @@
             </x-dashboard::ui.button>
         </div>
 
-        @if ($classrooms->isEmpty())
-            <x-dashboard::shared.no-data />
-        @else
-            <x-dashboard::ui.table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nama Kelas</th>
-                        <th>Jumlah Siswa</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($classrooms as $classroom)
-                        <tr>
-                            <x-dashboard::ui.table.table-iteration iteration="{{ $loop->iteration }}" />
-                            <td>{{ $classroom->name }}</td>
-                            <td><span class="font-weight-bold">{{ $classroom->students_count }}</span> Siswa</td>
-                            <td>
-                                <x-dashboard::ui.table.table-edit-action
-                                    href="{{ route('dashboard.classrooms.edit', $classroom->id) }}" />
-                                <x-dashboard::ui.table.table-delete-action
-                                    href="{{ route('dashboard.classrooms.destroy', $classroom->id) }}" />
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </x-dashboard::ui.table>
-            {{ $classrooms->links() }}
-        @endif
+        <livewire:classroom-table />
 
     </x-dashboard::ui.card>
 @endsection

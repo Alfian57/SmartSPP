@@ -24,8 +24,7 @@ class MyBillController extends Controller
             ->when(request('student'), function ($query) {
                 $query->where('id', request('student'));
             })
-            ->with('bills', 'bills.payments')
-            ->first();
+            ->firstOrFail();
 
         return view('dashboard.pages.my-bills.index', [
             'title' => 'Tagihan Saya',

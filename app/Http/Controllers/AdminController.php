@@ -12,14 +12,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::query()
-            ->with('account')
-            ->latest()
-            ->paginate(25);
-
         return view('dashboard.pages.admins.index', [
             'title' => 'Manajemen Admin',
-            'admins' => $admins,
         ]);
     }
 

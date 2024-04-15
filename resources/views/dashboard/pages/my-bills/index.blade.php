@@ -24,58 +24,8 @@
                 </select>
             </form>
         </div>
-        </div>
 
-        @if ($student == null or $student->bills->isEmpty())
-            <x-dashboard::shared.no-data />
-        @else
-            <x-dashboard::ui.table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Bulan</th>
-                        <th>Tahun Ajaran</th>
-                        <th>Jumlah Bayar Angsuran</th>
-                        <th>Jumlah Angsuran Ditolak</th>
-                        <th>Nominal</th>
-                        <th>Sisa Tagihan</th>
-                        <th>Diskon</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($student->bills as $bill)
-                        <tr>
-                            <x-dashboard::ui.table.table-iteration iteration="{{ $loop->iteration }}" />
-
-                            <td class="text-capitalize">
-                                {{ $bill->month }}
-                            </td>
-
-                            <td>{{ $bill->school_year }}</td>
-                            <td>{{ $bill->payments->count() }} Kali</td>
-                            <td>dasjdksajd</td>
-                            <td>
-                                @money($bill->nominal)
-                            </td>
-                            <td>dasjdksajd</td>
-                            @if ($bill->discount == 0)
-                                <td>Tidak Ada</td>
-                            @else
-                                <td>
-                                    @money($bill->discount)
-                                </td>
-                            @endif
-
-                            <td>
-                                <a href="{{ route('dashboard.my-bills.payments.index', $bill->id) }}"
-                                    class="btn btn-primary">Angsuran</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </x-dashboard::ui.table>
-        @endif
+        <livewire:my-bill-table :student="$student" />
 
     </x-dashboard::ui.card>
 @endsection

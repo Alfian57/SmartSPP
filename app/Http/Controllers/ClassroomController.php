@@ -10,14 +10,8 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-        $classrooms = Classroom::query()
-            ->withCount('students')
-            ->latest()
-            ->paginate();
-
         return view('dashboard.pages.classrooms.index', [
             'title' => 'Manajemen Kelas',
-            'classrooms' => $classrooms,
         ]);
     }
 

@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::anonymousComponentNamespace('dashboard.components', 'dashboard');
         Blade::anonymousComponentNamespace('auth.components', 'auth');
         Blade::anonymousComponentNamespace('app.components', 'app');
+        Blade::anonymousComponentNamespace('datatable.components', 'datatable');
 
         Blade::directive('money', function ($amount) {
             return "<?php echo 'Rp. ' . number_format($amount, 2); ?>";

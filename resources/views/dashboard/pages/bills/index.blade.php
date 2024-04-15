@@ -31,41 +31,7 @@
             </tr>
         </x-dashboard::ui.table>
 
-        @if ($bills->isEmpty())
-            <x-dashboard::shared.no-data />
-        @else
-            <x-dashboard::ui.table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nominal</th>
-                        <th>Bulan</th>
-                        <th>Tahun Ajaran</th>
-                        <th>Jumlah Bayar Angsuran</th>
-                        <th>Jumlah Angsuran Ditolak</th>
-                        <th>Sisa Tagihan</th>
-                        <th>Diskon</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($bills as $bill)
-                        <tr>
-                            <x-dashboard::ui.table.table-iteration iteration="{{ $loop->iteration }}" />
-                            <td>
-                                @money($bill->nominal)
-                            </td>
-                            <td>{{ $bill->month }}</td>
-                            <td>{{ $bill->school_year }}</td>
-                            <td>dasjdksajd</td>
-                            <td>dasjdksajd</td>
-                            <td>dasjdksajd</td>
-                            <td>{{ $bill->disscount }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </x-dashboard::ui.table>
-            {{ $bills->links() }}
-        @endif
+        <livewire:student-bill-table :student="$student" />
 
     </x-dashboard::ui.card>
 @endsection

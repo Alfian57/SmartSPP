@@ -12,16 +12,9 @@ class MyPaymentController extends Controller
 {
     public function index(Bill $bill)
     {
-        $payments = Payment::query()
-            ->with('bill')
-            ->where('bill_id', $bill->id)
-            ->latest()
-            ->paginate(25);
-
         return view('dashboard.pages.my-payments.index', [
             'title' => 'Manajemen Pembayaran',
             'bill' => $bill,
-            'payments' => $payments,
         ]);
     }
 
