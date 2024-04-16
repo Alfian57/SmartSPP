@@ -3,19 +3,20 @@
 namespace App\Livewire;
 
 use App\Enums\Enum\PaymentStatus;
-use App\Models\Classroom;
-use App\Models\Payment;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Bill;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Models\Payment;
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
-class PaymentTable extends DataTableComponent
+class StudentPaymentTable extends DataTableComponent
 {
     protected $model = Payment::class;
+
+    public Bill $bill;
 
     public function configure(): void
     {
@@ -28,31 +29,6 @@ class PaymentTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            TextFilter::make('NISN Siswa', 'student_nisn')
-                ->config([
-                    'placeholder' => 'Cari NISN siswa',
-                    'max' => 10,
-                ])
-                ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
-                }),
-            SelectFilter::make('Status Pembayaran', 'student_name')
-                ->options(
-                    Classroom::query()
-                        ->with('students')
-                        ->get()
-                        ->map(function ($classroom) {
-                            $students = $classroom->students->pluck('name', 'nisn')->toArray();
-                            $classroom->students = $students;
-
-                            return $classroom;
-                        })
-                        ->pluck('students', 'name')
-                        ->toArray()
-                )
-                ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', $value);
-                }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
                     '' => 'Pilih',
@@ -60,7 +36,6 @@ class PaymentTable extends DataTableComponent
                     PaymentStatus::VALIDATED->value => 'Diterima',
                     PaymentStatus::UNVALIDATED->value => 'Ditolak',
                 ])
-                ->setFilterDefaultValue(PaymentStatus::PENDING->value)
                 ->filter(function (Builder $builder, string $value) {
                     $builder->where('payments.status', $value);
                 }),
@@ -79,20 +54,12 @@ class PaymentTable extends DataTableComponent
     public function builder(): Builder
     {
         return Payment::query()
-            ->with('bill', 'bill.student');
+            ->where('bill_id', $this->bill->id);
     }
 
     public function columns(): array
     {
         return [
-            Column::make('NISN', 'bill.student.nisn')
-                ->sortable()
-                ->secondaryHeaderFilter('student_nisn'),
-
-            Column::make('Nama Siswa', 'bill.student.name')
-                ->sortable()
-                ->secondaryHeaderFilter('student_name'),
-
             Column::make('Nominal', 'nominal')
                 ->format(function ($value) {
                     return view('datatable.payments.nominal-column', [
@@ -121,14 +88,6 @@ class PaymentTable extends DataTableComponent
             Column::make('Tanggal Pembayaran', 'created_at')
                 ->sortable()
                 ->secondaryHeaderFilter('payment_created_at'),
-
-            Column::make('Aksi')
-                ->label(function ($row) {
-                    return view('datatable.payments.action-column', [
-                        'id' => $row->id,
-                        'status' => $row->status,
-                    ]);
-                }),
         ];
     }
 }

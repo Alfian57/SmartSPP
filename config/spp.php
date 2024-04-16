@@ -14,4 +14,9 @@ return [
     // Waktu untuk pembayaran perbulan
     // Contoh: 00:01 (Pembayaran akan dilakukan setiap bulan pada pukul 00:01)
     'payment_time' => '00:01',
+
+    "payment_credentials" => [
+        "payment_destination" => env("SPP_PAYMENT_DESTINATION"),
+        "payment_type" => env("SPP_PAYMENT_TYPE"),
+    ],
 ];

@@ -3,7 +3,7 @@
 @section('content')
     <x-dashboard::ui.page-header title="Siswa" desc="Semua data siswa yang tersedia">
         <x-dashboard::ui.page-header.item href="{{ route('dashboard.students.index') }}" label="Siswa" />
-        <x-dashboard::ui.page-header.item label="Riwayat" active />
+        <x-dashboard::ui.page-header.item label="Riwayat Tagihan" active />
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>
@@ -13,7 +13,13 @@
                 <td>{{ $student->nisn }}</td>
 
                 <td>Total Tagihan</td>
-                <td>dsakdkasd</td>
+                <td>
+                    @if ($totalBill > 0)
+                        @money($totalBill)
+                    @else
+                        <span class="text-primary">Lunas</span>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Nama</td>
@@ -27,7 +33,7 @@
                 <td>{{ $student->classroom->name }}</td>
 
                 <td>Angsuran Ditolak</td>
-                <td class="text-danger">{{ $unverifiedPayments }} Angsuran</td>
+                <td class="text-danger">{{ $unvalidatedPayments }} Angsuran</td>
             </tr>
         </x-dashboard::ui.table>
 

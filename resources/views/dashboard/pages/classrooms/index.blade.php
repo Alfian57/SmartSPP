@@ -2,7 +2,7 @@
 
 @section('content')
     <x-dashboard::ui.page-header title="Kelas" desc="Semua data kelas yang tersedia">
-        <x-dashboard::ui.page-header.item label="Kelas" active="" />
+        <x-dashboard::ui.page-header.item label="Kelas" active />
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>

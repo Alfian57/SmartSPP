@@ -36,6 +36,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
 
         Route::resource('/students', StudentController::class)->except('show');
         Route::get('/students/{student}/bills', [BillController::class, 'index'])->name('students.bills.index');
+        Route::get('/bills/{bill}/payments', [BillController::class, 'show'])->name('bills.show');
     });
 
     Route::middleware('role:student_parent')->group(function () {

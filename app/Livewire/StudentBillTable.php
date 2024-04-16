@@ -123,7 +123,12 @@ class StudentBillTable extends DataTableComponent
                     ]);
                 }),
 
-            Column::make('Aksi', 'id'),
+            Column::make('Aksi')
+                ->label(function ($row) {
+                    return view('datatable.bills.action-column', [
+                        'id' => $row->id,
+                    ]);
+                }),
         ];
     }
 }

@@ -8,6 +8,20 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card title="Form Data Pembayaran">
+        <x-dashboard::ui.table class="w-50 font-weight-bold">
+            <tr>
+                <td colspan="2">Tujuan Pembarayan</td>
+            </tr>
+            <tr>
+                <td>Kredensial</td>
+                <td>{{ config('spp.payment_credentials.payment_destination') }}</td>
+            </tr>
+            <tr>
+                <td>Jenis Pembayaran</td>
+                <td>{{ config('spp.payment_credentials.payment_type') }}</td>
+            </tr>
+        </x-dashboard::ui.table>
+
         <form action="{{ route('dashboard.my-bills.payments.store', $bill->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
