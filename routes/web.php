@@ -36,7 +36,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
 
         Route::resource('/students', StudentController::class)->except('show');
         Route::get('/students/{student}/bills', [BillController::class, 'index'])->name('students.bills.index');
-        Route::get('/bills/{bill}/payments', [BillController::class, 'show'])->name('bills.show');
+        Route::get('students/{student}/bills/{bill}', [BillController::class, 'show'])->name('students.bills.show');
     });
 
     Route::middleware('role:student_parent')->group(function () {
@@ -46,5 +46,6 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
 
     Route::middleware('role:student')->group(function () {
         Route::get('bill-informations', [BillInformationController::class, 'index'])->name('bill-informations.index');
+        Route::get('bill-informations/{bill}', [BillInformationController::class, 'show'])->name('bill-informations.show');
     });
 });

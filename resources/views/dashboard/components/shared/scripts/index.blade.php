@@ -22,4 +22,5 @@
 <script src="/dashboard/js/charts.js"></script>
 <script src="/dashboard/dist/js/theme.min.js"></script>
 
+@stack('scripts')
 @livewireScripts

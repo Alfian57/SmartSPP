@@ -4,18 +4,16 @@ namespace App\Livewire;
 
 use App\Enums\Enum\PaymentStatus;
 use App\Helpers\Month;
-use App\Models\Bill;
-use App\Models\Student;
-use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Models\Bill;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
-class StudentBillTable extends DataTableComponent
+class BillInformationTable extends DataTableComponent
 {
     protected $model = Bill::class;
-
-    public Student $student;
 
     public function configure(): void
     {
@@ -52,7 +50,7 @@ class StudentBillTable extends DataTableComponent
                     array_merge(
                         ['' => 'Pilih'],
                         Bill::query()
-                            ->where('student_id', $this->student->id)
+                            ->where('student_id', Auth::user()->accountable->id)
                             ->distinct('school_year')
                             ->pluck('school_year', 'school_year')
                             ->toArray()
@@ -67,7 +65,7 @@ class StudentBillTable extends DataTableComponent
     public function builder(): Builder
     {
         return Bill::query()
-            ->where('student_id', $this->student->id)
+            ->where('student_id', Auth::user()->accountable->id)
             ->addSelect([
                 'total_paid' => function ($query) {
                     $query->selectRaw('SUM(nominal) as total_paid')
@@ -84,7 +82,7 @@ class StudentBillTable extends DataTableComponent
             Column::make('Bulan', 'month')
                 ->sortable()
                 ->format(function ($value) {
-                    return view('datatable.bills.month-column', [
+                    return view('datatable.bill-informations.month-column', [
                         'month' => Month::translateToID($value),
                     ]);
                 })
@@ -96,7 +94,7 @@ class StudentBillTable extends DataTableComponent
 
             Column::make('Total Tagihan', 'nominal')
                 ->format(function ($value) {
-                    return view('datatable.bills.nominal-column', [
+                    return view('datatable.bill-informations.nominal-column', [
                         'nominal' => $value,
                     ]);
                 })
@@ -104,30 +102,29 @@ class StudentBillTable extends DataTableComponent
 
             Column::make('Diskon', 'discount')
                 ->format(function ($value) {
-                    return view('datatable.bills.discount-column', [
+                    return view('datatable.bill-informations.discount-column', [
                         'discount' => $value,
                     ]);
                 }),
 
             Column::make('Nominal Dibayarkan')
                 ->label(function ($row) {
-                    return view('datatable.bills.total-paid-column', [
+                    return view('datatable.bill-informations.total-paid-column', [
                         'nominal' => $row->total_paid,
                     ]);
                 }),
 
             Column::make('Sisa Tagihan')
                 ->label(function ($row) {
-                    return view('datatable.bills.remaining-bill-column', [
+                    return view('datatable.bill-informations.remaining-bill-column', [
                         'nominal' => $row->nominal - $row->total_paid - $row->discount,
                     ]);
                 }),
 
             Column::make('Aksi')
                 ->label(function ($row) {
-                    return view('datatable.bills.action-column', [
-                        'billId' => $row->id,
-                        'studentId' => $this->student->id,
+                    return view('datatable.bill-informations.action-column', [
+                        'id' => $row->id,
                     ]);
                 }),
         ];

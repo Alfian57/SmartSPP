@@ -4,6 +4,7 @@
 <x-dashboard::shared.head title="{{ $title }}" />
 
 <body>
+    @stack('body-init')
     @include('sweetalert::alert')
 
     <div class="wrapper">

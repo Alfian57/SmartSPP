@@ -1,3 +1,3 @@
 <div>
-    <a href="{{ route('dashboard.bills.show', $id) }}" class="btn btn-primary">Detail</a>
+    <a href="{{ route('dashboard.students.bills.show', [$studentId, $billId]) }}" class="btn btn-primary">Detail</a>
 </div>

@@ -6,7 +6,6 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>
-        <h1>Test</h1>
-
+        <livewire:bill-information-table />
     </x-dashboard::ui.card>
 @endsection

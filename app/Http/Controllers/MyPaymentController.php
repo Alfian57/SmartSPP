@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMyPaymentRequest;
 use App\Http\Requests\UpdateMyPaymentRequest;
 use App\Models\Bill;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class MyPaymentController extends Controller

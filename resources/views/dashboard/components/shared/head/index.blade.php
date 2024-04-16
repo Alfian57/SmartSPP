@@ -27,6 +27,8 @@
 
     <link rel="stylesheet" href="/dashboard/dist/css/theme.min.css">
 
+    @stack('styles')
+
     <style>
         button {
             height: auto !important;

@@ -34,7 +34,7 @@ class BillController extends Controller
         ]);
     }
 
-    public function show(Bill $bill)
+    public function show(Student $student, Bill $bill)
     {
         return view('dashboard.pages.bills.show', [
             'title' => 'Riwayat Pembayaran',
