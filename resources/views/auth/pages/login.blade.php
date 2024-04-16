@@ -3,7 +3,7 @@
 @section('content')
     <div class="authentication-form mx-auto">
         <div class="logo-centered">
-            <img src="/dashboard/src/img/brand.svg" alt="">
+            <img src="/logo.png" alt="Logo" class="img-fluid">
         </div>
         <h3>Login ke {{ config('app.name') }}</h3>
         <p>Senang melihatmu kembali!</p>
