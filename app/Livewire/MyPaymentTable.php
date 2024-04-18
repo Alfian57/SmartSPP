@@ -73,11 +73,11 @@ class MyPaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
+                    fn ($row) => asset('storage/' . $row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',
-                    'alt' => $row->name.'Bukti rusak. Silahkan upload ulang',
+                    'alt' => $row->name . 'Bukti rusak. Silahkan upload ulang',
                     'style' => 'width: 50px;',
                 ]),
 
@@ -99,6 +99,7 @@ class MyPaymentTable extends DataTableComponent
                         'paymentId' => $row->id,
                         'billId' => $row->bill_id,
                         'status' => $row->status,
+                        'file' => $row->transfer_file,
                     ]);
                 }),
         ];

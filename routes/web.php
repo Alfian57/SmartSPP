@@ -25,6 +25,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
     Route::get('/index', [DashboardController::class, 'index'])->name('index');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('/change-password', [DashboardController::class, 'changePassword'])->name('change-password');
+    Route::post('/change-profile', [DashboardController::class, 'changeProfile'])->name('change-profile');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

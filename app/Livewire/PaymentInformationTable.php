@@ -70,7 +70,7 @@ class PaymentInformationTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
+                    fn ($row) => asset('storage/' . $row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',
@@ -89,6 +89,13 @@ class PaymentInformationTable extends DataTableComponent
             Column::make('Tanggal Pembayaran', 'created_at')
                 ->sortable()
                 ->secondaryHeaderFilter('payment_created_at'),
+
+            Column::make('Aksi')
+                ->label(function ($row) {
+                    return view('datatable.payment-informations.action-column', [
+                        'file' => $row->transfer_file,
+                    ]);
+                }),
         ];
     }
 }

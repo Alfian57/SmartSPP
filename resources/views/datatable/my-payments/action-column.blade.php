@@ -1,4 +1,8 @@
 <div class="d-flex align-items-center">
+    <a class="btn btn-primary" target="_blank" href="{{ asset('storage/' . $file) }}">
+        Lihat Bukti
+    </a>
+
     @if ($status != \App\Enums\PaymentStatus::VALIDATED->value)
         <div class="mx-1">
             <x-datatable::shared.edit-action-button

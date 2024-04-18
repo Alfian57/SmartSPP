@@ -10,7 +10,7 @@
                     @if (auth()->user()->profile_pic)
                         <a class="dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar"
-                                src="{{ asset('storage/', auth()->user()->profile_pic) }}" alt=""></a>
+                                src="{{ asset('storage/' . auth()->user()->profile_pic) }}" alt=""></a>
                     @else
                         <a class="dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar"
