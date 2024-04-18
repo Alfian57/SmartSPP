@@ -9,22 +9,19 @@ class MyBillController extends Controller
 {
     public function index()
     {
-        /** @var \App\Models\Account $user * */
         $user = Auth::user();
 
-        $children = Student::query()
-            ->where('student_parent_id', $user->accountable->id)
-            ->get();
+        $children = Student::where('student_parent_id', $user->accountable->id)->get();
 
-        if (! $children->isEmpty() && ! request('student')) {
-            return redirect()->route('dashboard.my-bills.index', ['student' => $children->first()->id]);
+        if ($children->isEmpty() || request('student')) {
+            $student = Student::where('id', request('student'))->firstOrFail();
+
+            if ($student->student_parent_id !== $user->accountable->id) {
+                abort(403);
+            }
+        } else {
+            $student = $children->first();
         }
-
-        $student = Student::query()
-            ->when(request('student'), function ($query) {
-                $query->where('id', request('student'));
-            })
-            ->firstOrFail();
 
         return view('dashboard.pages.my-bills.index', [
             'title' => 'Tagihan Saya',

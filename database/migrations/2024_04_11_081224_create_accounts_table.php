@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('email', 100)->unique();
             $table->string('password');
+            $table->string('profile_pic')->nullable();
             $table->uuidMorphs('accountable');
             $table->timestamps();
         });

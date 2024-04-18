@@ -5,42 +5,53 @@ namespace App\Policies;
 use App\Helpers\Role;
 use App\Models\Account;
 use App\Models\Bill;
+use App\Models\Payment;
 
 class BillPolicy
 {
-    public function viewPayment(Account $account, Bill $bill): bool
+    public function view(Account $account, Bill $bill): bool
     {
         if (Role::check('admin')) {
             return true;
         }
 
-        return $account->accountable->id === $bill->student_id;
+        if (Role::check('student_parent')) {
+            return $account->accountable->id === $bill->student->student_parent_id;
+        }
+
+        if (Role::check('student')) {
+            return $account->accountable->id === $bill->student_id;
+        }
+
+        return false;
     }
 
-    public function createPayment(Account $account, Bill $bill): bool
+    public function create(Account $account, Bill $bill): bool
     {
         if (Role::check('admin')) {
             return false;
         }
 
-        return $account->accountable->id === $bill->student_id;
+        return $account->accountable->id === $bill->student->student_parent_id;
     }
 
-    public function editPayment(Account $account, Bill $bill): bool
+    public function edit(Account $account, Bill $bill): bool
     {
         if (Role::check('admin')) {
             return false;
         }
 
-        return $account->accountable->id === $bill->student_id;
+
+
+        return $account->accountable->id === $bill->student->student_parent_id;
     }
 
-    public function deletePayment(Account $account, Bill $bill): bool
+    public function delete(Account $account, Bill $bill): bool
     {
         if (Role::check('admin')) {
             return false;
         }
 
-        return $account->accountable->id === $bill->student_id;
+        return $account->accountable->id === $bill->student->student_parent_id;
     }
 }
