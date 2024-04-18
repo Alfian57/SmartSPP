@@ -17,7 +17,7 @@
                     @if ($totalBill > 0)
                         @money($totalBill)
                     @else
-                        <span class="text-primary">Lunas</span>
+                        <span class="text-primary">Tidak Ada<span>
                     @endif
                 </td>
             </tr>

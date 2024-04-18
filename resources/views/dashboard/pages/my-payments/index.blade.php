@@ -6,7 +6,7 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>
-        @if ($bill->status == \App\Enums\Enum\BillStatus::NotPaidOff->value)
+        @if ($bill->status == \App\Enums\BillStatus::NOT_PAID_OFF->value)
             <div class="d-flex justify-content-end mb-3">
                 <x-dashboard::ui.button href="{{ route('dashboard.my-bills.payments.create', $bill->id) }}">
                     Ajukan Pembayaran

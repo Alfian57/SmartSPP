@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\PaymentStatus;
 use App\Helpers\Month;
 use App\Models\Bill;
 use App\Models\Student;
@@ -75,7 +75,8 @@ class StudentBillTable extends DataTableComponent
                         ->whereColumn('bill_id', 'bills.id')
                         ->where('status', PaymentStatus::VALIDATED->value);
                 },
-            ]);
+            ])
+            ->latest('bills.created_at');
     }
 
     public function columns(): array

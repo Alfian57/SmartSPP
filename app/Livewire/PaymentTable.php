@@ -2,8 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\PaymentStatus;
-use App\Models\Classroom;
+use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -34,24 +33,14 @@ class PaymentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
+                    $builder->where('bill_student.nisn', 'like', '%'.$value.'%');
                 }),
-            SelectFilter::make('Status Pembayaran', 'student_name')
-                ->options(
-                    Classroom::query()
-                        ->with('students')
-                        ->get()
-                        ->map(function ($classroom) {
-                            $students = $classroom->students->pluck('name', 'nisn')->toArray();
-                            $classroom->students = $students;
-
-                            return $classroom;
-                        })
-                        ->pluck('students', 'name')
-                        ->toArray()
-                )
+            TextFilter::make('Nama Siswa', 'student_name')
+                ->config([
+                    'placeholder' => 'Cari Nama siswa',
+                ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', $value);
+                    $builder->where('bill_student.name', 'like', '%'.$value.'%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
@@ -79,7 +68,8 @@ class PaymentTable extends DataTableComponent
     public function builder(): Builder
     {
         return Payment::query()
-            ->with('bill', 'bill.student');
+            ->with('bill', 'bill.student')
+            ->latest('payments.created_at');
     }
 
     public function columns(): array
@@ -102,7 +92,7 @@ class PaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/' . $row->transfer_file)
+                    fn ($row) => asset('storage/'.$row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',

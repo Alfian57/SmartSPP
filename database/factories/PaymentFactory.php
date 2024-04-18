@@ -18,7 +18,6 @@ class PaymentFactory extends Factory
     {
         return [
             'nominal' => $this->faker->randomElement([50000, 100000, 200000]),
-            // 'transfer_file' => $this->faker->file('/public/dashboard/img/no-data.jpg', 'storage/app/public/transfer_file', false),
             'transfer_file' => 'dummy.jpg',
             'status' => $this->faker->randomElement(['validated', 'unvalidated', 'pending']),
         ];

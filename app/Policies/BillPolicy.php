@@ -14,8 +14,6 @@ class BillPolicy
             return true;
         }
 
-
-
         return $account->accountable->id === $bill->student_id;
     }
 
@@ -24,8 +22,6 @@ class BillPolicy
         if (Role::check('admin')) {
             return false;
         }
-
-
 
         return $account->accountable->id === $bill->student_id;
     }
@@ -36,8 +32,6 @@ class BillPolicy
             return false;
         }
 
-
-
         return $account->accountable->id === $bill->student_id;
     }
 
@@ -46,8 +40,6 @@ class BillPolicy
         if (Role::check('admin')) {
             return false;
         }
-
-
 
         return $account->accountable->id === $bill->student_id;
     }

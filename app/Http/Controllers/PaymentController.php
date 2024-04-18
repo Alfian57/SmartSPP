@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Enum\BillStatus;
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\BillStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Payment;
 
@@ -49,7 +49,7 @@ class PaymentController extends Controller
 
         if ($bill->nominal - $totalPaid - $bill->discount <= 0) {
             $bill->update([
-                'status' => BillStatus::PaidOff->value,
+                'status' => BillStatus::PAID_OFF->value,
             ]);
         }
     }

@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\Enum\BillStatus;
+use App\Enums\BillStatus;
+use App\Enums\OrphanStatus;
 use App\Mail\MonthlyBillMail;
 use App\Models\Student;
 use Illuminate\Console\Command;
@@ -33,12 +34,15 @@ class GenerateMonthlyBill extends Command
             $firstYear = now()->format('m') <= 6 ? now()->format('Y') - 1 : now()->format('Y');
             $secondYear = now()->format('m') <= 6 ? now()->format('Y') : now()->format('Y') + 1;
 
+            $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
+            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+
             $student->bills()->create([
                 'nominal' => config('spp.nominal'),
                 'month' => now()->format('F'),
                 'school_year' => $firstYear.'/'.$secondYear,
-                'discount' => $student->studentParent->students->count() >= 2 ? config('spp.discount') : 0,
-                'status' => BillStatus::NotPaidOff->value,
+                'discount' => $familyDiscount + $orphanDiscount,
+                'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
 
             Mail::to($student->account->email)->queue(new MonthlyBillMail($student->name, config('spp.nominal')));

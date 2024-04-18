@@ -43,7 +43,8 @@ class StudentParentTable extends DataTableComponent
     public function builder(): Builder
     {
         return StudentParent::query()
-            ->with('students');
+            ->with('students')
+            ->latest('student_parents.created_at');
     }
 
     public function columns(): array
@@ -52,6 +53,9 @@ class StudentParentTable extends DataTableComponent
             Column::make('Nama Orang Tua', 'name')
                 ->sortable()
                 ->secondaryHeaderFilter('student_parent_name'),
+
+            Column::make('Email', 'account.email')
+                ->sortable(),
 
             Column::make('Nama Anak')
                 ->label(function ($row) {

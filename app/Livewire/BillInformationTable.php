@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\PaymentStatus;
 use App\Helpers\Month;
-use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Bill;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class BillInformationTable extends DataTableComponent
@@ -73,7 +73,8 @@ class BillInformationTable extends DataTableComponent
                         ->whereColumn('bill_id', 'bills.id')
                         ->where('status', PaymentStatus::VALIDATED->value);
                 },
-            ]);
+            ])
+            ->latest('bills.created_at');
     }
 
     public function columns(): array

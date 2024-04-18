@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\Gender;
+use App\Enums\Gender;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -62,7 +62,8 @@ class StudentTable extends DataTableComponent
     public function builder(): Builder
     {
         return Student::query()
-            ->with('classroom');
+            ->with('classroom')
+            ->latest('students.created_at');
     }
 
     public function columns(): array
@@ -75,6 +76,9 @@ class StudentTable extends DataTableComponent
             Column::make('Nama Siswa', 'name')
                 ->sortable()
                 ->secondaryHeaderFilter('student_name'),
+
+            Column::make('Email', 'account.email')
+                ->sortable(),
 
             Column::make('Nama Kelas', 'classroom.name')
                 ->sortable()

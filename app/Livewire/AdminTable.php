@@ -36,7 +36,7 @@ class AdminTable extends DataTableComponent
     public function builder(): Builder
     {
         return Admin::query()
-            ->latest();
+            ->latest('admins.created_at');
     }
 
     public function columns(): array
@@ -45,6 +45,9 @@ class AdminTable extends DataTableComponent
             Column::make('Nama Admin', 'name')
                 ->sortable()
                 ->secondaryHeaderFilter('admin_name'),
+
+            Column::make('Email', 'account.email')
+                ->sortable(),
 
             Column::make('Aksi')
                 ->label(function ($row) {

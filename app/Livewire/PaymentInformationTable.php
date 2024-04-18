@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Bill;
-use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -54,7 +54,8 @@ class PaymentInformationTable extends DataTableComponent
     public function builder(): Builder
     {
         return Payment::query()
-            ->where('bill_id', $this->bill->id);
+            ->where('bill_id', $this->bill->id)
+            ->latest('payments.created_at');
     }
 
     public function columns(): array
@@ -69,7 +70,7 @@ class PaymentInformationTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/' . $row->transfer_file)
+                    fn ($row) => asset('storage/'.$row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',

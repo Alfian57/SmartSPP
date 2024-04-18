@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
@@ -56,7 +56,8 @@ class MyPaymentTable extends DataTableComponent
     {
         return Payment::query()
             ->where('payments.bill_id', $this->bill->id)
-            ->join('bills', 'payments.bill_id', '=', 'bills.id');
+            ->join('bills', 'payments.bill_id', '=', 'bills.id')
+            ->latest('payments.created_at');
     }
 
     public function columns(): array

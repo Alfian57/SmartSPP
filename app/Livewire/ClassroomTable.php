@@ -36,7 +36,8 @@ class ClassroomTable extends DataTableComponent
     public function builder(): Builder
     {
         return Classroom::query()
-            ->withCount('students');
+            ->withCount('students')
+            ->latest('classrooms.created_at');
     }
 
     public function columns(): array

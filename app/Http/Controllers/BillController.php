@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Enum\PaymentStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Student;
 
@@ -23,7 +23,6 @@ class BillController extends Controller
             ->each(function ($bill) use (&$totalBill) {
                 $totalBill += $bill->nominal - $bill->total_paid - $bill->discount;
             });
-
 
         return view('dashboard.pages.bills.index', [
             'title' => 'Riwayat Tagihan',

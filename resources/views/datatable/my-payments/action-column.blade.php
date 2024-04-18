@@ -1,5 +1,5 @@
-<div class="d-flex">
-    @if ($status != \App\Enums\Enum\PaymentStatus::VALIDATED->value)
+<div class="d-flex align-items-center">
+    @if ($status != \App\Enums\PaymentStatus::VALIDATED->value)
         <div class="mx-1">
             <x-datatable::shared.edit-action-button
                 href="{{ route('dashboard.my-bills.payments.edit', [$billId, $paymentId]) }}" />

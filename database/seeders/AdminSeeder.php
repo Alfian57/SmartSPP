@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Admin::factory()->count(1)->createOne([
+        $admin = Admin::create([
             'name' => 'Alfian Gading Saputra',
         ]);
 

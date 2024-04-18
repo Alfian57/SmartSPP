@@ -1,3 +1,3 @@
-<div>
-    <a href="{{ route('dashboard.my-bills.payments.index', $id) }}" class="btn btn-primary">Angsuran</a>
+<div class="d-flex align-items-center">
+    <a href="{{ route('dashboard.my-bills.payments.index', $id) }}" class="btn btn-primary btn-sm mx-1">Angsuran</a>
 </div>

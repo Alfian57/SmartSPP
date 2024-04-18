@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\BillStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,11 +21,9 @@ class BillFactory extends Factory
     public function definition(): array
     {
         return [
-            'nominal' => $this->faker->randomElement([300000, 500000]),
+            'nominal' => config('spp.nominal'),
             'month' => $this->faker->randomElement(['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']),
             'school_year' => $this->faker->randomElement(['2018/2019', '2019/2020', '2020/2021', '2021/2022', '2022/2023']),
-            'discount' => $this->faker->randomElement([0, 300000]),
-            'status' => $this->faker->randomElement(['paid-off', 'not-paid-off']),
         ];
     }
 
@@ -33,6 +33,12 @@ class BillFactory extends Factory
             Payment::factory(5)->create([
                 'bill_id' => $bill->id,
             ]);
+
+            if ($bill->payments->where('status', PaymentStatus::VALIDATED->value)->sum('nominal') >= $bill->nominal) {
+                $bill->update([
+                    'status' => BillStatus::PAID_OFF->value,
+                ]);
+            }
         });
     }
 }
