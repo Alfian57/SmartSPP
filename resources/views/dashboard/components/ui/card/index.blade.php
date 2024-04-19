@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card {{ $class ?? '' }}">
     @isset($title)
         <div class="card-header d-block">
             <h3>{{ $title }}</h3>

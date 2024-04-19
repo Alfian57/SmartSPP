@@ -3,10 +3,8 @@
 namespace App\Policies;
 
 use App\Enums\PaymentStatus;
-use App\Enums\Role;
 use App\Models\Account;
 use App\Models\Payment;
-use Illuminate\Auth\Access\Response;
 
 class PaymentPolicy
 {

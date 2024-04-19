@@ -14,6 +14,7 @@ class MyPaymentController extends Controller
     public function index(Bill $bill)
     {
         Gate::authorize('view', $bill);
+
         return view('dashboard.pages.my-payments.index', [
             'title' => 'Manajemen Pembayaran',
             'bill' => $bill,

@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Helpers\Role;
 use App\Models\Account;
 use App\Models\Bill;
-use App\Models\Payment;
 
 class BillPolicy
 {
@@ -40,8 +39,6 @@ class BillPolicy
         if (Role::check('admin')) {
             return false;
         }
-
-
 
         return $account->accountable->id === $bill->student->student_parent_id;
     }

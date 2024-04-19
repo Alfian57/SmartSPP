@@ -1,5 +1,18 @@
-@extends('app.layouts.main')
+<!doctype html>
+<html class="no-js" lang="id">
 
-@section('content')
-    <h1>Hi</h1>
-@endsection
+<x-app::shared.head :title="$title" />
+
+<body>
+    <x-app::shared.navbar />
+    <x-app::shared.slider />
+    <x-app::shared.about />
+    <x-app::shared.testimonial />
+    <x-app::shared.our-advantages />
+    <x-app::shared.newsletter />
+    <x-app::shared.contact />
+    <x-app::shared.footer />
+    <x-app::shared.scripts />
+</body>
+
+</html>
