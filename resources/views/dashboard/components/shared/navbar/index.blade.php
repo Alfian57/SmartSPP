@@ -1,9 +1,11 @@
 <header class="header-top" header-theme="light">
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <div class="top-menu d-flex align-items-center">
-                <button type="button" class="btn-icon mobile-nav-toggle d-lg-none"><span></span></button>
-                <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i></button>
+            <div class="top-menu d-flex">
+                <button type="button"
+                    class="btn-icon bg-transparent mobile-nav-toggle pb-3 d-lg-none"><span></span></button>
+                <button type="button" id="navbar-fullscreen" class="nav-link bg-transparent"><i
+                        class="ik ik-maximize"></i></button>
             </div>
             <div class="top-menu d-flex align-items-center">
                 <div class="dropdown">

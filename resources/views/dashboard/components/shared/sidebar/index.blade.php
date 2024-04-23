@@ -1,7 +1,7 @@
 <div class="app-sidebar colored">
     <div class="sidebar-header">
         <a class="header-brand" href="index.html">
-            <span class="text">ThemeKit</span>
+            <span class="text">{{ config('app.name') }}</span>
         </a>
         <button type="button" class="nav-toggle"><i data-toggle="expanded"
                 class="ik ik-toggle-right toggle-icon"></i></button>

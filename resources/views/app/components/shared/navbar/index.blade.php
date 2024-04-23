@@ -6,7 +6,8 @@
                     <div class="col-xl-2 col-lg-2">
                         <div class="logo-img">
                             <a href="#">
-                                <img src="/logo.png" alt="" class="img-fluid w-25">
+                                <img src="/logo.png" alt="" class="img-fluid w-25 d-none d-lg-block">
+                                <h5 class="d-block d-lg-none text-white">{{ config('app.name') }}</h5>
                             </a>
                         </div>
                     </div>
