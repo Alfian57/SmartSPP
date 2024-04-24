@@ -7,8 +7,8 @@
     </div>
     <div class="col-12">
         <input type="{{ $type ?? 'text' }}" id="{{ $name }}" name="{{ $name }}"
-            placeholder="{{ $placeholder ?? '' }}" value="{{ $value ?? '' }}" class="form-control"
-            @disabled(isset($disable))>
+            placeholder="{{ $placeholder ?? '' }}" value="{{ $value ?? '' }}"
+            class="form-control @error($name) is-invalid @enderror" @disabled(isset($disable))>
         @error($name)
             <small class="form-text text-danger">{{ $message }}</small>
         @enderror

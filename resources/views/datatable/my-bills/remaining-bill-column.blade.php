@@ -1,4 +1,4 @@
-<div>
+<div class="font-weight-bold text-info">
     @if ($nominal > 0)
         @money($nominal)
     @else

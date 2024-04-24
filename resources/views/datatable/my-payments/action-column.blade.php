@@ -13,6 +13,8 @@
                 href="{{ route('dashboard.my-bills.payments.destroy', [$billId, $paymentId]) }}" />
         </div>
     @else
-        <p class="text-primary">Tidak dapat diedit</p>
+        <div class="pt-2">
+            <p class="text-primary">Tidak dapat diedit</p>
+        </div>
     @endif
 </div>

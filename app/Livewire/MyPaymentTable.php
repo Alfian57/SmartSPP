@@ -36,7 +36,6 @@ class MyPaymentTable extends DataTableComponent
                     PaymentStatus::VALIDATED->value => 'Diterima',
                     PaymentStatus::UNVALIDATED->value => 'Ditolak',
                 ])
-                ->setFilterDefaultValue(PaymentStatus::PENDING->value)
                 ->filter(function (Builder $builder, string $value) {
                     $builder->where('payments.status', $value);
                 }),
@@ -73,11 +72,11 @@ class MyPaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
+                    fn ($row) => asset('storage/' . $row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',
-                    'alt' => $row->name.'Bukti rusak. Silahkan upload ulang',
+                    'alt' => $row->name . 'Bukti rusak. Silahkan upload ulang',
                     'style' => 'width: 50px;',
                 ]),
 
