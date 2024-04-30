@@ -39,6 +39,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::post('/payments/{payment}/accept', [PaymentController::class, 'accept'])->name('payments.accept');
 
         Route::resource('/students', StudentController::class)->except('show');
+        Route::get('/students{student}/export', [StudentController::class, 'export'])->name('students.export');
         Route::get('/students/{student}/bills', [BillController::class, 'index'])->name('students.bills.index');
         Route::get('students/{student}/bills/{bill}', [BillController::class, 'show'])->name('students.bills.show');
     });

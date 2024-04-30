@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Events\OnAccountCreated;
+use App\Exports\StudentBillsExport;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -72,5 +74,12 @@ class StudentController extends Controller
         toast('Siswa berhasil dihapus', 'success');
 
         return redirect()->route('dashboard.students.index');
+    }
+
+    public function export(Student $student)
+    {
+        $fileName = date('Y-m-d_H:i:s') . '_tagihan_' . $student->name . '.xlsx';
+
+        return Excel::download(new StudentBillsExport($student), $fileName);
     }
 }
