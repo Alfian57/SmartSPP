@@ -16,14 +16,8 @@
                     <span>Dashboard</span>
                 </x-dashboard::shared.sidebar.item>
 
-                <div class="nav-lavel">Manajemen Data</div>
-
                 @if (auth()->user()->role() === \App\Enums\Role::ADMIN->value)
-                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
-                        <x-dashboard::icons.classroom />
-                        <span>Data Kelas</span>
-                    </x-dashboard::shared.sidebar.item>
-
+                    <div class="nav-lavel">Manajemen Akun</div>
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.students.index') }}">
                         <x-dashboard::icons.student />
                         <span>Data Siswa</span>
@@ -36,16 +30,25 @@
 
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.admins.index') }}">
                         <x-dashboard::icons.admin />
-
                         <span>Data Admin</span>
                     </x-dashboard::shared.sidebar.item>
+
+
+                    <div class="nav-lavel">Manajemen Pembayaran</div>
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
                         <x-dashboard::icons.payment />
                         <span>Data Pembayaran</span>
                     </x-dashboard::shared.sidebar.item>
+
+                    <div class="nav-lavel">Menu Lainnya</div>
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
+                        <x-dashboard::icons.classroom />
+                        <span>Data Kelas</span>
+                    </x-dashboard::shared.sidebar.item>
                 @endif
 
                 @if (auth()->user()->role() === \App\Enums\Role::STUDENT_PARENT->value)
+                    <div class="nav-lavel">Manajemen Pembayaran</div>
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
                         <x-dashboard::icons.bill />
                         <span>Tagihan Saya</span>
@@ -53,6 +56,7 @@
                 @endif
 
                 @if (auth()->user()->role() === \App\Enums\Role::STUDENT->value)
+                    <div class="nav-lavel">Manajemen Pembayaran</div>
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.bill-informations.index') }}">
                         <x-dashboard::icons.bill />
                         <span>Informasi Tagihan</span>

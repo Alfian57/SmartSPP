@@ -6,8 +6,9 @@
         <x-dashboard::ui.page-header.item label="Riwayat Tagihan" active />
     </x-dashboard::ui.page-header>
 
-    <x-dashboard::ui.card>
-        <x-dashboard::ui.table class="w-50">
+
+    <div class="row">
+        <x-dashboard::ui.table class="col-12 col-lg-6">
             <tr>
                 <td>NISN</td>
                 <td>{{ $student->nisn }}</td>
@@ -25,19 +26,20 @@
                 <td>Nama</td>
                 <td>{{ $student->name }}</td>
 
-                <td>Angsuran Diproses</td>
-                <td class="text-primary">{{ $pendingPayment }} Angsuran</td>
+                <td>Tagihan Lunas</td>
+                <td class="text-primary">{{ $paidBills }} Tagihan</td>
             </tr>
             <tr>
                 <td>Kelas</td>
                 <td>{{ $student->classroom->name }}</td>
 
-                <td>Angsuran Ditolak</td>
-                <td class="text-danger">{{ $unvalidatedPayments }} Angsuran</td>
+                <td>Tagihan Belum Lunas</td>
+                <td class="text-danger">{{ $unpaidBills }} Tagihan</td>
             </tr>
         </x-dashboard::ui.table>
+    </div>
 
+    <x-dashboard::ui.card>
         <livewire:student-bill-table :student="$student" />
-
     </x-dashboard::ui.card>
 @endsection

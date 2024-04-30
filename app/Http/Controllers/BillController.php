@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\BillStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Student;
@@ -27,8 +28,8 @@ class BillController extends Controller
         return view('dashboard.pages.bills.index', [
             'title' => 'Riwayat Tagihan',
             'student' => $student,
-            'pendingPayment' => $student->payments->where('status', PaymentStatus::PENDING->value)->count(),
-            'unvalidatedPayments' => $student->payments->where('status', PaymentStatus::UNVALIDATED->value)->count(),
+            'paidBills' => $student->bills->where('status', BillStatus::PAID_OFF->value)->count(),
+            'unpaidBills' => $student->bills->where('status', BillStatus::NOT_PAID_OFF->value)->count(),
             'totalBill' => $totalBill,
         ]);
     }
@@ -38,6 +39,9 @@ class BillController extends Controller
         return view('dashboard.pages.bills.show', [
             'title' => 'Riwayat Pembayaran',
             'bill' => $bill,
+            'pendingPayment' => $bill->payments->where('status', PaymentStatus::PENDING->value)->count(),
+            'unvalidatedPayments' => $bill->payments->where('status', PaymentStatus::UNVALIDATED->value)->count(),
+            'validatedPayments' => $bill->payments->where('status', PaymentStatus::VALIDATED->value)->count(),
         ]);
     }
 }
