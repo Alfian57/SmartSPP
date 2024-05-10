@@ -70,7 +70,7 @@ class StudentPaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/' . $row->transfer_file)
+                    fn ($row) => asset('storage/'.$row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',

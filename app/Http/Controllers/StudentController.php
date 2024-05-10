@@ -74,7 +74,7 @@ class StudentController extends Controller
 
     public function export(Student $student)
     {
-        $fileName = date('Y-m-d_H:i:s') . '_tagihan_' . $student->name . '.xlsx';
+        $fileName = date('Y-m-d_H:i:s').'_tagihan_'.$student->name.'.xlsx';
 
         return Excel::download(new StudentBillsExport($student), $fileName);
     }

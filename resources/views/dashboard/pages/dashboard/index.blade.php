@@ -1,5 +1,5 @@
 @section('title')
-    Manajemen
+    Dashboard
 @endsection
 
 <x-dashboard-layouts::main>

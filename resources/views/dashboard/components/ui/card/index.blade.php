@@ -1,4 +1,4 @@
-<div {{ $attributes->class('card ') }}>
+<div {{ $attributes->class('card ') }} style="overflow: hidden;">
     @isset($title)
         <div class="card-header d-block">
             <h3>{{ $title }}</h3>

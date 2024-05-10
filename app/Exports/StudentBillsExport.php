@@ -14,7 +14,7 @@ class StudentBillsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Bulan", "Tahun Ajaran", "Nominal", "Diskon", "Total Dibayar", "Sisa Tagihan"];
+        return ['Bulan', 'Tahun Ajaran', 'Nominal', 'Diskon', 'Total Dibayar', 'Sisa Tagihan'];
     }
 
     public function __construct(Student $student)

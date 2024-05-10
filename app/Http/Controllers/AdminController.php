@@ -28,6 +28,7 @@ class AdminController extends Controller
         });
 
         toast('Admin berhasil dibuat', 'success');
+
         return redirect()->route('dashboard.admins.index');
     }
 
@@ -42,6 +43,7 @@ class AdminController extends Controller
     {
         $admin->update($request->validated());
         toast('Admin berhasil diperbarui', 'success');
+
         return redirect()->route('dashboard.admins.index');
     }
 
@@ -49,6 +51,7 @@ class AdminController extends Controller
     {
         $admin->delete();
         toast('Admin berhasil dihapus', 'success');
+
         return redirect()->route('dashboard.admins.index');
     }
 }

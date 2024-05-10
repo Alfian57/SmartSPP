@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Classroom;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -29,7 +28,7 @@ class ClassroomTable extends DataTableComponent
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('classrooms.name', 'like', '%' . $value . '%');
+                    $builder->where('classrooms.name', 'like', '%'.$value.'%');
                 }),
         ];
     }

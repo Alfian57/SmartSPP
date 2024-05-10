@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Facades\Storage;
 
 class Student extends Model
 {
@@ -19,6 +20,10 @@ class Student extends Model
     protected static function booted(): void
     {
         static::deleting(function (Student $student) {
+            if ($student->account->profile_pic) {
+                Storage::delete($student->account->profile_pic);
+            }
+
             $student->account()->delete();
         });
     }

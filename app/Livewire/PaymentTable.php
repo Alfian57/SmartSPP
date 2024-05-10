@@ -33,14 +33,14 @@ class PaymentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
+                    $builder->where('bill_student.nisn', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari Nama siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.name', 'like', '%' . $value . '%');
+                    $builder->where('bill_student.name', 'like', '%'.$value.'%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
@@ -91,7 +91,7 @@ class PaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/' . $row->transfer_file)
+                    fn ($row) => asset('storage/'.$row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',

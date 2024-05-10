@@ -89,7 +89,8 @@ class StudentTable extends DataTableComponent
         return [
             Column::make('NISN', 'nisn')
                 ->sortable()
-                ->secondaryHeaderFilter('student_nisn'),
+                ->secondaryHeaderFilter('student_nisn')
+                ->collapseOnMobile(),
 
             Column::make('Nama Siswa', 'name')
                 ->sortable()
@@ -97,7 +98,7 @@ class StudentTable extends DataTableComponent
 
             Column::make('Email', 'account.email')
                 ->sortable()
-                ->collapseOnTablet(),
+                ->collapseAlways(),
 
             Column::make('Nama Kelas', 'classroom.name')
                 ->sortable()
@@ -111,7 +112,7 @@ class StudentTable extends DataTableComponent
                     ]);
                 })
                 ->secondaryHeaderFilter('gender')
-                ->collapseOnTablet(),
+                ->collapseAlways(),
 
             Column::make('Tanggal Lahir', 'date_of_birth')
                 ->collapseAlways(),
@@ -135,8 +136,7 @@ class StudentTable extends DataTableComponent
                     return view('datatable.students.action-column', [
                         'id' => $row->id,
                     ]);
-                })
-                ->collapseOnTablet(),
+                }),
         ];
     }
 

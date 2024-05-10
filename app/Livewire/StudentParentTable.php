@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\StudentParent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -28,16 +29,31 @@ class StudentParentTable extends DataTableComponent
                     'placeholder' => 'Cari orang tua',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('student_parents.name', 'like', '%' . $value . '%');
+                    $builder->where('student_parents.name', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->whereRelation('students', 'name', 'like', '%' . $value . '%');
+                    $builder->whereRelation('students', 'name', 'like', '%'.$value.'%');
                 }),
         ];
+    }
+
+    public array $bulkActions = [
+        'deleteSelected' => 'Hapus',
+    ];
+
+    public function deleteSelected()
+    {
+        StudentParent::whereIn('id', $this->getSelected())->get()->each(function ($student) {
+            if ($student->account->profile_pic) {
+                Storage::delete($student->account->profile_pic);
+            }
+        });
+
+        StudentParent::whereIn('id', $this->getSelected())->delete();
     }
 
     public function builder(): Builder
