@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="id">
 
 <x-auth::shared.head />
 
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-7 my-auto p-0">
-                    @yield('content')
+                    {{ $slot }}
                 </div>
             </div>
         </div>

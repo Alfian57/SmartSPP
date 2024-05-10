@@ -28,14 +28,14 @@ class StudentParentTable extends DataTableComponent
                     'placeholder' => 'Cari orang tua',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('student_parents.name', 'like', '%'.$value.'%');
+                    $builder->where('student_parents.name', 'like', '%' . $value . '%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->whereRelation('students', 'name', 'like', '%'.$value.'%');
+                    $builder->whereRelation('students', 'name', 'like', '%' . $value . '%');
                 }),
         ];
     }
@@ -63,9 +63,11 @@ class StudentParentTable extends DataTableComponent
                         'children' => $row->students,
                     ]);
                 })
-                ->secondaryHeaderFilter('student_name'),
+                ->secondaryHeaderFilter('student_name')
+                ->collapseOnTablet(),
 
-            Column::make('No. Telepon', 'phone_number'),
+            Column::make('No. Telepon', 'phone_number')
+                ->collapseOnMobile(),
 
             Column::make('Aksi')
                 ->label(function ($row) {

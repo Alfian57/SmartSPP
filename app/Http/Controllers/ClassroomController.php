@@ -10,16 +10,12 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-        return view('dashboard.pages.classrooms.index', [
-            'title' => 'Manajemen Kelas',
-        ]);
+        return view('dashboard.pages.classrooms.index');
     }
 
     public function create()
     {
-        return view('dashboard.pages.classrooms.create', [
-            'title' => 'Manajemen Kelas',
-        ]);
+        return view('dashboard.pages.classrooms.create');
     }
 
     public function store(StoreClassroomRequest $request)
@@ -34,7 +30,6 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
         return view('dashboard.pages.classrooms.edit', [
-            'title' => 'Manajemen Kelas',
             'classroom' => $classroom,
         ]);
     }

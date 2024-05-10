@@ -1,7 +1,7 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="id">
 
-<x-dashboard::shared.head title="{{ $title }}" />
+<x-dashboard::shared.head />
 
 <body>
     @stack('body-init')
@@ -9,19 +9,15 @@
 
     <div class="wrapper">
         <x-dashboard::shared.navbar />
-
         <div class="page-wrap">
             <x-dashboard::shared.sidebar />
-
             <div class="main-content">
                 <div class="container-fluid">
-                    @yield('content')
+                    {{ $slot }}
                 </div>
             </div>
-
             <x-dashboard::shared.footer />
         </div>
-
     </div>
 
     <x-dashboard::shared.scripts />

@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ $title }} | {{ config('app.name') }}</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -25,8 +25,6 @@
 
     <link rel="stylesheet" href="/dashboard/dist/css/theme.min.css">
 
-    @stack('styles')
-
     <style>
         button {
             height: auto !important;
@@ -39,4 +37,5 @@
     </style>
 
     @livewireStyles
+    @stack('styles')
 </head>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="id">
 
-<x-app::shared.head :title="$title" />
+<x-app::shared.head title="Home" />
 
 <body>
     <x-app::shared.navbar />

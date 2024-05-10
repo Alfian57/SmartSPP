@@ -1,4 +1,4 @@
-<div class="card {{ $class ?? '' }}">
+<div {{ $attributes->class('card ') }}>
     @isset($title)
         <div class="card-header d-block">
             <h3>{{ $title }}</h3>

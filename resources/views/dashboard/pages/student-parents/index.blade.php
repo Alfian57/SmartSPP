@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen Orang Tua
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Orang Tua" desc="Semua data orang tua yang tersedia">
         <x-dashboard::ui.page-header.item label="Orang Tua" active="" />
     </x-dashboard::ui.page-header>
@@ -15,4 +17,4 @@
         <livewire:student-parent-table />
 
     </x-dashboard::ui.card>
-@endsection
+</x-dashboard-layouts::main>

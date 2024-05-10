@@ -1,6 +1,8 @@
-@extends('auth.layouts.main')
+@section('title')
+    Login
+@endsection
 
-@section('content')
+<x-auth-layouts::main>
     <div class="authentication-form mx-auto">
         <div class="logo-centered">
             <img src="/logo.png" alt="Logo" class="img-fluid">
@@ -42,4 +44,4 @@
             </div>
         </form>
     </div>
-@endsection
+</x-auth-layouts::main>

@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Profil" desc="Profil anda">
         <x-dashboard::ui.page-header.item label="Profil" active />
     </x-dashboard::ui.page-header>
@@ -41,8 +43,8 @@
             <div class="card">
                 <ul class="nav nav-pills custom-pills" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#password" role="tab"
-                            aria-controls="pills-profile" aria-selected="false">Ganti Password</a>
+                        <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#password"
+                            role="tab" aria-controls="pills-profile" aria-selected="false">Ganti Password</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#profile-pic" role="tab"
@@ -55,11 +57,11 @@
                         <div class="card-body">
                             <form action="{{ route('dashboard.change-password') }}" method="post">
                                 @csrf
-                                <x-dashboard::ui.input.text type="password" label="Password Lama"
+                                <x-dashboard::ui.input type="password" label="Password Lama"
                                     placeholder="Masukan password lama" name="old_password" required />
-                                <x-dashboard::ui.input.text type="password" label="Password Baru"
+                                <x-dashboard::ui.input type="password" label="Password Baru"
                                     placeholder="Masukan password baru" name="new_password" required />
-                                <x-dashboard::ui.input.text type="password" label="Konfirmasi Password Baru"
+                                <x-dashboard::ui.input type="password" label="Konfirmasi Password Baru"
                                     placeholder="Masukan konfirmasi password baru" name="new_password_confirmation"
                                     required />
 
@@ -72,7 +74,7 @@
                             <form action="{{ route('dashboard.change-profile') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <x-dashboard::ui.input.text label="Masukan Foto" type="file" name="profile_pic"
+                                <x-dashboard::ui.input label="Masukan Foto" type="file" name="profile_pic"
                                     required />
                                 <button class="btn btn-success"" type="submit">Ganti Foto</button>
                             </form>
@@ -82,4 +84,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-dashboard-layouts::main>

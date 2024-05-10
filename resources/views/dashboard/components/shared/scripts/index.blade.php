@@ -12,7 +12,6 @@
 <script src="/dashboard/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="/dashboard/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 <script src="/dashboard/plugins/jvectormap/jquery-jvectormap.min.js"></script>
-{{-- <script src="/dashboard/plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js"></script> --}}
 <script src="/dashboard/plugins/moment/moment.js"></script>
 <script src="/dashboard/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
 <script src="/dashboard/plugins/d3/dist/d3.min.js"></script>
@@ -31,8 +30,8 @@
             icon: 'question',
             title: text,
             showCancelButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: 'No',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
             customClass: {
                 cancelButton: 'order-1',
                 confirmButton: 'order-2',
@@ -45,5 +44,5 @@
     };
 </script>
 
-@stack('scripts')
 @livewireScripts
+@stack('scripts')

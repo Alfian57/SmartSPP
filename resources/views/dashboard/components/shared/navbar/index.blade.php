@@ -20,7 +20,7 @@
                     @endif
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="{{ route('dashboard.profile') }}"><i
+                        <a class="dropdown-item" href="{{ route('dashboard.profile') }}" wire:navigate><i
                                 class="ik ik-user dropdown-icon"></i>
                             Profil</a>
                         <form action="{{ route('dashboard.logout') }}" method="post" style="display: none"

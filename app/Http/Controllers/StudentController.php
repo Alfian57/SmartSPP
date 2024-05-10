@@ -16,9 +16,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return view('dashboard.pages.students.index', [
-            'title' => 'Manajemen Siswa',
-        ]);
+        return view('dashboard.pages.students.index');
     }
 
     public function create()
@@ -27,7 +25,6 @@ class StudentController extends Controller
         $studentParents = StudentParent::pluck('name', 'id');
 
         return view('dashboard.pages.students.create', [
-            'title' => 'Tambah Siswa',
             'classrooms' => $classrooms,
             'studentParents' => $studentParents,
         ]);
@@ -51,7 +48,6 @@ class StudentController extends Controller
         $studentParents = StudentParent::pluck('name', 'id');
 
         return view('dashboard.pages.students.edit', [
-            'title' => 'Edit Siswa',
             'student' => $student,
             'classrooms' => $classrooms,
             'studentParents' => $studentParents,

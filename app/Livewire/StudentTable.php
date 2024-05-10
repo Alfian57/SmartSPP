@@ -3,8 +3,11 @@
 namespace App\Livewire;
 
 use App\Enums\Gender;
+use App\Enums\OrphanStatus;
+use App\Enums\Religion;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -31,21 +34,21 @@ class StudentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.nisn', 'like', '%'.$value.'%');
+                    $builder->where('students.nisn', 'like', '%' . $value . '%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.name', 'like', '%'.$value.'%');
+                    $builder->where('students.name', 'like', '%' . $value . '%');
                 }),
             TextFilter::make('Nama Kelas', 'classroom_name')
                 ->config([
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('classrooms.name', 'like', '%'.$value.'%');
+                    $builder->where('classroom.name', 'like', '%' . $value . '%');
                 }),
             SelectFilter::make('Jenis Kelamin', 'gender')
                 ->options([
@@ -57,6 +60,21 @@ class StudentTable extends DataTableComponent
                     $builder->where('gender', $value);
                 }),
         ];
+    }
+
+    public array $bulkActions = [
+        'deleteSelected' => 'Hapus',
+    ];
+
+    public function deleteSelected()
+    {
+        Student::whereIn('id', $this->getSelected())->get()->each(function ($student) {
+            if ($student->account->profile_pic) {
+                Storage::delete($student->account->profile_pic);
+            }
+        });
+
+        Student::whereIn('id', $this->getSelected())->delete();
     }
 
     public function builder(): Builder
@@ -78,11 +96,13 @@ class StudentTable extends DataTableComponent
                 ->secondaryHeaderFilter('student_name'),
 
             Column::make('Email', 'account.email')
-                ->sortable(),
+                ->sortable()
+                ->collapseOnTablet(),
 
             Column::make('Nama Kelas', 'classroom.name')
                 ->sortable()
-                ->secondaryHeaderFilter('classroom_name'),
+                ->secondaryHeaderFilter('classroom_name')
+                ->collapseOnMobile(),
 
             Column::make('Jenis Kelamin', 'gender')
                 ->format(function ($value) {
@@ -90,14 +110,59 @@ class StudentTable extends DataTableComponent
                         'gender' => $value,
                     ]);
                 })
-                ->secondaryHeaderFilter('gender'),
+                ->secondaryHeaderFilter('gender')
+                ->collapseOnTablet(),
+
+            Column::make('Tanggal Lahir', 'date_of_birth')
+                ->collapseAlways(),
+
+            Column::make('Agama', 'religion')
+                ->format(fn ($value) => $this->displayReligion($value))
+                ->collapseAlways(),
+
+            Column::make('Status Yatim', 'orphan_status')
+                ->format(fn ($value) => $this->displayOrphanStatus($value))
+                ->collapseAlways(),
+
+            Column::make('Alamat', 'address')
+                ->collapseAlways(),
+
+            Column::make('Nama Orang Tua', 'studentParent.name')
+                ->collapseAlways(),
 
             Column::make('Aksi')
                 ->label(function ($row) {
                     return view('datatable.students.action-column', [
                         'id' => $row->id,
                     ]);
-                }),
+                })
+                ->collapseOnTablet(),
         ];
+    }
+
+    private function displayOrphanStatus($value)
+    {
+        $statuses = [
+            OrphanStatus::ORPHAN_BOTH->value => 'Yatim Piatu',
+            OrphanStatus::ORPHAN_FATHER->value => 'Yatim',
+            OrphanStatus::ORPHAN_MOTHER->value => 'Piatu',
+            OrphanStatus::NONE->value => 'Tidak Yatim Piatu',
+        ];
+
+        return $statuses[$value];
+    }
+
+    private function displayReligion($value)
+    {
+        $religions = [
+            Religion::ISLAM->value => 'Islam',
+            Religion::CHRISTIANITY->value => 'Kristen',
+            Religion::CATHOLICISM->value => 'Katolik',
+            Religion::HINDUISM->value => 'Hindu',
+            Religion::BUDDHISM->value => 'Buddha',
+            Religion::CONFUCIANISM->value => 'Konghucu',
+        ];
+
+        return $religions[$value];
     }
 }

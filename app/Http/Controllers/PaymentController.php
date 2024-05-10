@@ -11,15 +11,13 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return view('dashboard.pages.payments.index', [
-            'title' => 'Manajemen Pembayaran',
-        ]);
+        return view('dashboard.pages.payments.index');
     }
 
     public function reject(Payment $payment)
     {
         $payment->update([
-            'status' => 'unvalidated',
+            'status' => PaymentStatus::UNVALIDATED->value,
         ]);
 
         toast('Berhasil menolak pembayaran', 'success');
@@ -30,7 +28,7 @@ class PaymentController extends Controller
     public function accept(Payment $payment)
     {
         $payment->update([
-            'status' => 'validated',
+            'status' => PaymentStatus::VALIDATED->value,
         ]);
 
         $this->checkBillStatus($payment->bill);

@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Siswa" desc="Semua data siswa yang tersedia">
         <x-dashboard::ui.page-header.item href="{{ route('dashboard.students.index') }}" label="Siswa" />
         <x-dashboard::ui.page-header.item label="Riwayat Tagihan" active />
@@ -42,4 +44,4 @@
     <x-dashboard::ui.card>
         <livewire:student-bill-table :student="$student" />
     </x-dashboard::ui.card>
-@endsection
+</x-dashboard-layouts::main>

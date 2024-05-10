@@ -97,7 +97,8 @@ class PaymentTable extends DataTableComponent
                     'class' => 'text-danger font-weight-bold',
                     'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
                     'style' => 'width: 50px;',
-                ]),
+                ])
+                ->collapseOnTablet(),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {
@@ -105,11 +106,13 @@ class PaymentTable extends DataTableComponent
                         'status' => $value,
                     ]);
                 })
-                ->secondaryHeaderFilter('payment_status'),
+                ->secondaryHeaderFilter('payment_status')
+                ->collapseOnTablet(),
 
             Column::make('Tanggal Pembayaran', 'created_at')
                 ->sortable()
-                ->secondaryHeaderFilter('payment_created_at'),
+                ->secondaryHeaderFilter('payment_created_at')
+                ->collapseOnTablet(),
 
             Column::make('Aksi')
                 ->label(function ($row) {
@@ -118,7 +121,8 @@ class PaymentTable extends DataTableComponent
                         'status' => $row->status,
                         'file' => $row->transfer_file,
                     ]);
-                }),
+                })
+                ->collapseOnMobile(),
         ];
     }
 }

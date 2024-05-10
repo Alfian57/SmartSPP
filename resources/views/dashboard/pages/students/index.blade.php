@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen Siswa
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Siswa" desc="Semua data siswa yang tersedia">
         <x-dashboard::ui.page-header.item label="Siswa" active />
     </x-dashboard::ui.page-header>
@@ -15,4 +17,4 @@
         <livewire:student-table />
 
     </x-dashboard::ui.card>
-@endsection
+</x-dashboard-layouts::main>

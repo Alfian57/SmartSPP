@@ -93,7 +93,8 @@ class StudentBillTable extends DataTableComponent
 
             Column::make('Tahun Ajaran', 'school_year')
                 ->sortable()
-                ->secondaryHeaderFilter('school_year'),
+                ->secondaryHeaderFilter('school_year')
+                ->collapseOnMobile(),
 
             Column::make('Total Tagihan', 'nominal')
                 ->format(function ($value) {
@@ -101,21 +102,24 @@ class StudentBillTable extends DataTableComponent
                         'nominal' => $value,
                     ]);
                 })
-                ->sortable(),
+                ->sortable()
+                ->collapseOnMobile(),
 
             Column::make('Diskon', 'discount')
                 ->format(function ($value) {
                     return view('datatable.bills.discount-column', [
                         'discount' => $value,
                     ]);
-                }),
+                })
+                ->collapseOnTablet(),
 
             Column::make('Nominal Dibayarkan')
                 ->label(function ($row) {
                     return view('datatable.bills.total-paid-column', [
                         'nominal' => $row->total_paid,
                     ]);
-                }),
+                })
+                ->collapseOnTablet(),
 
             Column::make('Sisa Tagihan')
                 ->label(function ($row) {

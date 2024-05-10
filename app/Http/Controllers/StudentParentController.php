@@ -12,16 +12,12 @@ class StudentParentController extends Controller
 {
     public function index()
     {
-        return view('dashboard.pages.student-parents.index', [
-            'title' => 'Manajemen Orang Tua',
-        ]);
+        return view('dashboard.pages.student-parents.index');
     }
 
     public function create()
     {
-        return view('dashboard.pages.student-parents.create', [
-            'title' => 'Tambah Orang Tua',
-        ]);
+        return view('dashboard.pages.student-parents.create');
     }
 
     public function store(StoreStudentParentRequest $request)
@@ -39,7 +35,6 @@ class StudentParentController extends Controller
     public function edit(StudentParent $studentParent)
     {
         return view('dashboard.pages.student-parents.edit', [
-            'title' => 'Edit Orang Tua',
             'studentParent' => $studentParent,
         ]);
     }

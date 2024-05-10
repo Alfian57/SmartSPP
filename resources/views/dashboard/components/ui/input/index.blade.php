@@ -1,4 +1,4 @@
-@props(['label', 'id', 'options', 'selected'])
+@props(['label', 'id'])
 
 @php
     $id = $id ?? Str::uuid();
@@ -10,12 +10,14 @@
         <label for="{{ $id }}">{{ $label }}</label>
     </div>
     <div class="col-12">
-        <select {{ $attributes->class('form-control form-select ' . ($errors->has($name) ? ' is-invalid' : '')) }}
+        @isset($body)
+            {{ $body }}
+        @endisset
+    </div>
+    <div class="col-12">
+        <input
+            {{ $attributes->class('form-control ' . ($errors->has($name) ? ' is-invalid' : ''))->merge(['type' => 'text']) }}
             id="{{ $id }}">
-            @foreach ($options as $key => $value)
-                <option value="{{ $key }}" @selected($selected == $key)>{{ $value }}</option>
-            @endforeach
-        </select>
         @error($name)
             <small class="form-text text-danger">{{ $message }}</small>
         @enderror

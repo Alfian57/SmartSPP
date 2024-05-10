@@ -19,3 +19,4 @@
 <script src="/app/js/jquery.ajaxchimp.min.js"></script>
 
 <script src="/app/js/main.js"></script>
+@livewireScripts

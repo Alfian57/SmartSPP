@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <div class="row">
         <x-dashboard::ui.card title="Dashboard" class="col-12 col-md-6">
             <div class="text-center">
@@ -77,4 +79,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-dashboard-layouts::main>

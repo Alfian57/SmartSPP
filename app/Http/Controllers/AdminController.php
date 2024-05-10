@@ -12,16 +12,12 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('dashboard.pages.admins.index', [
-            'title' => 'Manajemen Admin',
-        ]);
+        return view('dashboard.pages.admins.index');
     }
 
     public function create()
     {
-        return view('dashboard.pages.admins.create', [
-            'title' => 'Tambah Admin',
-        ]);
+        return view('dashboard.pages.admins.create');
     }
 
     public function store(StoreAdminRequest $request)
@@ -32,14 +28,12 @@ class AdminController extends Controller
         });
 
         toast('Admin berhasil dibuat', 'success');
-
         return redirect()->route('dashboard.admins.index');
     }
 
     public function edit(Admin $admin)
     {
         return view('dashboard.pages.admins.edit', [
-            'title' => 'Edit Admin',
             'admin' => $admin,
         ]);
     }
@@ -47,18 +41,14 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
         $admin->update($request->validated());
-
         toast('Admin berhasil diperbarui', 'success');
-
         return redirect()->route('dashboard.admins.index');
     }
 
     public function destroy(Admin $admin)
     {
         $admin->delete();
-
         toast('Admin berhasil dihapus', 'success');
-
         return redirect()->route('dashboard.admins.index');
     }
 }

@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Edit Kelas
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Kelas" desc="Semua data kelas yang tersedia">
         <x-dashboard::ui.page-header.item href="{{ route('dashboard.classrooms.index') }}" label="Kelas" />
         <x-dashboard::ui.page-header.item label="Ubah" active="" />
@@ -10,12 +12,14 @@
         <form action="{{ route('dashboard.classrooms.update', $classroom->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <x-dashboard::ui.input.text label="Nama" name="name" value="{{ old('name', $classroom->name) }}"
+            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name', $classroom->name) }}"
                 placeholder="Masukan Nama Kelas" required />
 
-            <x-dashboard::ui.button.submit>
-                Kirim
-            </x-dashboard::ui.button.submit>
+            <div class="d-flex justify-content-end">
+                <x-dashboard::ui.button type="submit">
+                    Kirim
+                </x-dashboard::ui.button>
+            </div>
         </form>
     </x-dashboard::ui.card>
-@endsection
+</x-dashboard-layouts::main>

@@ -70,13 +70,14 @@ class StudentPaymentTable extends DataTableComponent
 
             ImageColumn::make('Bukti Trasfer', 'transfer_file')
                 ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
+                    fn ($row) => asset('storage/' . $row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',
                     'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
                     'style' => 'width: 50px;',
-                ]),
+                ])
+                ->collapseOnTablet(),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {

@@ -1,6 +1,8 @@
-@extends('dashboard.layouts.main')
+@section('title')
+    Manajemen
+@endsection
 
-@section('content')
+<x-dashboard-layouts::main>
     <x-dashboard::ui.page-header title="Tagihan Saya" desc="Semua data tagihan saya yang tersedia">
         <x-dashboard::ui.page-header.item label="Tagihan Saya" active />
     </x-dashboard::ui.page-header>
@@ -28,4 +30,4 @@
         <livewire:my-bill-table :student="$student" />
 
     </x-dashboard::ui.card>
-@endsection
+</x-dashboard-layouts::main>

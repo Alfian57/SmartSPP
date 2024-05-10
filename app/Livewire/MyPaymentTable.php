@@ -78,7 +78,8 @@ class MyPaymentTable extends DataTableComponent
                     'class' => 'text-danger font-weight-bold',
                     'alt' => $row->name . 'Bukti rusak. Silahkan upload ulang',
                     'style' => 'width: 50px;',
-                ]),
+                ])
+                ->collapseOnTablet(),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {
@@ -100,7 +101,8 @@ class MyPaymentTable extends DataTableComponent
                         'status' => $row->status,
                         'file' => $row->transfer_file,
                     ]);
-                }),
+                })
+                ->collapseOnTablet(),
         ];
     }
 }
