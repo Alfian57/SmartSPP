@@ -34,21 +34,21 @@ class StudentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.nisn', 'like', '%' . $value . '%');
+                    $builder->where('students.nisn', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.name', 'like', '%' . $value . '%');
+                    $builder->where('students.name', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Kelas', 'classroom_name')
                 ->config([
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('classroom.name', 'like', '%' . $value . '%');
+                    $builder->where('classroom.name', 'like', '%'.$value.'%');
                 }),
             SelectFilter::make('Jenis Kelamin', 'gender')
                 ->options([

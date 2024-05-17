@@ -20,7 +20,6 @@ class DashboardController extends Controller
         $billCount = Bill::where('status', BillStatus::PAID_OFF->value)->count();
 
         return view('dashboard.pages.dashboard.index', [
-            'title' => 'Dashboard',
             'studentCount' => $studentCount,
             'classroomCount' => $classroomCount,
             'billCount' => $billCount,
@@ -29,9 +28,7 @@ class DashboardController extends Controller
 
     public function profile()
     {
-        return view('dashboard.pages.dashboard.profile', [
-            'title' => 'Profil',
-        ]);
+        return view('dashboard.pages.dashboard.profile');
     }
 
     public function changePassword(ChangePasswordRequest $request)
