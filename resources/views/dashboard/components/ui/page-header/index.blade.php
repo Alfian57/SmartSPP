@@ -12,7 +12,7 @@
             <nav class="breadcrumb-container" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('dashboard.index') }}" wire:navigate>
+                        <a href="{{ route('dashboard.index') }}">
                             <i class="ik ik-home"></i>
                         </a>
                     </li>

@@ -25,7 +25,7 @@ class StudentSeeder extends Seeder
             'date_of_birth' => '1990-01-01',
             'religion' => Religion::ISLAM->value,
             'orphan_status' => OrphanStatus::NONE->value,
-            'phone_number' => '1234567890',
+            'phone_number' => '0895363116378',
             'address' => '123 Main St',
             'classroom_id' => Classroom::inRandomOrder()->first()->id,
             'student_parent_id' => StudentParent::inRandomOrder()->first()->id,
@@ -43,6 +43,12 @@ class StudentSeeder extends Seeder
         Bill::factory(3)->create([
             'student_id' => $student->id,
             'discount' => $familyDiscount + $orphanDiscount,
+        ]);
+
+        $student = Student::factory()->create();
+        $student->account()->create([
+            'email' => 'kykyrizky57@gmail.com',
+            'password' => 'password',
         ]);
     }
 }

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         Classroom::factory(50)->create();
         Admin::factory(5)->create();
         StudentParent::factory(50)->create();
-        Student::factory(60)->create();
+        // Student::factory(60)->create();
 
         $this->call([
             AdminSeeder::class,

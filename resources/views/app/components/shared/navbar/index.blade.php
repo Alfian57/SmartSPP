@@ -21,7 +21,7 @@
                                     <li><a href="#our-advantages">Keunggulan Kami</a></li>
                                     <li><a href="#contact">Kontak</a></li>
                                     <li class="d-block d-lg-none">
-                                        <a href="{{ route('login') }}" wire:navigate>Login</a>
+                                        <a href="{{ route('login') }}">Login</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -35,7 +35,7 @@
                                     <span>{{ auth()->user()->email }}</span>
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" class="login" wire:navigate>
+                                <a href="{{ route('login') }}" class="login">
                                     <i class="flaticon-user"></i>
                                     <span>log in</span>
                                 </a>

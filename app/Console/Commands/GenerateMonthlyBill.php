@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\BillStatus;
 use App\Enums\OrphanStatus;
+use App\Jobs\SendMonthlyWhatsappBill;
 use App\Mail\MonthlyBillMail;
 use App\Models\Student;
 use Illuminate\Console\Command;
@@ -46,6 +47,8 @@ class GenerateMonthlyBill extends Command
             ]);
 
             Mail::to($student->account->email)->queue(new MonthlyBillMail($student->name, config('spp.nominal')));
+            SendMonthlyWhatsappBill::dispatch($student->phone_number);
+            SendMonthlyWhatsappBill::dispatch($student->studentParent->phone_number);
         });
     }
 }
