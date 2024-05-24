@@ -27,7 +27,7 @@ class StudentFactory extends Factory
             'date_of_birth' => $this->faker->date(),
             'religion' => $this->faker->randomElement(['islam', 'christianity', 'catholicism', 'hinduism', 'buddhism', 'confucianism']),
             'orphan_status' => $this->faker->randomElement(['orphan_both', 'orphan_father', 'orphan_mother', 'none']),
-            'phone_number' => $this->faker->phoneNumber,
+            'phone_number' => $this->faker->numerify('############'),
             'address' => $this->faker->address,
             'classroom_id' => function () {
                 return \App\Models\Classroom::inRandomOrder()->first()->id;
@@ -45,12 +45,12 @@ class StudentFactory extends Factory
             $student->account()->save($account);
 
             // Seed the bills
-            $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
-            Bill::factory(3)->create([
-                'student_id' => $student->id,
-                'discount' => $familyDiscount + $orphanDiscount,
-            ]);
+            // $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
+            // $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            // Bill::factory(3)->create([
+            //     'student_id' => $student->id,
+            //     'discount' => $familyDiscount + $orphanDiscount,
+            // ]);
         });
     }
 }

@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Admin;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -31,6 +33,21 @@ class AdminTable extends DataTableComponent
                     $builder->where('admins.name', 'like', '%'.$value.'%');
                 }),
         ];
+    }
+
+    public array $bulkActions = [
+        'deleteSelected' => 'Hapus',
+    ];
+
+    public function deleteSelected()
+    {
+        Admin::whereIn('id', $this->getSelected())->get()->each(function ($admin) {
+            if ($admin->account->profile_pic) {
+                Storage::delete($admin->account->profile_pic);
+            }
+        });
+
+        Admin::whereIn('id', $this->getSelected())->whereNot('id', Auth::user()->accountable->id)->delete();
     }
 
     public function builder(): Builder

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Account;
+use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,7 @@ class StudentParentFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'phone_number' => $this->faker->phoneNumber,
+            'phone_number' => $this->faker->numerify('############'),
         ];
     }
 
@@ -29,6 +30,10 @@ class StudentParentFactory extends Factory
         return $this->afterCreating(function (StudentParent $studentParent) {
             $account = Account::factory()->makeOne();
             $studentParent->account()->save($account);
+
+            Student::factory(rand(1, 3))->create([
+                'student_parent_id' => $studentParent->id,
+            ]);
         });
     }
 }

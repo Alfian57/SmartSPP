@@ -54,3 +54,5 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::get('bill-informations/{bill}', [BillInformationController::class, 'show'])->name('bill-informations.show');
     });
 });
+
+Route::view('test', 'test');

@@ -37,18 +37,12 @@ class StudentSeeder extends Seeder
         ]);
 
         // Seed the bills
-        $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-        $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+        // $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
+        // $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
-        Bill::factory(3)->create([
-            'student_id' => $student->id,
-            'discount' => $familyDiscount + $orphanDiscount,
-        ]);
-
-        $student = Student::factory()->create();
-        $student->account()->create([
-            'email' => 'kykyrizky57@gmail.com',
-            'password' => 'password',
-        ]);
+        // Bill::factory(3)->create([
+        //     'student_id' => $student->id,
+        //     'discount' => $familyDiscount + $orphanDiscount,
+        // ]);
     }
 }
