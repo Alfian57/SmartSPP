@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('nominal');
+            $table->unsignedBigInteger('nominal')->nullable();
             $table->string('transfer_file');
             $table->enum('status', ['validated', 'unvalidated', 'pending'])->default('pending');
             $table->foreignUuid('bill_id')->references('id')->on('bills')->cascadeOnDelete();

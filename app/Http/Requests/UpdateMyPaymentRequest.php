@@ -22,7 +22,6 @@ class UpdateMyPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nominal' => ['required', 'integer'],
             'transfer_file' => ['file', 'image', 'max:10240'],
         ];
     }

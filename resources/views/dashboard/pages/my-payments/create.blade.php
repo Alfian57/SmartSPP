@@ -17,9 +17,6 @@
             enctype="multipart/form-data">
             @csrf
 
-            <x-dashboard::ui.input type="number" label="Nominal" name="nominal" value="{{ old('nominal') }}"
-                placeholder="Masukan Nominal Pembayaran" required />
-
             <x-dashboard::ui.input type="file" label="File Transfer" name="transfer_file" required />
 
             <div class="d-flex justify-content-end">

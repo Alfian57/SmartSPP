@@ -4,11 +4,9 @@
     </a>
 
     @if ($status != 'validated')
-        <form action="{{ route('dashboard.payments.accept', $id) }}" method="post" class="mx-1">
+        <form action="{{ route('dashboard.payments.accept', $id) }}" method="get" class="mx-1">
             @csrf
-            <button type="submit" class="btn btn-success"
-                onclick="return confirmation(event, 'Apakah anda ingin menerima pembayaran ini?')"
-                href="">Terima</button>
+            <button type="submit" class="btn btn-success" href="">Terima</button>
         </form>
     @endif
 

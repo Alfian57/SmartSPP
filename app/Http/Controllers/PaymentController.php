@@ -6,6 +6,7 @@ use App\Enums\BillStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Bill;
 use App\Models\Payment;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -27,8 +28,19 @@ class PaymentController extends Controller
 
     public function accept(Payment $payment)
     {
+        return view('dashboard.pages.payments.accept', [
+            'payment' => $payment,
+        ]);
+    }
+
+    public function acceptProcess(Request $request, Payment $payment)
+    {
+        $request->validate([
+            'nominal' => 'required|numeric',
+        ]);
         $payment->update([
             'status' => PaymentStatus::VALIDATED->value,
+            'nominal' => $request->nominal,
         ]);
 
         $this->checkBillStatus($payment->bill);

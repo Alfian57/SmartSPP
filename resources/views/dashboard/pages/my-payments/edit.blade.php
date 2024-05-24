@@ -10,20 +10,22 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card title="Form Data Pembayaran">
+
+        <x-dashboard::shared.modal.payment />
+
         <form action="{{ route('dashboard.my-bills.payments.update', [$bill->id, $payment->id]) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <x-dashboard::ui.input type="number" label="Nominal" name="nominal"
-                value="{{ old('nominal', $payment->nominal) }}" placeholder="Masukan Nominal Pembayaran" required />
-
-
             <x-dashboard::ui.input type="file" label="File Transfer" name="transfer_file" required>
-                <div style="width: 100px" class="text-danger mb-3 text-nowrap">
-                    <img src="{{ asset('storage/' . $payment->transfer_file) }}" alt="Bukti tidak dapat ditampilkan"
-                        class="img-fluid">
-                </div>
+                <x-slot name="body">
+                    <div style="width: 150px" class="text-danger mb-3 text-nowrap">
+                        <img src="{{ asset('storage/' . $payment->transfer_file) }}" alt="Bukti tidak dapat ditampilkan"
+                            class="img-fluid">
+                    </div>
+                </x-slot>
+
             </x-dashboard::ui.input>
             <p class="text-info">Note: Kosongkan jika tidak ingin mengupdate</p>
 

@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\RequestException;
 
 class SendMonthlyWhatsappBill implements ShouldQueue
 {
@@ -43,11 +45,24 @@ class SendMonthlyWhatsappBill implements ShouldQueue
                 'message' => 'Bayar woi',
             ],
             CURLOPT_HTTPHEADER => [
-                'Authorization: '.env('FONNTE_TOKEN'),
+                'Authorization: ' . env('FONNTE_TOKEN'),
             ],
         ]);
 
         curl_exec($curl);
         curl_close($curl);
+
+        // try {
+        //     $response = Http::withHeaders([
+        //         'Authorization' => env('FONNTE_TOKEN'),
+        //     ])->post('https://api.fonnte.com/send', [
+        //         'target' => $this->phoneNumber,
+        //         'message' => 'Bayar woi',
+        //     ]);
+
+        //     $response->throw();
+        // } catch (RequestException $e) {
+        //     throw new \Exception("Gagal mengirim pesan: " . $e->getMessage());
+        // }
     }
 }
