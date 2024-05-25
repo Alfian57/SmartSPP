@@ -31,7 +31,7 @@ class BillPolicy
             return false;
         }
 
-        return $account->accountable->id === $bill->student->student_parent_id;
+        return $account->accountable->id === $bill->student->id;
     }
 
     public function edit(Account $account, Bill $bill): bool
@@ -40,7 +40,7 @@ class BillPolicy
             return false;
         }
 
-        return $account->accountable->id === $bill->student->student_parent_id;
+        return $account->accountable->id === $bill->student->id;
     }
 
     public function delete(Account $account, Bill $bill): bool
@@ -49,6 +49,6 @@ class BillPolicy
             return false;
         }
 
-        return $account->accountable->id === $bill->student->student_parent_id;
+        return $account->accountable->id === $bill->student->id;
     }
 }

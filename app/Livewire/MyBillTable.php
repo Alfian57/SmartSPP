@@ -5,8 +5,8 @@ namespace App\Livewire;
 use App\Enums\PaymentStatus;
 use App\Helpers\Month;
 use App\Models\Bill;
-use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -14,8 +14,6 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 class MyBillTable extends DataTableComponent
 {
     protected $model = Bill::class;
-
-    public Student $student;
 
     public function configure(): void
     {
@@ -52,7 +50,7 @@ class MyBillTable extends DataTableComponent
                     array_merge(
                         ['' => 'Pilih'],
                         Bill::query()
-                            ->where('student_id', $this->student->id)
+                            ->where('student_id', Auth::user()->accountable->id)
                             ->distinct('school_year')
                             ->pluck('school_year', 'school_year')
                             ->toArray()
@@ -67,7 +65,7 @@ class MyBillTable extends DataTableComponent
     public function builder(): Builder
     {
         return Bill::query()
-            ->where('student_id', $this->student->id)
+            ->where('student_id', Auth::user()->accountable->id)
             ->addSelect([
                 'total_paid' => function ($query) {
                     $query->selectRaw('SUM(nominal) as total_paid')

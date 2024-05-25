@@ -49,17 +49,17 @@
 
                 @if (auth()->user()->role() === \App\Enums\Role::STUDENT_PARENT->value)
                     <div class="nav-lavel">Manajemen Pembayaran</div>
-                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.bill-informations.index') }}">
                         <x-dashboard::icons.bill />
-                        <span>Tagihan Saya</span>
+                        <span>Informasi Tagihan</span>
                     </x-dashboard::shared.sidebar.item>
                 @endif
 
                 @if (auth()->user()->role() === \App\Enums\Role::STUDENT->value)
                     <div class="nav-lavel">Manajemen Pembayaran</div>
-                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.bill-informations.index') }}">
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.my-bills.index') }}">
                         <x-dashboard::icons.bill />
-                        <span>Informasi Tagihan</span>
+                        <span>Tagihan Saya</span>
                     </x-dashboard::shared.sidebar.item>
                 @endif
             </nav>

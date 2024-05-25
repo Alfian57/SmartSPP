@@ -46,14 +46,12 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
     });
 
     Route::middleware('role:student_parent')->group(function () {
-        Route::get('/my-bills', [MyBillController::class, 'index'])->name('my-bills.index');
-        Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ['as' => 'my-bills']);
-    });
-
-    Route::middleware('role:student')->group(function () {
         Route::get('bill-informations', [BillInformationController::class, 'index'])->name('bill-informations.index');
         Route::get('bill-informations/{bill}', [BillInformationController::class, 'show'])->name('bill-informations.show');
     });
-});
 
-Route::view('test', 'test');
+    Route::middleware('role:student')->group(function () {
+        Route::get('/my-bills', [MyBillController::class, 'index'])->name('my-bills.index');
+        Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ['as' => 'my-bills']);
+    });
+});
