@@ -91,6 +91,9 @@ Ensure you have installed and configured the above prerequisites before proceedi
     FONNTE_TOKEN=
     ```
 
+    for documnetation you can open this url
+    [here](https://scribehow.com/shared/Mengganti_Fontee_Token_pada_aplikasi_SmartSPP__nExLP-OTSuaeWvSO50TYXw)
+
 8. **Run Local Server, Queue Worker, and Scheduler**
 
     Open three separate terminals or command prompts. In the first terminal, run the following command to start the local server:
