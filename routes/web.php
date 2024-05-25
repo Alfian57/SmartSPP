@@ -34,7 +34,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::resource('/classrooms', ClassroomController::class)->except('show');
         Route::resource('/student-parents', StudentParentController::class)->except('show');
 
-        Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+        Route::resource('/payments', PaymentController::class)->only('index', 'create', 'store');
         Route::post('/payments/{payment}/reject', [PaymentController::class, 'reject'])->name('payments.reject');
         Route::get('/payments/{payment}/accept', [PaymentController::class, 'accept'])->name('payments.accept');
         Route::post('/payments/{payment}/accept', [PaymentController::class, 'acceptProcess'])->name('payments.accept.process');

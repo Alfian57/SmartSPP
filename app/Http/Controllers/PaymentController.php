@@ -4,15 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Enums\BillStatus;
 use App\Enums\PaymentStatus;
+use App\Http\Requests\AcceptPaymentRequest;
+use App\Http\Requests\StorePaymentRequest;
 use App\Models\Bill;
 use App\Models\Payment;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     public function index()
     {
         return view('dashboard.pages.payments.index');
+    }
+
+    public function create()
+    {
+        return view('dashboard.pages.payments.create');
+    }
+
+    public function store(StorePaymentRequest $request)
+    {
+        $validatedData = $request->validated();
+        if ($request->transfer_file) {
+            $validatedData['transfer_file'] = $request->file('transfer_file')->store('payments_transfer_files');
+        }
+        Payment::create($validatedData);
+        toast('Pembayaran berhasil ditambahkan', 'success');
+
+        return redirect()->route('dashboard.payments.index');
     }
 
     public function reject(Payment $payment)
@@ -33,11 +51,8 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function acceptProcess(Request $request, Payment $payment)
+    public function acceptProcess(AcceptPaymentRequest $request, Payment $payment)
     {
-        $request->validate([
-            'nominal' => 'required|numeric',
-        ]);
         $payment->update([
             'status' => PaymentStatus::VALIDATED->value,
             'nominal' => $request->nominal,
