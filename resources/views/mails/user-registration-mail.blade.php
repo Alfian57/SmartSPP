@@ -16,8 +16,8 @@
     <p>Ingatlah untuk menjaga kredensial ini tetap aman dan jangan bagikan kepada siapapun untuk menjaga keamanan akun Anda.
     </p>
     <p>Jika Anda memiliki pertanyaan atau butuh bantuan, jangan ragu untuk menghubungi tim dukungan kami di <a
-            href="mailto:{{ env('MAIL_FROM_ADDRESS') }}"
-            style="color: #007bff; text-decoration: none;">{{ env('MAIL_FROM_ADDRESS') }}</a> dan
+            href="mailto:pembayaran_spp@gmail.com" style="color: #007bff; text-decoration: none;">pembayaran_spp@gmail.com</a>
+        dan
         kami akan
         senang membantu Anda.</p>
     <br>
