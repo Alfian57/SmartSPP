@@ -15,10 +15,13 @@ class ClassroomSeeder extends Seeder
         $grades = ['IX', 'X', 'XI'];
         $sections = ['A', 'B', 'C', 'D', 'E', 'F'];
 
+        $sppPrice = [200000, 300000, 400000];
+
         foreach ($grades as $grade) {
             foreach ($sections as $section) {
                 Classroom::create([
                     'name' => "$grade-$section",
+                    'spp_price' => $sppPrice[array_rand($sppPrice)],
                 ]);
             }
         }

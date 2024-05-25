@@ -24,6 +24,7 @@ class UpdateClassroomRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100', Rule::unique('classrooms')->ignore($this->classroom->id)],
+            'spp_price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

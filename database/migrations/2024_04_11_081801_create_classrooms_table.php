@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 100)->unique();
+            $table->unsignedBigInteger('spp_price');
             $table->timestamps();
         });
     }

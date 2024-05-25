@@ -23,6 +23,7 @@ class StoreClassroomRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:100', 'unique:classrooms'],
+            'spp_price' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

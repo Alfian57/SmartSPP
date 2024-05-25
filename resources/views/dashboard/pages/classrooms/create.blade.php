@@ -14,6 +14,9 @@
             <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name') }}"
                 placeholder="Masukan Nama Kelas" required />
 
+            <x-dashboard::ui.input label="Harga SPP" name="spp_price" value="{{ old('spp_price') }}"
+                placeholder="Masukan Harga SPP" required />
+
             <div class="d-flex justify-content-end">
                 <x-dashboard::ui.button type="submit">
                     Kirim

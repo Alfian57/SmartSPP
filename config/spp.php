@@ -17,10 +17,4 @@ return [
     // The time for monthly payment
     // Example: 00:01 (Payment will be made every month at 00:01)
     'payment_time' => '00:01',
-
-    // payment credentials owned by the school
-    'payment_credentials' => [
-        'payment_destination' => env('SPP_PAYMENT_DESTINATION'),
-        'payment_type' => env('SPP_PAYMENT_TYPE'),
-    ],
 ];

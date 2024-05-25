@@ -56,6 +56,14 @@ class ClassroomTable extends DataTableComponent
                 ->sortable()
                 ->secondaryHeaderFilter('classroom_name'),
 
+            Column::make('Nama Kelas', 'spp_price')
+                ->sortable()
+                ->label(function ($row) {
+                    return view('datatable.classrooms.spp-price-column', [
+                        'price' => $row->spp_price,
+                    ]);
+                }),
+
             Column::make('Jumlah Siswa')
                 ->sortable()
                 ->label(function ($row) {

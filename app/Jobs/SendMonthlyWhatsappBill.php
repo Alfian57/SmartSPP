@@ -16,12 +16,15 @@ class SendMonthlyWhatsappBill implements ShouldQueue
 
     private string $phoneNumber;
 
+    private $price;
+
     /**
      * Create a new job instance.
      */
-    public function __construct(string $phoneNumber)
+    public function __construct(string $phoneNumber, $price)
     {
         $this->phoneNumber = $phoneNumber;
+        $this->price = $price;
     }
 
     /**
@@ -34,7 +37,7 @@ class SendMonthlyWhatsappBill implements ShouldQueue
                 'Authorization' => env('FONNTE_TOKEN'),
             ])->post('https://api.fonnte.com/send', [
                 'target' => $this->phoneNumber,
-                'message' => 'Bayar woi',
+                'message' => 'Halo, ini adalah tagihan bulanan sekolah. Silakan segera membayar tagihan sebesar Rp. '.number_format($this->price, 2).'. Terima kasih.',
             ]);
 
             $response->throw();
