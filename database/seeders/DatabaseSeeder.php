@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
         ]);
 
-        Admin::factory(2)->create();
-        StudentParent::factory(20)->create();
+        // Admin::factory(2)->create();
+        // StudentParent::factory(20)->create();
 
         $this->generateBill();
     }
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
             $student->bills()->create([
-                'nominal' => config('spp.nominal'),
+                'nominal' => $student->classroom->spp_price,
                 'month' => now()->format('F'),
                 'school_year' => $firstYear.'/'.$secondYear,
                 'discount' => $familyDiscount + $orphanDiscount,

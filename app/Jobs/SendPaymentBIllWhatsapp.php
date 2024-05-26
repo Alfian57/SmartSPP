@@ -9,19 +9,24 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendMonthlyWhatsappBill implements ShouldQueue
+class SendPaymentBIllWhatsapp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $phones;
+    private Student $student;
+
+    private int $nominal;
+
+    private int $remainingAmount;
 
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(Student $student, int $nominal, int $remainingAmount)
     {
-        $students = Student::pluck('phone_number')->toArray();
-        $this->phones = implode(',', $students);
+        $this->student = $student;
+        $this->nominal = $nominal;
+        $this->remainingAmount = $remainingAmount;
     }
 
     /**
@@ -29,19 +34,22 @@ class SendMonthlyWhatsappBill implements ShouldQueue
      */
     public function handle(): void
     {
-        $message = <<<'EOT'
-            REMINDER 🌟
-            
-            Halo! Ini adalah pengingat ramah. Kami ingin mengingatkan Anda bahwa pembayaran SPP bulanan untuk bulan ini sudah bisa dibayarkan.
-            
-            📅 Waktu Pembayaran: 1 Bulan 
-            💳 Cara Pembayaran: Transfer Bank dan Gopay
-            
-            Pastikan pembayaran dilakukan tepat waktu untuk menjaga kelancaran proses belajar mengajar. Jika Anda membutuhkan bantuan atau informasi lebih lanjut, jangan ragu untuk menghubungi admin kami.
-            Terima kasih atas perhatian dan kerjasamanya.
-            
-            Salam hangat,
-            Tim Administrasi
+        $formattedNominal = number_format($this->nominal, 2);
+        $formattedRemainingAmount = number_format($this->remainingAmount, 2);
+
+        $message = <<<EOT
+        Halo, tagihan bulanan berhasil dibayarkan.
+
+        Berikut adalah rincian pembayaran:
+        - NISN          : {$this->student->nisn}
+        - Nama          : {$this->student->name}
+        - Kelas         : {$this->student->classroom->name}
+        - Bulan         : {$this->student->bills->last()->month}
+        - Tahun         : {$this->student->bills->last()->school_year}
+        - Nominal       : Rp. {$formattedNominal}
+        - Sisa Tagihan  : Rp. {$formattedRemainingAmount}
+
+        Terima kasih.
         EOT;
 
         $curl = curl_init();
@@ -55,10 +63,9 @@ class SendMonthlyWhatsappBill implements ShouldQueue
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => [
-                'target' => $this->phones,
+                'target' => $this->student->phone_number,
                 'message' => $message,
-                'delay' => '10',
-                'countryCode' => '62',
+                'countryCode' => '62', //optional
             ],
             CURLOPT_HTTPHEADER => [
                 'Authorization: '.env('FONNTE_TOKEN'),

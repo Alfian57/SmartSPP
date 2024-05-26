@@ -31,7 +31,7 @@ class GenerateMonthlyBill extends Command
      */
     public function handle()
     {
-        Student::all()->each(function ($student) {
+        Student::all()->each(function ($student) use (&$loop) {
             $firstYear = now()->format('m') <= 6 ? now()->format('Y') - 1 : now()->format('Y');
             $secondYear = now()->format('m') <= 6 ? now()->format('Y') : now()->format('Y') + 1;
 
@@ -48,8 +48,8 @@ class GenerateMonthlyBill extends Command
 
             $price = $student->classroom->spp_price - $familyDiscount - $orphanDiscount;
             Mail::to($student->account->email)->queue(new MonthlyBillMail($student->name, $price));
-            SendMonthlyWhatsappBill::dispatch($student->phone_number, $price);
-            SendMonthlyWhatsappBill::dispatch($student->studentParent->phone_number, $price);
         });
+
+        SendMonthlyWhatsappBill::dispatch();
     }
 }

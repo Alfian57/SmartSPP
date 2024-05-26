@@ -6,6 +6,7 @@ use App\Enums\BillStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Requests\AcceptPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
+use App\Jobs\SendPaymentBIllWhatsapp;
 use App\Models\Bill;
 use App\Models\Payment;
 
@@ -60,6 +61,7 @@ class PaymentController extends Controller
 
         $this->checkBillStatus($payment->bill);
 
+        SendPaymentBIllWhatsapp::dispatch($payment->bill->student, $request->nominal, $this->getRemainingAmount($payment->bill));
         toast('Berhasil menyetujui pembayaran', 'success');
 
         return redirect()->route('dashboard.payments.index');
@@ -67,15 +69,20 @@ class PaymentController extends Controller
 
     private function checkBillStatus(Bill $bill)
     {
+        if ($this->getRemainingAmount($bill) <= 0) {
+            $bill->update([
+                'status' => BillStatus::PAID_OFF->value,
+            ]);
+        }
+    }
+
+    private function getRemainingAmount(Bill $bill): int
+    {
         $totalPaid = Payment::query()
             ->where('bill_id', $bill->id)
             ->where('status', PaymentStatus::VALIDATED->value)
             ->sum('nominal');
 
-        if ($bill->nominal - $totalPaid - $bill->discount <= 0) {
-            $bill->update([
-                'status' => BillStatus::PAID_OFF->value,
-            ]);
-        }
+        return $bill->nominal - $totalPaid - $bill->discount;
     }
 }
