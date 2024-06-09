@@ -1,5 +1,5 @@
 @section('title')
-    Manajemen
+    {{ $title }}
 @endsection
 
 <x-dashboard-layouts::main>

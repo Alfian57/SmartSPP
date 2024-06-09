@@ -12,13 +12,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
-                        @if (auth()->user()->profile_pic)
-                            <img src="{{ asset('storage/' . auth()->user()->profile_pic) }}" class="rounded-circle"
+                        @if (auth()->user()->foto_profil)
+                            <img src="{{ asset('storage/' . auth()->user()->foto_profil) }}" class="rounded-circle"
                                 width="150" />
                         @else
                             <img src="/dashboard/img/avatar.png" class="rounded-circle" width="150" />
                         @endif
-                        <h4 class="card-title mt-10">{{ auth()->user()->accountable->name }}</h4>
+                        <h4 class="card-title mt-10">{{ auth()->user()->accountable->nama }}</h4>
                         <p class="card-subtitle">Bergabung pada {{ auth()->user()->created_at }}</p>
                     </div>
                 </div>
@@ -29,12 +29,12 @@
 
                     @if (auth()->user()->role() !== \App\Enums\Role::ADMIN->value)
                         <small class="text-muted d-block pt-10">Phone</small>
-                        <h6>{{ auth()->user()->accountable->phone_number }}</h6>
+                        <h6>{{ auth()->user()->accountable->no_telepon }}</h6>
                     @endif
 
                     @if (auth()->user()->role() === \App\Enums\Role::STUDENT->value)
                         <small class="text-muted d-block pt-10">Address</small>
-                        <h6>{{ auth()->user()->accountable->address }}</h6>
+                        <h6>{{ auth()->user()->accountable->alamat }}</h6>
                     @endif
                 </div>
             </div>
@@ -74,7 +74,7 @@
                             <form action="{{ route('dashboard.change-profile') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
-                                <x-dashboard::ui.input label="Masukan Foto" type="file" name="profile_pic"
+                                <x-dashboard::ui.input label="Masukan Foto" type="file" name="foto_profil"
                                     required />
                                 <button class="btn btn-success"" type="submit">Ganti Foto</button>
                             </form>

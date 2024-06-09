@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         DB::transaction(function () use ($request) {
             $admin = Admin::create($request->except('email'));
-            OnAccountCreated::dispatch($request->name, $request->email, $admin);
+            OnAccountCreated::dispatch($request->nama, $request->email, $admin);
         });
 
         toast('Admin berhasil dibuat', 'success');

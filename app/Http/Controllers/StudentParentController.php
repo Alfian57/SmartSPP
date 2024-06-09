@@ -24,7 +24,7 @@ class StudentParentController extends Controller
     {
         DB::transaction(function () use ($request) {
             $studentParent = StudentParent::create($request->except('email'));
-            OnAccountCreated::dispatch($request->name, $request->email, $studentParent);
+            OnAccountCreated::dispatch($request->nama, $request->email, $studentParent);
         });
 
         toast('Orang Tua berhasil dibuat', 'success');

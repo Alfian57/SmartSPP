@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum PaymentStatus: string
 {
-    case PENDING = 'pending';
-    case VALIDATED = 'validated';
-    case UNVALIDATED = 'unvalidated';
+    case PENDING = 'menunggu-validasi';
+    case VALIDATED = 'tervalidasi';
+    case UNVALIDATED = 'belum-tervalidasi';
 }

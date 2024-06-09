@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_parents', function (Blueprint $table) {
+        Schema::create('orang_tua', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name', 100);
-            $table->string('phone_number', 25);
+            $table->string('nama', 100);
+            $table->string('no_telepon', 25);
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_parents');
+        Schema::dropIfExists('orang_tua');
     }
 };

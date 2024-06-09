@@ -14,7 +14,7 @@ class AccountEmailListener
     public function handle(OnAccountCreated $event): void
     {
         Mail::to($event->email)->queue(new UserRegistrationMail(
-            $event->name,
+            $event->nama,
             $event->email,
             $event->password,
         ));

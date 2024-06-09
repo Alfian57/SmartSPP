@@ -14,13 +14,15 @@ class Bill extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'tagihan';
+
     public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'id_siswa');
     }
 
     public function payments(): HasMany
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class, 'id_tagihan');
     }
 }

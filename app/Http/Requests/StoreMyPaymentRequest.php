@@ -22,7 +22,7 @@ class StoreMyPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transfer_file' => ['required', 'file', 'image', 'max:10240'],
+            'bukti_transfer' => ['required', 'file', 'image', 'max:10240'],
         ];
     }
 }

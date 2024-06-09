@@ -20,7 +20,7 @@ class SendMonthlyWhatsappBill implements ShouldQueue
      */
     public function __construct()
     {
-        $students = Student::pluck('phone_number')->toArray();
+        $students = Student::pluck('no_telepon')->toArray();
         $this->phones = implode(',', $students);
     }
 

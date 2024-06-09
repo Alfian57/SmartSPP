@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $admin = Admin::create([
-            'name' => 'Alfian Gading Saputra',
+            'nama' => 'Alfian Gading Saputra',
         ]);
 
         $admin->account()->create([

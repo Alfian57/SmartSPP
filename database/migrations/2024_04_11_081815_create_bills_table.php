@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bills', function (Blueprint $table) {
+        Schema::create('tagihan', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('nominal');
-            $table->enum('month', ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']);
-            $table->string('school_year', 10);
-            $table->unsignedBigInteger('discount')->default(0);
-            $table->foreignUuid('student_id')->references('id')->on('students')->cascadeOnDelete();
-            $table->enum('status', ['paid-off', 'not-paid-off'])->default('not-paid-off');
+            $table->enum('bulan', ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']);
+            $table->string('tahun_ajaran', 10);
+            $table->unsignedBigInteger('diskon')->default(0);
+            $table->foreignUuid('id_siswa')->references('id')->on('siswa')->cascadeOnDelete();
+            $table->enum('status', ['dibayar', 'belum-dibayar'])->default('belum-dibayar');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bills');
+        Schema::dropIfExists('tagihan');
     }
 };

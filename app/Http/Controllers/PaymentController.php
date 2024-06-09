@@ -24,11 +24,9 @@ class PaymentController extends Controller
 
     public function store(StorePaymentRequest $request)
     {
-        $validatedData = $request->validated();
-        if ($request->transfer_file) {
-            $validatedData['transfer_file'] = $request->file('transfer_file')->store('payments_transfer_files');
-        }
-        Payment::create($validatedData);
+        $data = $request->validated();
+        $data['status'] = PaymentStatus::VALIDATED->value;
+        Payment::create($data);
         toast('Pembayaran berhasil ditambahkan', 'success');
 
         return redirect()->route('dashboard.payments.index');
@@ -79,7 +77,7 @@ class PaymentController extends Controller
     private function getRemainingAmount(Bill $bill): int
     {
         $totalPaid = Payment::query()
-            ->where('bill_id', $bill->id)
+            ->where('id_tagihan', $bill->id)
             ->where('status', PaymentStatus::VALIDATED->value)
             ->sum('nominal');
 

@@ -20,8 +20,8 @@ class StudentParentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'phone_number' => $this->faker->numerify('############'),
+            'nama' => $this->faker->name,
+            'no_telepon' => $this->faker->numerify('############'),
         ];
     }
 
@@ -32,7 +32,7 @@ class StudentParentFactory extends Factory
             $studentParent->account()->save($account);
 
             Student::factory(rand(1, 3))->create([
-                'student_parent_id' => $studentParent->id,
+                'id_orang_tua' => $studentParent->id,
             ]);
         });
     }

@@ -5,9 +5,9 @@ namespace App\Enums;
 enum Religion: string
 {
     case ISLAM = 'islam';
-    case CHRISTIANITY = 'christianity';
-    case CATHOLICISM = 'catholicism';
-    case HINDUISM = 'hinduism';
-    case BUDDHISM = 'buddhism';
-    case CONFUCIANISM = 'confucianism';
+    case CHRISTIANITY = 'kristen';
+    case CATHOLICISM = 'katholik';
+    case HINDUISM = 'hindu';
+    case BUDDHISM = 'budha';
+    case CONFUCIANISM = 'konghuchu';
 }

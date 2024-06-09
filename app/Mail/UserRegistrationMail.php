@@ -23,7 +23,7 @@ class UserRegistrationMail extends Mailable
      */
     public function __construct(string $name, string $email, string $password)
     {
-        $this->name = $name;
+        $this->nama = $name;
         $this->email = $email;
         $this->password = $password;
     }
@@ -46,7 +46,7 @@ class UserRegistrationMail extends Mailable
         return new Content(
             markdown: 'mails.user-registration-mail',
             with: [
-                'name' => $this->name,
+                'nama' => $this->nama,
                 'email' => $this->email,
                 'password' => $this->password,
             ]

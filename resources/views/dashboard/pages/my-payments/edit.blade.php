@@ -1,5 +1,5 @@
 @section('title')
-    Manajemen
+    {{ $title }}
 @endsection
 
 <x-dashboard-layouts::main>
@@ -18,11 +18,11 @@
             @csrf
             @method('PUT')
 
-            <x-dashboard::ui.input type="file" label="File Transfer" name="transfer_file" required>
+            <x-dashboard::ui.input type="file" label="File Transfer" name="bukti_transfer" required>
                 <x-slot name="body">
                     <div style="width: 150px" class="text-danger mb-3 text-nowrap">
-                        <img src="{{ asset('storage/' . $payment->transfer_file) }}" alt="Bukti tidak dapat ditampilkan"
-                            class="img-fluid">
+                        <img src="{{ asset('storage/' . $payment->bukti_transfer) }}"
+                            alt="Bukti tidak dapat ditampilkan" class="img-fluid">
                     </div>
                 </x-slot>
 

@@ -1,5 +1,5 @@
 @section('title')
-    Manajemen
+    {{ $title }}
 @endsection
 
 <x-dashboard-layouts::main>
@@ -17,7 +17,7 @@
             enctype="multipart/form-data">
             @csrf
 
-            <x-dashboard::ui.input type="file" label="File Transfer" name="transfer_file" required />
+            <x-dashboard::ui.input type="file" label="File Transfer" name="bukti_transfer" required />
 
             <div class="d-flex justify-content-end">
                 <x-dashboard::ui.button type="submit">

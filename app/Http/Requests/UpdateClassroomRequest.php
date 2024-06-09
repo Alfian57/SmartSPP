@@ -23,8 +23,8 @@ class UpdateClassroomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', Rule::unique('classrooms')->ignore($this->classroom->id)],
-            'spp_price' => ['required', 'numeric', 'min:0'],
+            'nama' => ['required', 'string', 'max:100', Rule::unique('kelas')->ignore($this->classroom->id)],
+            'harga_spp' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

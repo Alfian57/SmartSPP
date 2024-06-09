@@ -42,8 +42,8 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
 
         Berikut adalah rincian pembayaran:
         - NISN          : {$this->student->nisn}
-        - Nama          : {$this->student->name}
-        - Kelas         : {$this->student->classroom->name}
+        - Nama          : {$this->student->nama}
+        - Kelas         : {$this->student->classroom->nama}
         - Bulan         : {$this->student->bills->last()->month}
         - Tahun         : {$this->student->bills->last()->school_year}
         - Nominal       : Rp. {$formattedNominal}
@@ -63,7 +63,7 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => [
-                'target' => $this->student->phone_number,
+                'target' => $this->student->no_telepon,
                 'message' => $message,
                 'countryCode' => '62', //optional
             ],

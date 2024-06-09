@@ -22,8 +22,8 @@ class BillFactory extends Factory
     {
         return [
             'nominal' => config('spp.nominal'),
-            'month' => $this->faker->randomElement(['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']),
-            'school_year' => $this->faker->randomElement(['2018/2019', '2019/2020', '2020/2021', '2021/2022', '2022/2023']),
+            'bulan' => $this->faker->randomElement(['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']),
+            'tahun_ajaran' => $this->faker->randomElement(['2018/2019', '2019/2020', '2020/2021', '2021/2022', '2022/2023']),
         ];
     }
 
@@ -31,7 +31,7 @@ class BillFactory extends Factory
     {
         return $this->afterCreating(function (Bill $bill) {
             Payment::factory(5)->create([
-                'bill_id' => $bill->id,
+                'id_tagihan' => $bill->id,
             ]);
 
             if ($bill->payments->where('status', PaymentStatus::VALIDATED->value)->sum('nominal') >= $bill->nominal) {

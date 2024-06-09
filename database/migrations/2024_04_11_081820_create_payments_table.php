@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('pembayaran', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('nominal')->nullable();
-            $table->string('transfer_file');
-            $table->enum('status', ['validated', 'unvalidated', 'pending'])->default('pending');
-            $table->foreignUuid('bill_id')->references('id')->on('bills')->cascadeOnDelete();
+            $table->string('bukti_transfer')->nullable();
+            $table->enum('status', ['tervalidasi', 'belum-tervalidasi', 'menunggu-validasi'])->default('menunggu-validasi');
+            $table->foreignUuid('id_tagihan')->references('id')->on('tagihan')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('pembayaran');
     }
 };

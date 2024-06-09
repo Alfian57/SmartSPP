@@ -15,7 +15,7 @@ class SelectBillForm extends Component
 
     public function mount()
     {
-        $this->studentOptions = Student::pluck('name', 'id');
+        $this->studentOptions = Student::pluck('nama', 'id');
         $this->billOptions = [];
     }
 
@@ -25,7 +25,7 @@ class SelectBillForm extends Component
 
         $student = Student::find($studentId);
         $student->bills->map(function ($bill) {
-            $label = $bill->school_year.' | '.$bill->month.' | '.($bill->nominal - $bill->discount);
+            $label = $bill->tahun_ajaran.' | '.$bill->bulan.' | '.($bill->nominal - $bill->diskon);
             $this->billOptions[$bill->id] = $label;
         })->toArray();
     }

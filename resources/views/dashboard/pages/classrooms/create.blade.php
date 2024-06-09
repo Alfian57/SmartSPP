@@ -11,10 +11,10 @@
     <x-dashboard::ui.card title="Form Data Kelas">
         <form action="{{ route('dashboard.classrooms.store') }}" method="POST">
             @csrf
-            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name') }}"
+            <x-dashboard::ui.input label="Nama" name="nama" value="{{ old('nama') }}"
                 placeholder="Masukan Nama Kelas" required />
 
-            <x-dashboard::ui.input label="Harga SPP" name="spp_price" value="{{ old('spp_price') }}"
+            <x-dashboard::ui.input label="Harga SPP" name="harga_spp" value="{{ old('harga_spp') }}"
                 placeholder="Masukan Harga SPP" required />
 
             <div class="d-flex justify-content-end">

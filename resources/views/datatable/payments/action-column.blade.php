@@ -3,14 +3,14 @@
         Lihat Bukti
     </a>
 
-    @if ($status != 'validated')
+    @if ($status != 'tervalidasi')
         <form action="{{ route('dashboard.payments.accept', $id) }}" method="get" class="mx-1">
             @csrf
             <button type="submit" class="btn btn-success" href="">Terima</button>
         </form>
     @endif
 
-    @if ($status != 'unvalidated')
+    @if ($status != 'belum-tervalidasi')
         <form action="{{ route('dashboard.payments.reject', $id) }}" method="post" class="mx-1">
             @csrf
             <button type="submit" class="btn btn-danger"

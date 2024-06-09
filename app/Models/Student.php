@@ -17,11 +17,13 @@ class Student extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'siswa';
+
     protected static function booted(): void
     {
         static::deleting(function (Student $student) {
-            if ($student->account->profile_pic) {
-                Storage::delete($student->account->profile_pic);
+            if ($student->account->foto_profil) {
+                Storage::delete($student->account->foto_profil);
             }
 
             $student->account()->delete();
@@ -35,21 +37,21 @@ class Student extends Model
 
     public function studentParent(): BelongsTo
     {
-        return $this->belongsTo(StudentParent::class);
+        return $this->belongsTo(StudentParent::class, 'id_orang_tua');
     }
 
     public function classroom(): BelongsTo
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->belongsTo(Classroom::class, 'id_kelas');
     }
 
     public function bills(): HasMany
     {
-        return $this->hasMany(Bill::class);
+        return $this->hasMany(Bill::class, 'id_siswa');
     }
 
     public function payments(): HasManyThrough
     {
-        return $this->hasManyThrough(Payment::class, Bill::class);
+        return $this->hasManyThrough(Payment::class, Bill::class, 'id_siswa', 'id_tagihan');
     }
 }

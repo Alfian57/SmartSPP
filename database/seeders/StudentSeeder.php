@@ -19,16 +19,16 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $student = Student::create([
-            'name' => 'Alfian Gading Saputra',
+            'nama' => 'Alfian Gading Saputra',
             'nisn' => '1234567890',
-            'gender' => Gender::MALE->value,
-            'date_of_birth' => '1990-01-01',
-            'religion' => Religion::ISLAM->value,
-            'orphan_status' => OrphanStatus::NONE->value,
-            'phone_number' => '0895363116378',
-            'address' => '123 Main St',
-            'classroom_id' => Classroom::inRandomOrder()->first()->id,
-            'student_parent_id' => StudentParent::inRandomOrder()->first()->id,
+            'jenis_kelamin' => Gender::MALE->value,
+            'tanggal_lahir' => '1990-01-01',
+            'agama' => Religion::ISLAM->value,
+            'status' => OrphanStatus::NONE->value,
+            'no_telepon' => '0895363116378',
+            'alamat' => '123 Main St',
+            'id_kelas' => Classroom::inRandomOrder()->first()->id,
+            'id_orang_tua' => StudentParent::inRandomOrder()->first()->id,
         ]);
 
         $student->account()->create([
@@ -41,8 +41,8 @@ class StudentSeeder extends Seeder
         // $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
         // Bill::factory(3)->create([
-        //     'student_id' => $student->id,
-        //     'discount' => $familyDiscount + $orphanDiscount,
+        //     'id_siswa' => $student->id,
+        //     'diskon' => $familyDiscount + $orphanDiscount,
         // ]);
     }
 }

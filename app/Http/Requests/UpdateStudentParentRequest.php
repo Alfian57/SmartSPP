@@ -22,8 +22,8 @@ class UpdateStudentParentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'max:25'],
+            'nama' => ['required', 'string', 'max:100'],
+            'no_telepon' => ['required', 'string', 'max:25'],
         ];
     }
 }

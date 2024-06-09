@@ -16,11 +16,13 @@ class StudentParent extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'orang_tua';
+
     protected static function booted(): void
     {
         static::deleted(function (StudentParent $studentParent) {
-            if ($studentParent->account->profile_pic) {
-                Storage::delete($studentParent->account->profile_pic);
+            if ($studentParent->account->foto_profil) {
+                Storage::delete($studentParent->account->foto_profil);
             }
 
             $studentParent->account()->delete();
@@ -34,11 +36,11 @@ class StudentParent extends Model
 
     public function students(): HasMany
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class, 'id_orang_tua');
     }
 
     public function bills(): HasManyThrough
     {
-        return $this->hasManyThrough(Bill::class, Student::class);
+        return $this->hasManyThrough(Bill::class, Student::class, 'id_orang_tua', 'id_siswa');
     }
 }

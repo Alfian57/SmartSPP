@@ -21,8 +21,8 @@ class StudentController extends Controller
 
     public function create()
     {
-        $classrooms = Classroom::pluck('name', 'id');
-        $studentParents = StudentParent::pluck('name', 'id');
+        $classrooms = Classroom::pluck('nama', 'id');
+        $studentParents = StudentParent::pluck('nama', 'id');
 
         return view('dashboard.pages.students.create', [
             'classrooms' => $classrooms,
@@ -34,7 +34,7 @@ class StudentController extends Controller
     {
         DB::transaction(function () use ($request) {
             $student = Student::create($request->except('email'));
-            OnAccountCreated::dispatch($request->name, $request->email, $student);
+            OnAccountCreated::dispatch($request->nama, $request->email, $student);
         });
 
         toast('Siswa berhasil dibuat', 'success');
@@ -44,8 +44,8 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
-        $classrooms = Classroom::pluck('name', 'id');
-        $studentParents = StudentParent::pluck('name', 'id');
+        $classrooms = Classroom::pluck('nama', 'id');
+        $studentParents = StudentParent::pluck('nama', 'id');
 
         return view('dashboard.pages.students.edit', [
             'student' => $student,
@@ -74,7 +74,7 @@ class StudentController extends Controller
 
     public function export(Student $student)
     {
-        $fileName = date('Y-m-d_H:i:s').'_tagihan_'.$student->name.'.xlsx';
+        $fileName = date('Y-m-d_H:i:s').'_tagihan_'.$student->nama.'.xlsx';
 
         return Excel::download(new StudentBillsExport($student), $fileName);
     }

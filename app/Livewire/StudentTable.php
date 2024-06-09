@@ -22,7 +22,7 @@ class StudentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['students.id as id']);
+        $this->setAdditionalSelects(['siswa.id as id']);
     }
 
     public function filters(): array
@@ -34,30 +34,30 @@ class StudentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.nisn', 'like', '%'.$value.'%');
+                    $builder->where('siswa.nisn', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('students.name', 'like', '%'.$value.'%');
+                    $builder->where('siswa.nama', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Kelas', 'classroom_name')
                 ->config([
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('classroom.name', 'like', '%'.$value.'%');
+                    $builder->where('classroom.nama', 'like', '%'.$value.'%');
                 }),
-            SelectFilter::make('Jenis Kelamin', 'gender')
+            SelectFilter::make('Jenis Kelamin', 'jenis_kelamin')
                 ->options([
                     '' => 'Pilih',
                     Gender::MALE->value => 'Laki-laki',
                     Gender::FEMALE->value => 'Perempuan',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('gender', $value);
+                    $builder->where('jenis_kelamin', $value);
                 }),
         ];
     }
@@ -69,8 +69,8 @@ class StudentTable extends DataTableComponent
     public function deleteSelected()
     {
         Student::whereIn('id', $this->getSelected())->get()->each(function ($student) {
-            if ($student->account->profile_pic) {
-                Storage::delete($student->account->profile_pic);
+            if ($student->account->foto_profil) {
+                Storage::delete($student->account->foto_profil);
             }
         });
 
@@ -81,7 +81,7 @@ class StudentTable extends DataTableComponent
     {
         return Student::query()
             ->with('classroom')
-            ->latest('students.created_at');
+            ->latest('siswa.created_at');
     }
 
     public function columns(): array
@@ -92,7 +92,7 @@ class StudentTable extends DataTableComponent
                 ->secondaryHeaderFilter('student_nisn')
                 ->collapseOnMobile(),
 
-            Column::make('Nama Siswa', 'name')
+            Column::make('Nama Siswa', 'nama')
                 ->sortable()
                 ->secondaryHeaderFilter('student_name'),
 
@@ -100,35 +100,35 @@ class StudentTable extends DataTableComponent
                 ->sortable()
                 ->collapseAlways(),
 
-            Column::make('Nama Kelas', 'classroom.name')
+            Column::make('Nama Kelas', 'classroom.nama')
                 ->sortable()
                 ->secondaryHeaderFilter('classroom_name')
                 ->collapseOnMobile(),
 
-            Column::make('Jenis Kelamin', 'gender')
+            Column::make('Jenis Kelamin', 'jenis_kelamin')
                 ->format(function ($value) {
                     return view('datatable.students.gender-column', [
                         'gender' => $value,
                     ]);
                 })
-                ->secondaryHeaderFilter('gender')
+                ->secondaryHeaderFilter('jenis_kelamin')
                 ->collapseAlways(),
 
-            Column::make('Tanggal Lahir', 'date_of_birth')
+            Column::make('Tanggal Lahir', 'tanggal_lahir')
                 ->collapseAlways(),
 
-            Column::make('Agama', 'religion')
+            Column::make('Agama', 'agama')
                 ->format(fn ($value) => $this->displayReligion($value))
                 ->collapseAlways(),
 
-            Column::make('Status Yatim', 'orphan_status')
+            Column::make('Status Yatim', 'status')
                 ->format(fn ($value) => $this->displayOrphanStatus($value))
                 ->collapseAlways(),
 
-            Column::make('Alamat', 'address')
+            Column::make('Alamat', 'alamat')
                 ->collapseAlways(),
 
-            Column::make('Nama Orang Tua', 'studentParent.name')
+            Column::make('Nama Orang Tua', 'studentParent.nama')
                 ->collapseAlways(),
 
             Column::make('Aksi')
@@ -143,9 +143,9 @@ class StudentTable extends DataTableComponent
     private function displayOrphanStatus($value)
     {
         $statuses = [
-            OrphanStatus::ORPHAN_BOTH->value => 'Yatim Piatu',
-            OrphanStatus::ORPHAN_FATHER->value => 'Yatim',
-            OrphanStatus::ORPHAN_MOTHER->value => 'Piatu',
+            OrphanStatus::YATIM_PIATU->value => 'Yatim Piatu',
+            OrphanStatus::YATIM->value => 'Yatim',
+            OrphanStatus::PIATU->value => 'Piatu',
             OrphanStatus::NONE->value => 'Tidak Yatim Piatu',
         ];
 

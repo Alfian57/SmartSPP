@@ -20,8 +20,8 @@ class ClassroomSeeder extends Seeder
         foreach ($grades as $grade) {
             foreach ($sections as $section) {
                 Classroom::create([
-                    'name' => "$grade-$section",
-                    'spp_price' => $sppPrice[array_rand($sppPrice)],
+                    'nama' => "$grade-$section",
+                    'harga_spp' => $sppPrice[array_rand($sppPrice)],
                 ]);
             }
         }

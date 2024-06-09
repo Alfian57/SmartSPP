@@ -12,7 +12,7 @@
             @if ($student == null)
                 <h5>Siswa belum ada</h5>
             @else
-                <h5>Tagihan {{ $student->name }}</h5>
+                <h5>Tagihan {{ $student->nama }}</h5>
             @endif
 
             <form action="{{ route('dashboard.my-bills.index') }}" method="GET" class="d-flex">
@@ -20,7 +20,7 @@
                 <select name="student" class="form-control " id="student" onchange="this.form.submit()">
                     @foreach ($children as $child)
                         <option value="{{ $child->id }}" {{ $child->id == $student->id ? 'selected' : '' }}>
-                            {{ $child->name }}
+                            {{ $child->nama }}
                         </option>
                     @endforeach
                 </select>

@@ -20,13 +20,13 @@ class MyBillTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['bills.id as id']);
+        $this->setAdditionalSelects(['tagihan.id as id']);
     }
 
     public function filters(): array
     {
         return [
-            SelectFilter::make('Bulan', 'month')
+            SelectFilter::make('Bulan', 'bulan')
                 ->options([
                     '' => 'Pilih',
                     'january' => 'Januari',
@@ -43,21 +43,21 @@ class MyBillTable extends DataTableComponent
                     'december' => 'Desember',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bills.month', $value);
+                    $builder->where('tagihan.bulan', $value);
                 }),
-            SelectFilter::make('Tahun Ajaran', 'school_year')
+            SelectFilter::make('Tahun Ajaran', 'tahun_ajaran')
                 ->options(
                     array_merge(
                         ['' => 'Pilih'],
                         Bill::query()
-                            ->where('student_id', Auth::user()->accountable->id)
-                            ->distinct('school_year')
-                            ->pluck('school_year', 'school_year')
+                            ->where('id_siswa', Auth::user()->accountable->id)
+                            ->distinct('tahun_ajaran')
+                            ->pluck('tahun_ajaran', 'tahun_ajaran')
                             ->toArray()
                     )
                 )
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bills.school_year', $value);
+                    $builder->where('tagihan.tahun_ajaran', $value);
                 }),
         ];
     }
@@ -65,33 +65,33 @@ class MyBillTable extends DataTableComponent
     public function builder(): Builder
     {
         return Bill::query()
-            ->where('student_id', Auth::user()->accountable->id)
+            ->where('id_siswa', Auth::user()->accountable->id)
             ->addSelect([
                 'total_paid' => function ($query) {
                     $query->selectRaw('SUM(nominal) as total_paid')
-                        ->from('payments')
-                        ->whereColumn('bill_id', 'bills.id')
+                        ->from('pembayaran')
+                        ->whereColumn('id_tagihan', 'tagihan.id')
                         ->where('status', PaymentStatus::VALIDATED->value);
                 },
             ])
-            ->latest('bills.created_at');
+            ->latest('tagihan.created_at');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Bulan', 'month')
+            Column::make('Bulan', 'bulan')
                 ->sortable()
                 ->format(function ($value) {
                     return view('datatable.bills.month-column', [
                         'month' => Month::translateToID($value),
                     ]);
                 })
-                ->secondaryHeaderFilter('month'),
+                ->secondaryHeaderFilter('bulan'),
 
-            Column::make('Tahun Ajaran', 'school_year')
+            Column::make('Tahun Ajaran', 'tahun_ajaran')
                 ->sortable()
-                ->secondaryHeaderFilter('school_year')
+                ->secondaryHeaderFilter('tahun_ajaran')
                 ->collapseOnMobile(),
 
             Column::make('Total Tagihan', 'nominal')
@@ -102,7 +102,7 @@ class MyBillTable extends DataTableComponent
                 })
                 ->sortable(),
 
-            Column::make('Diskon', 'discount')
+            Column::make('Diskon', 'diskon')
                 ->format(function ($value) {
                     return view('datatable.my-bills.discount-column', [
                         'discount' => $value,

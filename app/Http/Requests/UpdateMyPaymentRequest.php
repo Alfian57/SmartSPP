@@ -22,7 +22,7 @@ class UpdateMyPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transfer_file' => ['file', 'image', 'max:10240'],
+            'bukti_transfer' => ['file', 'image', 'max:10240'],
         ];
     }
 }

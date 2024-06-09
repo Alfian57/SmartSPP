@@ -7,7 +7,6 @@ use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -21,7 +20,7 @@ class PaymentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['payments.id as id', 'payments.transfer_file as transfer_file']);
+        $this->setAdditionalSelects(['pembayaran.id as id']);
     }
 
     public function filters(): array
@@ -40,7 +39,7 @@ class PaymentTable extends DataTableComponent
                     'placeholder' => 'Cari Nama siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.name', 'like', '%'.$value.'%');
+                    $builder->where('bill_student.nama', 'like', '%'.$value.'%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
@@ -50,7 +49,7 @@ class PaymentTable extends DataTableComponent
                     PaymentStatus::UNVALIDATED->value => 'Ditolak',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('payments.status', $value);
+                    $builder->where('pembayaran.status', $value);
                 }),
             DateRangeFilter::make('Tanggal Pembayaran', 'payment_created_at')
                 ->config([
@@ -58,8 +57,8 @@ class PaymentTable extends DataTableComponent
                 ])
                 ->filter(function (Builder $builder, array $dateRange) {
                     $builder
-                        ->whereDate('payments.created_at', '>=', $dateRange['minDate'])
-                        ->whereDate('payments.created_at', '<=', $dateRange['maxDate']);
+                        ->whereDate('pembayaran.created_at', '>=', $dateRange['minDate'])
+                        ->whereDate('pembayaran.created_at', '<=', $dateRange['maxDate']);
                 }),
         ];
     }
@@ -68,7 +67,7 @@ class PaymentTable extends DataTableComponent
     {
         return Payment::query()
             ->with('bill', 'bill.student')
-            ->latest('payments.created_at');
+            ->latest('pembayaran.created_at');
     }
 
     public function columns(): array
@@ -78,7 +77,7 @@ class PaymentTable extends DataTableComponent
                 ->sortable()
                 ->secondaryHeaderFilter('student_nisn'),
 
-            Column::make('Nama Siswa', 'bill.student.name')
+            Column::make('Nama Siswa', 'bill.student.nama')
                 ->sortable()
                 ->secondaryHeaderFilter('student_name'),
 
@@ -88,17 +87,6 @@ class PaymentTable extends DataTableComponent
                         'nominal' => $value,
                     ]);
                 }),
-
-            ImageColumn::make('Bukti Trasfer', 'transfer_file')
-                ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
-                )
-                ->attributes(fn ($row) => [
-                    'class' => 'text-danger font-weight-bold',
-                    'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
-                    'style' => 'width: 50px;',
-                ])
-                ->collapseOnTablet(),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {

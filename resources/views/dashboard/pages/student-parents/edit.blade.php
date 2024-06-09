@@ -15,11 +15,11 @@
             <x-dashboard::ui.input label="Email" name="email"
                 value="{{ old('email', $studentParent->account->email) }}" placeholder="Masukan Email" disable />
 
-            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name', $studentParent->name) }}"
+            <x-dashboard::ui.input label="Nama" name="nama" value="{{ old('nama', $studentParent->nama) }}"
                 placeholder="Masukan Nama" required />
 
-            <x-dashboard::ui.input label="Nomor Telepon" name="phone_number"
-                value="{{ old('phone_number', $studentParent->phone_number) }}" placeholder="Masukan Nomor Telepon"
+            <x-dashboard::ui.input label="Nomor Telepon" name="no_telepon"
+                value="{{ old('no_telepon', $studentParent->no_telepon) }}" placeholder="Masukan Nomor Telepon"
                 required />
 
             <div class="d-flex justify-content-end">

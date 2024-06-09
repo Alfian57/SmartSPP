@@ -19,7 +19,7 @@ class AdminTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['admins.id as id']);
+        $this->setAdditionalSelects(['admin.id as id']);
     }
 
     public function filters(): array
@@ -30,7 +30,7 @@ class AdminTable extends DataTableComponent
                     'placeholder' => 'Cari admin',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('admins.name', 'like', '%'.$value.'%');
+                    $builder->where('admin.nama', 'like', '%'.$value.'%');
                 }),
         ];
     }
@@ -42,8 +42,8 @@ class AdminTable extends DataTableComponent
     public function deleteSelected()
     {
         Admin::whereIn('id', $this->getSelected())->get()->each(function ($admin) {
-            if ($admin->account->profile_pic) {
-                Storage::delete($admin->account->profile_pic);
+            if ($admin->account->foto_profil) {
+                Storage::delete($admin->account->foto_profil);
             }
         });
 
@@ -53,13 +53,13 @@ class AdminTable extends DataTableComponent
     public function builder(): Builder
     {
         return Admin::query()
-            ->latest('admins.created_at');
+            ->latest('admin.created_at');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Nama Admin', 'name')
+            Column::make('Nama Admin', 'nama')
                 ->sortable()
                 ->secondaryHeaderFilter('admin_name'),
 

@@ -18,7 +18,7 @@ class StudentParentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['student_parents.id as id']);
+        $this->setAdditionalSelects(['orang_tua.id as id']);
     }
 
     public function filters(): array
@@ -29,14 +29,14 @@ class StudentParentTable extends DataTableComponent
                     'placeholder' => 'Cari orang tua',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('student_parents.name', 'like', '%'.$value.'%');
+                    $builder->where('orang_tua.nama', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->whereRelation('students', 'name', 'like', '%'.$value.'%');
+                    $builder->whereRelation('students', 'nama', 'like', '%'.$value.'%');
                 }),
         ];
     }
@@ -48,8 +48,8 @@ class StudentParentTable extends DataTableComponent
     public function deleteSelected()
     {
         StudentParent::whereIn('id', $this->getSelected())->get()->each(function ($student) {
-            if ($student->account->profile_pic) {
-                Storage::delete($student->account->profile_pic);
+            if ($student->account->foto_profil) {
+                Storage::delete($student->account->foto_profil);
             }
         });
 
@@ -60,18 +60,16 @@ class StudentParentTable extends DataTableComponent
     {
         return StudentParent::query()
             ->with('students')
-            ->latest('student_parents.created_at');
+            ->latest('orang_tua.created_at');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Nama Orang Tua', 'name')
-                ->sortable()
+            Column::make('Nama Orang Tua', 'nama')
                 ->secondaryHeaderFilter('student_parent_name'),
 
-            Column::make('Email', 'account.email')
-                ->sortable(),
+            Column::make('Email', 'account.email'),
 
             Column::make('Nama Anak')
                 ->label(function ($row) {
@@ -82,7 +80,7 @@ class StudentParentTable extends DataTableComponent
                 ->secondaryHeaderFilter('student_name')
                 ->collapseOnTablet(),
 
-            Column::make('No. Telepon', 'phone_number')
+            Column::make('No. Telepon', 'no_telepon')
                 ->collapseOnMobile(),
 
             Column::make('Aksi')

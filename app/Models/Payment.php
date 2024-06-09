@@ -13,8 +13,10 @@ class Payment extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'pembayaran';
+
     public function bill(): BelongsTo
     {
-        return $this->belongsTo(Bill::class);
+        return $this->belongsTo(Bill::class, 'id_tagihan');
     }
 }

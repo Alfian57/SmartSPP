@@ -13,12 +13,12 @@ class BillInformationController extends Controller
     {
         $user = Auth::user();
 
-        $children = Student::where('student_parent_id', $user->accountable->id)->get();
+        $children = Student::where('id_orang_tua', $user->accountable->id)->get();
 
         if ($children->isEmpty() || request('student')) {
             $student = Student::where('id', request('student'))->firstOrFail();
 
-            if ($student->student_parent_id !== $user->accountable->id) {
+            if ($student->id_orang_tua !== $user->accountable->id) {
                 abort(403);
             }
         } else {

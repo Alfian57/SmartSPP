@@ -9,10 +9,10 @@
             </div>
             <div class="top-menu d-flex align-items-center">
                 <div class="dropdown">
-                    @if (auth()->user()->profile_pic)
+                    @if (auth()->user()->foto_profil)
                         <a class="dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar"
-                                src="{{ asset('storage/' . auth()->user()->profile_pic) }}" alt=""></a>
+                                src="{{ asset('storage/' . auth()->user()->foto_profil) }}" alt=""></a>
                     @else
                         <a class="dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar"

@@ -22,9 +22,9 @@ class StoreStudentParentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'max:100', 'unique:accounts,email'],
-            'name' => ['required', 'string', 'max:100'],
-            'phone_number' => ['required', 'string', 'max:25'],
+            'email' => ['required', 'email', 'max:100', 'unique:akun,email'],
+            'nama' => ['required', 'string', 'max:100'],
+            'no_telepon' => ['required', 'string', 'max:25'],
         ];
     }
 }

@@ -14,11 +14,13 @@ class Admin extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'admin';
+
     protected static function booted(): void
     {
         static::deleting(function (Admin $admin) {
-            if ($admin->account->profile_pic) {
-                Storage::delete($admin->account->profile_pic);
+            if ($admin->account->foto_profil) {
+                Storage::delete($admin->account->foto_profil);
             }
 
             $admin->account()->delete();

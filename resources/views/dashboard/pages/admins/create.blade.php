@@ -14,7 +14,7 @@
             <x-dashboard::ui.input type="email" label="Email" name="email" value="{{ old('email') }}"
                 placeholder="Masukan Email Admin" required />
 
-            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name') }}"
+            <x-dashboard::ui.input label="Nama" name="nama" value="{{ old('nama') }}"
                 placeholder="Masukan Nama Admin" required />
 
             <x-dashboard::shared.note.create-account />

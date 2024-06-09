@@ -15,8 +15,8 @@ class BillController extends Controller
         $student->bills()->addSelect([
             'total_paid' => function ($query) {
                 $query->selectRaw('SUM(nominal) as total_paid')
-                    ->from('payments')
-                    ->whereColumn('bill_id', 'bills.id')
+                    ->from('pembayaran')
+                    ->whereColumn('id_tagihan', 'tagihan.id')
                     ->where('status', PaymentStatus::VALIDATED->value);
             },
         ])

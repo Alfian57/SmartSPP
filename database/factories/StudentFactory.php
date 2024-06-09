@@ -22,17 +22,17 @@ class StudentFactory extends Factory
     {
         return [
             'nisn' => $this->faker->unique()->numerify('##########'),
-            'name' => $this->faker->name,
-            'gender' => $this->faker->randomElement(['male', 'female']),
-            'date_of_birth' => $this->faker->date(),
-            'religion' => $this->faker->randomElement(['islam', 'christianity', 'catholicism', 'hinduism', 'buddhism', 'confucianism']),
-            'orphan_status' => $this->faker->randomElement(['orphan_both', 'orphan_father', 'orphan_mother', 'none']),
-            'phone_number' => $this->faker->numerify('############'),
-            'address' => $this->faker->address,
-            'classroom_id' => function () {
+            'nama' => $this->faker->name,
+            'jenis_kelamin' => $this->faker->randomElement(['laki-laki', 'perempuan']),
+            'tanggal_lahir' => $this->faker->date(),
+            'agama' => $this->faker->randomElement(['islam', 'kristen', 'katholik', 'hindu', 'budha', 'konghuchu']),
+            'status' => $this->faker->randomElement(['yatim-piatu', 'yatim', 'piatu', 'none']),
+            'no_telepon' => $this->faker->numerify('############'),
+            'alamat' => $this->faker->address,
+            'id_kelas' => function () {
                 return \App\Models\Classroom::inRandomOrder()->first()->id;
             },
-            'student_parent_id' => function () {
+            'id_orang_tua' => function () {
                 return \App\Models\StudentParent::inRandomOrder()->first()->id;
             },
         ];
@@ -45,12 +45,12 @@ class StudentFactory extends Factory
             $student->account()->save($account);
 
             // Seed the bills
-            // $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            // $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
-            // Bill::factory(3)->create([
-            //     'student_id' => $student->id,
-            //     'discount' => $familyDiscount + $orphanDiscount,
-            // ]);
+            $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
+            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            Bill::factory(3)->create([
+                'id_siswa' => $student->id,
+                'diskon' => $familyDiscount + $orphanDiscount,
+            ]);
         });
     }
 }

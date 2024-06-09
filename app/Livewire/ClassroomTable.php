@@ -17,7 +17,7 @@ class ClassroomTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['classrooms.id as id']);
+        $this->setAdditionalSelects(['kelas.id as id']);
     }
 
     public function filters(): array
@@ -28,7 +28,7 @@ class ClassroomTable extends DataTableComponent
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('classrooms.name', 'like', '%'.$value.'%');
+                    $builder->where('kelas.nama', 'like', '%'.$value.'%');
                 }),
         ];
     }
@@ -46,21 +46,21 @@ class ClassroomTable extends DataTableComponent
     {
         return Classroom::query()
             ->withCount('students')
-            ->latest('classrooms.created_at');
+            ->latest('kelas.created_at');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Nama Kelas', 'name')
+            Column::make('Nama Kelas', 'nama')
                 ->sortable()
                 ->secondaryHeaderFilter('classroom_name'),
 
-            Column::make('Nama Kelas', 'spp_price')
+            Column::make('Harga SPP', 'harga_spp')
                 ->sortable()
                 ->label(function ($row) {
                     return view('datatable.classrooms.spp-price-column', [
-                        'price' => $row->spp_price,
+                        'price' => $row->harga_spp,
                     ]);
                 }),
 

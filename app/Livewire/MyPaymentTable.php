@@ -23,7 +23,7 @@ class MyPaymentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['payments.id as id', 'bills.id as bill_id', 'payments.transfer_file as transfer_file']);
+        $this->setAdditionalSelects(['pembayaran.id as id', 'tagihan.id as bill_id', 'pembayaran.bukti_transfer as transfer_file']);
     }
 
     public function filters(): array
@@ -37,7 +37,7 @@ class MyPaymentTable extends DataTableComponent
                     PaymentStatus::UNVALIDATED->value => 'Ditolak',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('payments.status', $value);
+                    $builder->where('pembayaran.status', $value);
                 }),
             DateRangeFilter::make('Tanggal Pembayaran', 'payment_created_at')
                 ->config([
@@ -45,8 +45,8 @@ class MyPaymentTable extends DataTableComponent
                 ])
                 ->filter(function (Builder $builder, array $dateRange) {
                     $builder
-                        ->whereDate('payments.created_at', '>=', $dateRange['minDate'])
-                        ->whereDate('payments.created_at', '<=', $dateRange['maxDate']);
+                        ->whereDate('pembayaran.created_at', '>=', $dateRange['minDate'])
+                        ->whereDate('pembayaran.created_at', '<=', $dateRange['maxDate']);
                 }),
         ];
     }
@@ -54,9 +54,9 @@ class MyPaymentTable extends DataTableComponent
     public function builder(): Builder
     {
         return Payment::query()
-            ->where('payments.bill_id', $this->bill->id)
-            ->join('bills', 'payments.bill_id', '=', 'bills.id')
-            ->latest('payments.created_at');
+            ->where('pembayaran.id_tagihan', $this->bill->id)
+            ->join('tagihan', 'pembayaran.id_tagihan', '=', 'tagihan.id')
+            ->latest('pembayaran.created_at');
     }
 
     public function columns(): array
@@ -70,13 +70,13 @@ class MyPaymentTable extends DataTableComponent
                     ]);
                 }),
 
-            ImageColumn::make('Bukti Trasfer', 'transfer_file')
+            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
                 ->location(
                     fn ($row) => asset('storage/'.$row->transfer_file)
                 )
                 ->attributes(fn ($row) => [
                     'class' => 'text-danger font-weight-bold',
-                    'alt' => $row->name.'Bukti rusak. Silahkan upload ulang',
+                    'alt' => $row->nama.'Bukti rusak. Silahkan upload ulang',
                     'style' => 'width: 50px;',
                 ])
                 ->collapseOnTablet(),

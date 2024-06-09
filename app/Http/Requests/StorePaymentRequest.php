@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\PaymentStatus;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StorePaymentRequest extends FormRequest
 {
@@ -25,9 +23,7 @@ class StorePaymentRequest extends FormRequest
     {
         return [
             'nominal' => ['integer'],
-            'transfer_file' => ['required', 'image', 'max:10240'],
-            'status' => ['required', Rule::in(PaymentStatus::VALIDATED->value, PaymentStatus::UNVALIDATED->value, PaymentStatus::PENDING->value)],
-            'bill_id' => ['required', 'exists:bills,id'],
+            'id_tagihan' => ['required', 'exists:tagihan,id'],
         ];
     }
 }

@@ -1,3 +1,3 @@
 <div>
-    {{ $gender == 'male' ? 'Laki-laki' : 'Perempuan' }}
+    {{ $gender == 'laki-laki' ? 'Laki-laki' : 'Perempuan' }}
 </div>

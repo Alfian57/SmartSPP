@@ -28,17 +28,17 @@ class StudentBillsExport implements FromCollection, WithHeadings
     public function collection()
     {
         return Bill::query()
-            ->where('student_id', $this->student->id)
-            ->select('month', 'school_year', 'nominal', 'discount')
+            ->where('id_siswa', $this->student->id)
+            ->select('bulan', 'tahun_ajaran', 'nominal', 'diskon')
             ->addSelect([
                 'total_paid' => function ($query) {
                     $query->selectRaw('SUM(nominal) as total_paid')
-                        ->from('payments')
-                        ->whereColumn('bill_id', 'bills.id')
+                        ->from('pembayaran')
+                        ->whereColumn('id_tagihan', 'tagihan.id')
                         ->where('status', PaymentStatus::VALIDATED->value);
                 },
             ])
-            ->latest('bills.created_at')
+            ->latest('tagihan.created_at')
 
             ->get()
             ->each(function ($bill) {

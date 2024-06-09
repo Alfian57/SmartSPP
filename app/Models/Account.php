@@ -15,6 +15,8 @@ class Account extends Authenticatable
 
     protected $guarded = ['id'];
 
+    protected $table = 'akun';
+
     public function role(): ?string
     {
         $roleMappings = [

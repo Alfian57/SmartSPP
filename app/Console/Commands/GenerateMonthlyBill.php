@@ -40,14 +40,14 @@ class GenerateMonthlyBill extends Command
 
             $student->bills()->create([
                 'nominal' => $student->classroom->spp_price,
-                'month' => now()->format('F'),
-                'school_year' => $firstYear.'/'.$secondYear,
-                'discount' => $familyDiscount + $orphanDiscount,
+                'bulan' => now()->format('F'),
+                'tahun_ajaran' => $firstYear.'/'.$secondYear,
+                'diskon' => $familyDiscount + $orphanDiscount,
                 'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
 
             $price = $student->classroom->spp_price - $familyDiscount - $orphanDiscount;
-            Mail::to($student->account->email)->queue(new MonthlyBillMail($student->name, $price));
+            Mail::to($student->account->email)->queue(new MonthlyBillMail($student->nama, $price));
         });
 
         SendMonthlyWhatsappBill::dispatch();

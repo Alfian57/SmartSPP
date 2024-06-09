@@ -57,7 +57,7 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         $user->update([
-            'profile_pic' => $request->file('profile_pic')->store('user_profile_pics'),
+            'foto_profil' => $request->file('foto_profil')->store('user_foto_profils'),
         ]);
 
         toast('Profil telah diupdate', 'success');

@@ -15,7 +15,7 @@ class BillPolicy
         }
 
         if (Role::check('student_parent')) {
-            return $account->accountable->id === $bill->student->student_parent_id;
+            return $account->accountable->id === $bill->student->id_orang_tua;
         }
 
         if (Role::check('student')) {

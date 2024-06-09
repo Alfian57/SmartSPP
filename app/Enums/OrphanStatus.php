@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum OrphanStatus: string
 {
-    case ORPHAN_BOTH = 'orphan_both';
-    case ORPHAN_FATHER = 'orphan_father';
-    case ORPHAN_MOTHER = 'orphan_mother';
+    case YATIM_PIATU = 'yatim-piatu';
+    case YATIM = 'yatim';
+    case PIATU = 'piatu';
     case NONE = 'none';
 }

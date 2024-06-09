@@ -15,12 +15,6 @@
             <x-dashboard::ui.input label="Nominal" name="nominal" value="{{ old('nominal') }}"
                 placeholder="Masukan Nominal tervalidasi" required />
 
-            <x-dashboard::ui.input type="file" label="Transfer File" name="transfer_file"
-                value="{{ old('transfer_file') }}" placeholder="Masukan File Transfer" required />
-
-            <x-dashboard::ui.input.select label="Status" name="status" :options="['validated' => 'Validated', 'unvalidated' => 'Unvalidated', 'pending' => 'Pending']" :selected="old('status')"
-                placeholder="Pilih Status" required />
-
             <livewire:form.select-bill-form />
 
             <div class="d-flex justify-content-end">

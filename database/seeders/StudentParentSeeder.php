@@ -14,8 +14,8 @@ class StudentParentSeeder extends Seeder
     public function run(): void
     {
         $studentParent = StudentParent::create([
-            'name' => 'Alfian Gading Saputra',
-            'phone_number' => '0895363116378',
+            'nama' => 'Alfian Gading Saputra',
+            'no_telepon' => '0895363116378',
         ]);
 
         $studentParent->account()->create([
@@ -24,7 +24,7 @@ class StudentParentSeeder extends Seeder
         ]);
 
         Student::factory()->count(2)->create([
-            'student_parent_id' => $studentParent->id,
+            'id_orang_tua' => $studentParent->id,
         ]);
     }
 }

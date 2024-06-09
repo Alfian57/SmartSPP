@@ -13,8 +13,10 @@ class Classroom extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'kelas';
+
     public function students(): HasMany
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class, 'id_kelas');
     }
 }

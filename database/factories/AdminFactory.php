@@ -19,7 +19,7 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'nama' => $this->faker->name,
         ];
     }
 

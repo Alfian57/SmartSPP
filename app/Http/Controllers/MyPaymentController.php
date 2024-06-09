@@ -13,8 +13,6 @@ class MyPaymentController extends Controller
 {
     public function index(Bill $bill)
     {
-        Gate::authorize('view', $bill);
-
         return view('dashboard.pages.my-payments.index', [
             'title' => 'Manajemen Pembayaran',
             'bill' => $bill,
@@ -23,8 +21,6 @@ class MyPaymentController extends Controller
 
     public function create(Bill $bill)
     {
-        Gate::authorize('create', $bill);
-
         return view('dashboard.pages.my-payments.create', [
             'title' => 'Ajuan Pembayaran',
             'bill' => $bill,
@@ -33,11 +29,9 @@ class MyPaymentController extends Controller
 
     public function store(StoreMyPaymentRequest $request, Bill $bill)
     {
-        Gate::authorize('create', $bill);
-
         $data = $request->validated();
-        $data['bill_id'] = $bill->id;
-        $data['transfer_file'] = $request->file('transfer_file')->store('payments_transfer_files');
+        $data['id_tagihan'] = $bill->id;
+        $data['bukti_transfer'] = $request->file('bukti_transfer')->store('payments_transfer_files');
 
         Payment::create($data);
         toast('Pembayaran berhasil ditambahkan', 'success');
@@ -47,8 +41,6 @@ class MyPaymentController extends Controller
 
     public function edit(Bill $bill, Payment $payment)
     {
-        Gate::authorize('edit', $bill);
-        Gate::authorize('edit', $payment);
 
         return view('dashboard.pages.my-payments.edit', [
             'title' => 'Manajemen Kelas',
@@ -63,12 +55,12 @@ class MyPaymentController extends Controller
         Gate::authorize('edit', $payment);
 
         $data = $request->validated();
-        $data['status'] = 'pending';
-        $data['transfer_file'] = $payment->transfer_file;
+        $data['status'] = 'menunggu-validasi';
+        $data['bukti_transfer'] = $payment->bukti_transfer;
 
-        if ($request->transfer_file) {
-            $data['transfer_file'] = $request->file('transfer_file')->store('payments_transfer_files');
-            Storage::delete($payment->transfer_file);
+        if ($request->bukti_transfer) {
+            $data['bukti_transfer'] = $request->file('bukti_transfer')->store('payments_transfer_files');
+            Storage::delete($payment->bukti_transfer);
         }
 
         $payment->update($data);
@@ -82,6 +74,9 @@ class MyPaymentController extends Controller
         Gate::authorize('delete', $bill);
         Gate::authorize('delete', $payment);
 
+        if ($payment->bukti_transfer) {
+            Storage::delete($payment->bukti_transfer);
+        }
         $payment->delete();
         toast('Pembayaran berhasil dihapus', 'success');
 

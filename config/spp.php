@@ -12,7 +12,7 @@ return [
 
     // The date for monthly payment
     // Example: 1 (Payment will be made every month on the 1st)
-    'payment_date' => 1,
+    'payment_date' => 10,
 
     // The time for monthly payment
     // Example: 00:01 (Payment will be made every month at 00:01)

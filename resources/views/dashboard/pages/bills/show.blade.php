@@ -22,14 +22,14 @@
             <tr>
                 <td>Angsuran Diterima</td>
                 <td class="text-success">
-                    {{ $unvalidatedPayments }} Anguran
+                    {{ $validatedPayments }} Anguran
                 </td>
             </tr>
 
             <tr>
                 <td>Angsuran Ditolak</td>
                 <td class="text-danger">
-                    {{ $validatedPayments }} Anguran
+                    {{ $unvalidatedPayments }} Anguran
                 </td>
             </tr>
         </x-dashboard::ui.table>

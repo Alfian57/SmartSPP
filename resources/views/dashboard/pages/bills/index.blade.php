@@ -26,14 +26,14 @@
             </tr>
             <tr>
                 <td>Nama</td>
-                <td>{{ $student->name }}</td>
+                <td>{{ $student->nama }}</td>
 
                 <td>Tagihan Lunas</td>
                 <td class="text-primary">{{ $paidBills }} Tagihan</td>
             </tr>
             <tr>
                 <td>Kelas</td>
-                <td>{{ $student->classroom->name }}</td>
+                <td>{{ $student->classroom->nama }}</td>
 
                 <td>Tagihan Belum Lunas</td>
                 <td class="text-danger">{{ $unpaidBills }} Tagihan</td>

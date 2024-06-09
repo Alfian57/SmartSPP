@@ -15,7 +15,7 @@
             <x-dashboard::ui.input type="email" label="Email" name="email"
                 value="{{ old('email', $admin->account->email) }}" placeholder="Masukan Email Admin" disable />
 
-            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name', $admin->name) }}"
+            <x-dashboard::ui.input label="Nama" name="nama" value="{{ old('nama', $admin->nama) }}"
                 placeholder="Masukan Nama Admin" required />
 
             <div class="d-flex justify-content-end">

@@ -22,8 +22,8 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'unique:accounts', 'max:100'],
+            'nama' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'unique:akun', 'max:100'],
         ];
     }
 }

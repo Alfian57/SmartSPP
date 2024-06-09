@@ -14,10 +14,10 @@
             <x-dashboard::ui.input label="Email" name="email" value="{{ old('email') }}" placeholder="Masukan Email"
                 required />
 
-            <x-dashboard::ui.input label="Nama" name="name" value="{{ old('name') }}" placeholder="Masukan Nama"
+            <x-dashboard::ui.input label="Nama" name="nama" value="{{ old('nama') }}" placeholder="Masukan Nama"
                 required />
 
-            <x-dashboard::ui.input label="Nomor Telepon" name="phone_number" value="{{ old('phone_number') }}"
+            <x-dashboard::ui.input label="Nomor Telepon" name="no_telepon" value="{{ old('no_telepon') }}"
                 placeholder="Masukan Nomor Telepon" required />
 
             <x-dashboard::shared.note.create-account />

@@ -23,7 +23,7 @@ class StudentPaymentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['payments.id as id', 'payments.transfer_file as transfer_file']);
+        $this->setAdditionalSelects(['pembayaran.id as id', 'pembayaran.bukti_transfer as transfer_file']);
     }
 
     public function filters(): array
@@ -37,7 +37,7 @@ class StudentPaymentTable extends DataTableComponent
                     PaymentStatus::UNVALIDATED->value => 'Ditolak',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('payments.status', $value);
+                    $builder->where('pembayaran.status', $value);
                 }),
             DateRangeFilter::make('Tanggal Pembayaran', 'payment_created_at')
                 ->config([
@@ -45,8 +45,8 @@ class StudentPaymentTable extends DataTableComponent
                 ])
                 ->filter(function (Builder $builder, array $dateRange) {
                     $builder
-                        ->whereDate('payments.created_at', '>=', $dateRange['minDate'])
-                        ->whereDate('payments.created_at', '<=', $dateRange['maxDate']);
+                        ->whereDate('pembayaran.created_at', '>=', $dateRange['minDate'])
+                        ->whereDate('pembayaran.created_at', '<=', $dateRange['maxDate']);
                 }),
         ];
     }
@@ -54,8 +54,8 @@ class StudentPaymentTable extends DataTableComponent
     public function builder(): Builder
     {
         return Payment::query()
-            ->where('bill_id', $this->bill->id)
-            ->latest('payments.created_at');
+            ->where('id_tagihan', $this->bill->id)
+            ->latest('pembayaran.created_at');
     }
 
     public function columns(): array
@@ -68,7 +68,7 @@ class StudentPaymentTable extends DataTableComponent
                     ]);
                 }),
 
-            ImageColumn::make('Bukti Trasfer', 'transfer_file')
+            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
                 ->location(
                     fn ($row) => asset('storage/'.$row->transfer_file)
                 )

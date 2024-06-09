@@ -23,16 +23,16 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nisn' => ['required', 'size:10', Rule::unique('students', 'nisn')->ignore($this->student->id)],
-            'name' => ['required', 'string', 'max:100'],
-            'gender' => ['required', 'in:male,female'],
-            'date_of_birth' => ['required', 'date'],
-            'religion' => ['required', 'in:islam,christianity,catholicism,hinduism,buddhism,confucianism'],
-            'orphan_status' => ['required', 'in:orphan_both,orphan_father,orphan_mother,none'],
-            'phone_number' => ['required', 'string', 'max:25'],
-            'address' => ['required', 'string'],
-            'classroom_id' => ['required', 'exists:classrooms,id'],
-            'student_parent_id' => ['required', 'exists:student_parents,id'],
+            'nisn' => ['required', 'size:10', Rule::unique('siswa', 'nisn')->ignore($this->student->id)],
+            'nama' => ['required', 'string', 'max:100'],
+            'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
+            'tanggal_lahir' => ['required', 'date'],
+            'agama' => ['required', 'in:islam,kristen,katholik,hindu,budha,konghuchu'],
+            'status' => ['required', 'in:yatim-piatu,yatim,piatu,none'],
+            'no_telepon' => ['required', 'string', 'max:25'],
+            'alamat' => ['required', 'string'],
+            'id_kelas' => ['required', 'exists:kelas,id'],
+            'id_orang_tua' => ['required', 'exists:orang_tua,id'],
         ];
     }
 }
