@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMyPaymentRequest;
 use App\Http\Requests\UpdateMyPaymentRequest;
+use App\Jobs\SendPaymentBIllWhatsapp;
 use App\Models\Bill;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Gate;
@@ -33,7 +34,8 @@ class MyPaymentController extends Controller
         $data['id_tagihan'] = $bill->id;
         $data['bukti_transfer'] = $request->file('bukti_transfer')->store('payments_transfer_files');
 
-        Payment::create($data);
+        $payment = Payment::create($data);
+        SendPaymentBIllWhatsapp::dispatch($payment->bill->student, $request->nominal);
         toast('Pembayaran berhasil ditambahkan', 'success');
 
         return redirect()->route('dashboard.my-bills.payments.index', $bill->id);

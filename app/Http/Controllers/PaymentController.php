@@ -6,7 +6,7 @@ use App\Enums\BillStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Requests\AcceptPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
-use App\Jobs\SendPaymentBIllWhatsapp;
+use App\Jobs\SendVerificationSuccessWhatsapp;
 use App\Models\Bill;
 use App\Models\Payment;
 
@@ -59,7 +59,7 @@ class PaymentController extends Controller
 
         $this->checkBillStatus($payment->bill);
 
-        SendPaymentBIllWhatsapp::dispatch($payment->bill->student, $request->nominal, $this->getRemainingAmount($payment->bill));
+        SendVerificationSuccessWhatsapp::dispatch($payment->bill->student, $request->nominal, $this->getRemainingAmount($payment->bill));
         toast('Berhasil menyetujui pembayaran', 'success');
 
         return redirect()->route('dashboard.payments.index');

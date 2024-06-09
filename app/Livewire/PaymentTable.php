@@ -20,7 +20,7 @@ class PaymentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['pembayaran.id as id']);
+        $this->setAdditionalSelects(['pembayaran.id as id', 'bill.bulan as bulan', 'bill.tahun_ajaran as tahun_ajaran']);
     }
 
     public function filters(): array
@@ -97,10 +97,19 @@ class PaymentTable extends DataTableComponent
                 ->secondaryHeaderFilter('payment_status')
                 ->collapseOnTablet(),
 
+            Column::make('Angsuran Pada')
+                ->label(function ($row) {
+                    return view('datatable.payments.payment-column', [
+                        'month' => $row->bulan,
+                        'year' => $row->tahun_ajaran,
+                    ]);
+                })
+                ->collapseOnMobile(),
+
             Column::make('Tanggal Pembayaran', 'created_at')
                 ->sortable()
                 ->secondaryHeaderFilter('payment_created_at')
-                ->collapseOnTablet(),
+                ->collapseAlways(),
 
             Column::make('Aksi')
                 ->label(function ($row) {

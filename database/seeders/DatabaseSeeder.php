@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\BillStatus;
 use App\Enums\OrphanStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Admin;
 use App\Models\Student;
 use App\Models\StudentParent;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         StudentParent::factory(20)->create();
 
         $this->generateBill();
+        $this->generatePayment();
     }
 
     private function generateBill()
@@ -46,6 +48,18 @@ class DatabaseSeeder extends Seeder
                 'diskon' => $familyDiscount + $orphanDiscount,
                 'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
+        });
+    }
+
+    private function generatePayment()
+    {
+        Student::all()->each(function ($student) {
+            $student->bills->each(function ($bill) {
+                $bill->payments()->create([
+                    'nominal' => ($bill->nominal - $bill->diskon) / 2,
+                    'status' => PaymentStatus::VALIDATED->value,
+                ]);
+            });
         });
     }
 }

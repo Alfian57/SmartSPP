@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendPaymentBIllWhatsapp implements ShouldQueue
+class SendVerificationSuccessWhatsapp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -17,13 +17,16 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
 
     private int $nominal;
 
+    private int $remainingAmount;
+
     /**
      * Create a new job instance.
      */
-    public function __construct(Student $student, int $nominal)
+    public function __construct(Student $student, int $nominal, int $remainingAmount)
     {
         $this->student = $student;
         $this->nominal = $nominal;
+        $this->remainingAmount = $remainingAmount;
     }
 
     /**
@@ -32,9 +35,10 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
     public function handle(): void
     {
         $formattedNominal = number_format($this->nominal, 2);
+        $formattedRemainingAmount = number_format($this->remainingAmount, 2);
 
         $message = <<<EOT
-        Halo, tagihan bulanan berhasil dibayarkan.
+        Halo, tagihan bulanan berhasil terverifikasi.
 
         Berikut adalah rincian pembayaran:
         - NISN          : {$this->student->nisn}
@@ -43,6 +47,7 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
         - Bulan         : {$this->student->bills->last()->month}
         - Tahun         : {$this->student->bills->last()->school_year}
         - Nominal       : Rp. {$formattedNominal}
+        - Sisa Tagihan  : Rp. {$formattedRemainingAmount}
 
         Terima kasih.
         EOT;
@@ -60,7 +65,7 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
             CURLOPT_POSTFIELDS => [
                 'target' => [$this->student->no_telepon, $this->student->studentParent->no_telepon],
                 'message' => $message,
-                'countryCode' => '62', //optional
+                'countryCode' => '62',
             ],
             CURLOPT_HTTPHEADER => [
                 'Authorization: '.env('FONNTE_TOKEN'),
