@@ -89,6 +89,12 @@ class MyPaymentTable extends DataTableComponent
                 })
                 ->secondaryHeaderFilter('payment_status'),
 
+            Column::make('Jenis')
+                ->label(function ($row) {
+                    return $row->transfer_file ? 'Online' : 'Offline';
+                })
+                ->collapseOnMobile(),
+
             Column::make('Tanggal Pembayaran', 'created_at')
                 ->sortable()
                 ->secondaryHeaderFilter('payment_created_at'),

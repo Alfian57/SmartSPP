@@ -27,18 +27,18 @@ class BillFactory extends Factory
         ];
     }
 
-    public function configure(): static
-    {
-        return $this->afterCreating(function (Bill $bill) {
-            Payment::factory(5)->create([
-                'id_tagihan' => $bill->id,
-            ]);
+    // public function configure(): static
+    // {
+    // return $this->afterCreating(function (Bill $bill) {
+    // Payment::factory(5)->create([
+    //     'id_tagihan' => $bill->id,
+    // ]);
 
-            if ($bill->payments->where('status', PaymentStatus::VALIDATED->value)->sum('nominal') >= $bill->nominal) {
-                $bill->update([
-                    'status' => BillStatus::PAID_OFF->value,
-                ]);
-            }
-        });
-    }
+    // if ($bill->payments->where('status', PaymentStatus::VALIDATED->value)->sum('nominal') >= $bill->nominal) {
+    //     $bill->update([
+    //         'status' => BillStatus::PAID_OFF->value,
+    //     ]);
+    // }
+    // });
+    // }
 }

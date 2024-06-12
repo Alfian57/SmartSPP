@@ -92,6 +92,12 @@ class PaymentInformationTable extends DataTableComponent
                 ->secondaryHeaderFilter('payment_created_at')
                 ->collapseOnMobile(),
 
+            Column::make('Jenis')
+                ->label(function ($row) {
+                    return $row->transfer_file ? 'Online' : 'Offline';
+                })
+                ->collapseOnMobile(),
+
             Column::make('Aksi')
                 ->label(function ($row) {
                     return view('datatable.payment-informations.action-column', [

@@ -45,12 +45,12 @@ class StudentFactory extends Factory
             $student->account()->save($account);
 
             // Seed the bills
-            $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
-            Bill::factory(3)->create([
-                'id_siswa' => $student->id,
-                'diskon' => $familyDiscount + $orphanDiscount,
-            ]);
+            // $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
+            // $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            // Bill::factory(3)->create([
+            //     'id_siswa' => $student->id,
+            //     'diskon' => $familyDiscount + $orphanDiscount,
+            // ]);
         });
     }
 }

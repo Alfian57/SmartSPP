@@ -38,6 +38,12 @@
                                 <x-dashboard::icons.admin />
                                 <span>Data Admin</span>
                             </x-dashboard::shared.sidebar.item>
+
+                            <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}"
+                                class="menu-item">
+                                <x-dashboard::icons.classroom />
+                                <span>Data Kelas</span>
+                            </x-dashboard::shared.sidebar.item>
                         </div>
                     </div>
 
@@ -45,11 +51,6 @@
                     <x-dashboard::shared.sidebar.item href="{{ route('dashboard.payments.index') }}">
                         <x-dashboard::icons.payment />
                         <span>Data Pembayaran</span>
-                    </x-dashboard::shared.sidebar.item>
-
-                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.classrooms.index') }}">
-                        <x-dashboard::icons.classroom />
-                        <span>Data Kelas</span>
                     </x-dashboard::shared.sidebar.item>
 
                     <x-dashboard::shared.sidebar.item href="#" data-toggle="modal" data-target="#laporanModal">

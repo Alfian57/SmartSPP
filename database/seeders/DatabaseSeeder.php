@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
 
     private function generatePayment()
     {
-        Student::all()->each(function ($student) {
+        Student::limit(10)->get()->each(function ($student) {
             $student->bills->each(function ($bill) {
                 $bill->payments()->create([
                     'nominal' => ($bill->nominal - $bill->diskon) / 2,

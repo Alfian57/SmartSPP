@@ -3,7 +3,7 @@
 @endsection
 
 <x-dashboard-layouts::main>
-    <x-dashboard::ui.page-header title="Admin" desc="Semua data pembayaran yang tersedia">
+    <x-dashboard::ui.page-header title="Pembayaran" desc="Semua data pembayaran yang tersedia">
         <x-dashboard::ui.page-header.item href="{{ route('dashboard.payments.index') }}" label="Pembayaran" />
         <x-dashboard::ui.page-header.item label="Tambah" active="" />
     </x-dashboard::ui.page-header>
@@ -13,7 +13,7 @@
             @csrf
 
             <x-dashboard::ui.input label="Nominal" name="nominal" value="{{ old('nominal') }}"
-                placeholder="Masukan Nominal tervalidasi" required />
+                placeholder="Masukan nominal" required />
 
             <livewire:form.select-bill-form />
 
