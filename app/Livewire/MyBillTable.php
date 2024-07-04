@@ -121,7 +121,7 @@ class MyBillTable extends DataTableComponent
             Column::make('Sisa Tagihan')
                 ->label(function ($row) {
                     return view('datatable.my-bills.remaining-bill-column', [
-                        'nominal' => $row->nominal - $row->total_paid - $row->discount,
+                        'nominal' => $row->nominal - $row->total_paid - $row->diskon,
                     ]);
                 }),
 

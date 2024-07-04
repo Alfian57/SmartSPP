@@ -111,7 +111,7 @@ class PaymentTable extends DataTableComponent
                 ->secondaryHeaderFilter('payment_created_at')
                 ->collapseAlways(),
 
-            Column::make('Jenis')
+            Column::make('Bukti transfer')
                 ->label(function ($row) {
                     return $row->transfer_file;
                 })

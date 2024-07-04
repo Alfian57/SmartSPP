@@ -47,8 +47,8 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
 
         Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('reports/{classroom}', [ReportController::class, 'show'])->name('reports.show');
-        Route::get('reports/{classroom}/export', [ReportController::class, 'classroomExport'])->name('reports.classroom.export');
-        Route::get('reports/{classroom}/students/{student}/export', [ReportController::class, 'studentExport'])->name('reports.student.export');
+        // Route::get('reports/{classroom}/export', [ReportController::class, 'classroomExport'])->name('reports.classroom.export');
+        // Route::get('reports/{classroom}/students/{student}/export', [ReportController::class, 'studentExport'])->name('reports.student.export');
     });
 
     Route::middleware('role:student_parent')->group(function () {
@@ -61,7 +61,3 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ['as' => 'my-bills']);
     });
 });
-
-Route::get('test', function () {
-    return 'Buat disini';
-})->name('test');

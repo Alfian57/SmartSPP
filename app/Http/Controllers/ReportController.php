@@ -41,14 +41,4 @@ class ReportController extends Controller
 
         return view('dashboard.pages.reports.show', compact('classroom', 'year', 'month'));
     }
-
-    public function classroomExport()
-    {
-        // 
-    }
-
-    public function studentExport()
-    {
-        // 
-    }
 }

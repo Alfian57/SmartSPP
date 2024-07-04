@@ -2,12 +2,16 @@
 
 namespace App\Livewire;
 
+use App\Models\Bill;
 use App\Models\Classroom;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Student;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ReportDetailTable extends DataTableComponent
 {
@@ -50,6 +54,41 @@ class ReportDetailTable extends DataTableComponent
             ->latest('created_at');
     }
 
+    public function downloadPdf($studentId)
+    {
+        try {
+            $billId = Bill::where('id_siswa', $studentId)
+                ->whereYear('created_at', $this->year)
+                ->where('bulan', $this->month)
+                ->latest('created_at')
+                ->pluck('id');
+            $billId = $billId->first();
+
+            $bill = Bill::with(['student', 'payments' => function ($query) {
+                $query->where('status', 'tervalidasi');
+            }])
+                ->where('id', $billId)
+                ->firstOrFail();
+
+            $totalPaid = $bill->payments->where('status', 'tervalidasi')->sum('nominal');
+            $amountDue = $bill->nominal - $bill->diskon - $totalPaid;
+
+            $data = [
+                'bill' => $bill,
+                'totalPaid' => $totalPaid,
+                'amountDue' => $amountDue,
+            ];
+
+            $pdf = PDF::loadView('pdf.bill', $data);
+
+            return response()->streamDownload(function () use ($pdf) {
+                echo $pdf->output();
+            }, 'bill-' . Str::slug($bill->student->nama) . '.pdf');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
     public function columns(): array
     {
         return [
@@ -81,6 +120,13 @@ class ReportDetailTable extends DataTableComponent
             Column::make("Status Pembayaran")
                 ->label(function ($row) {
                     return (($row->total_tagihan ?? 0) - ($row->total_diskon ?? 0)) <= ($row->total_terbayar ?? 0) ? 'lunas' : 'belum lunas';;
+                }),
+
+            Column::make('Aksi')
+                ->label(function ($row) {
+                    return view('datatable.report-details.action-column', [
+                        "id" => $row->id,
+                    ]);
                 }),
         ];
     }
