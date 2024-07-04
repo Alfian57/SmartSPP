@@ -1,5 +1,5 @@
 @section('title')
-    Tolak Pembayaran
+    Terima Pembayaran
 @endsection
 
 <x-dashboard-layouts::main>

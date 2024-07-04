@@ -17,10 +17,6 @@ class BillInformationController extends Controller
 
         if ($children->isEmpty() || request('student')) {
             $student = Student::where('id', request('student'))->firstOrFail();
-
-            if ($student->id_orang_tua !== $user->accountable->id) {
-                abort(403);
-            }
         } else {
             $student = $children->first();
         }

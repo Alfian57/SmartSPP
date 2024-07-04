@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MyBillController;
 use App\Http\Controllers\MyPaymentController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentParentController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,11 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::get('/students/{student}/export', [StudentController::class, 'export'])->name('students.export');
         Route::get('/students/{student}/bills', [BillController::class, 'index'])->name('students.bills.index');
         Route::get('students/{student}/bills/{bill}', [BillController::class, 'show'])->name('students.bills.show');
+
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/{classroom}', [ReportController::class, 'show'])->name('reports.show');
+        Route::get('reports/{classroom}/export', [ReportController::class, 'classroomExport'])->name('reports.classroom.export');
+        Route::get('reports/{classroom}/students/{student}/export', [ReportController::class, 'studentExport'])->name('reports.student.export');
     });
 
     Route::middleware('role:student_parent')->group(function () {

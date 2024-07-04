@@ -53,7 +53,7 @@
                         <span>Data Pembayaran</span>
                     </x-dashboard::shared.sidebar.item>
 
-                    <x-dashboard::shared.sidebar.item href="#" data-toggle="modal" data-target="#laporanModal">
+                    <x-dashboard::shared.sidebar.item href="{{ route('dashboard.reports.index') }}">
                         <i class="ik ik-layers"></i>
                         <span>Laporan</span>
                     </x-dashboard::shared.sidebar.item>

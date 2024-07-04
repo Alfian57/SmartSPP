@@ -1,5 +1,5 @@
 @section('title')
-    Manajemen
+    Informasi Tagihan
 @endsection
 
 <x-dashboard-layouts::main>
@@ -15,7 +15,7 @@
                 <h5>Tagihan {{ $student->nama }}</h5>
             @endif
 
-            <form action="{{ route('dashboard.my-bills.index') }}" method="GET" class="d-flex">
+            <form action="{{ route('dashboard.bill-informations.index') }}" method="GET" class="d-flex">
                 <label for="student">Pilih Siswa : </label>
                 <select name="student" class="form-control " id="student" onchange="this.form.submit()">
                     @foreach ($children as $child)

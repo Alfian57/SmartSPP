@@ -20,7 +20,7 @@ class PaymentTable extends DataTableComponent
         $this->setPrimaryKey('id');
         $this->setSearchStatus(false);
         $this->setFiltersVisibilityStatus(false);
-        $this->setAdditionalSelects(['pembayaran.id as id', 'bill.bulan as bulan', 'bill.tahun_ajaran as tahun_ajaran']);
+        $this->setAdditionalSelects(['pembayaran.id as id', 'bill.bulan as bulan', 'bill.tahun_ajaran as tahun_ajaran', 'pembayaran.bukti_transfer as transfer_file']);
     }
 
     public function filters(): array
@@ -32,14 +32,14 @@ class PaymentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%'.$value.'%');
+                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari Nama siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nama', 'like', '%'.$value.'%');
+                    $builder->where('bill_student.nama', 'like', '%' . $value . '%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
@@ -113,7 +113,7 @@ class PaymentTable extends DataTableComponent
 
             Column::make('Jenis')
                 ->label(function ($row) {
-                    return $row->transfer_file ? 'Online' : 'Offline';
+                    return $row->transfer_file;
                 })
                 ->collapseOnMobile(),
 

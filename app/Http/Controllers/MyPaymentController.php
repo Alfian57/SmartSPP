@@ -35,7 +35,7 @@ class MyPaymentController extends Controller
         $data['bukti_transfer'] = $request->file('bukti_transfer')->store('payments_transfer_files');
 
         $payment = Payment::create($data);
-        SendPaymentBIllWhatsapp::dispatch($payment->bill->student, $request->nominal);
+        SendPaymentBIllWhatsapp::dispatch($bill->student);
         toast('Pembayaran berhasil ditambahkan', 'success');
 
         return redirect()->route('dashboard.my-bills.payments.index', $bill->id);

@@ -23,4 +23,22 @@ class Month
 
         return isset($monthNames[$month]) ? $monthNames[$month] : $month;
     }
+
+    public static function all(): array
+    {
+        return [
+            'januari' => 'january',
+            'februari' => 'february',
+            'maret' => 'march',
+            'april' => 'april',
+            'mei' => 'may',
+            'juni' => 'june',
+            'juli' => 'july',
+            'agustus' => 'august',
+            'september' => 'september',
+            'oktober' => 'october',
+            'november' => 'november',
+            'desember' => 'december',
+        ];
+    }
 }

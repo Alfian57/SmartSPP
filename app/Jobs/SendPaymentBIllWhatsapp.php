@@ -15,15 +15,12 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
 
     private Student $student;
 
-    private int $nominal;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(Student $student, int $nominal)
+    public function __construct(Student $student)
     {
         $this->student = $student;
-        $this->nominal = $nominal;
     }
 
     /**
@@ -31,8 +28,6 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
      */
     public function handle(): void
     {
-        $formattedNominal = number_format($this->nominal, 2);
-
         $message = <<<EOT
         Halo, tagihan bulanan berhasil dibayarkan.
 
@@ -42,7 +37,6 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
         - Kelas         : {$this->student->classroom->nama}
         - Bulan         : {$this->student->bills->last()->month}
         - Tahun         : {$this->student->bills->last()->school_year}
-        - Nominal       : Rp. {$formattedNominal}
 
         Terima kasih.
         EOT;
@@ -63,7 +57,7 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
                 'countryCode' => '62', //optional
             ],
             CURLOPT_HTTPHEADER => [
-                'Authorization: '.env('FONNTE_TOKEN'),
+                'Authorization: ' . env('FONNTE_TOKEN'),
             ],
         ]);
 
