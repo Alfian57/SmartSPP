@@ -57,7 +57,7 @@ class SendPaymentBIllWhatsapp implements ShouldQueue
                 'countryCode' => '62', //optional
             ],
             CURLOPT_HTTPHEADER => [
-                'Authorization: ' . env('FONNTE_TOKEN'),
+                'Authorization: '.env('FONNTE_TOKEN'),
             ],
         ]);
 

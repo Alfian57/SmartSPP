@@ -2,17 +2,20 @@
 
 namespace App\Livewire;
 
-use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Classroom;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class ReportTable extends DataTableComponent
 {
     protected $model = Classroom::class;
-    public $year, $month;
+
+    public $year;
+
+    public $month;
 
     public function configure(): void
     {
@@ -42,9 +45,9 @@ class ReportTable extends DataTableComponent
                 DB::raw('SUM(tagihan.nominal) as total_tagihan'),
                 DB::raw('SUM(tagihan.diskon) as total_diskon'),
                 DB::raw('SUM(pembayaran.nominal) as total_terbayar'),
-                DB::raw('(SUM(pembayaran.nominal) / SUM(tagihan.nominal)) * 100 as presentase_terbayar')
+                DB::raw('(SUM(pembayaran.nominal) / SUM(tagihan.nominal)) * 100 as presentase_terbayar'),
             ])
-            ->groupBy('kelas.id')
+            ->groupBy('kelas.id', 'kelas.nama', 'kelas.harga_spp', 'kelas.updated_at', 'kelas.created_at')
             ->latest('kelas.created_at');
     }
 
@@ -56,7 +59,7 @@ class ReportTable extends DataTableComponent
                     'placeholder' => 'Cari kelas',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('kelas.nama', 'like', '%' . $value . '%');
+                    $builder->where('kelas.nama', 'like', '%'.$value.'%');
                 }),
         ];
     }
@@ -64,35 +67,35 @@ class ReportTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Nama Kelas")
+            Column::make('Nama Kelas')
                 ->label(function ($row) {
                     return $row->nama;
                 })
                 ->secondaryHeaderFilter('classroom_name'),
 
-            Column::make("Jumlah Siswa")
+            Column::make('Jumlah Siswa')
                 ->label(function ($row) {
-                    return $row->students_count . " Siswa";
+                    return $row->students_count.' Siswa';
                 }),
 
-            Column::make("Total Tagihan (Rp)")
+            Column::make('Total Tagihan (Rp)')
                 ->label(function ($row) {
-                    return "Rp " . number_format($row->total_tagihan, 2);
+                    return 'Rp '.number_format($row->total_tagihan, 2);
                 }),
 
-            Column::make("Total Diskon (Rp)")
+            Column::make('Total Diskon (Rp)')
                 ->label(function ($row) {
-                    return "Rp " . number_format($row->total_diskon, 2);
+                    return 'Rp '.number_format($row->total_diskon, 2);
                 }),
 
-            Column::make("Total Terbayar (Rp)")
+            Column::make('Total Terbayar (Rp)')
                 ->label(function ($row) {
-                    return "Rp " . number_format($row->total_terbayar, 2);
+                    return 'Rp '.number_format($row->total_terbayar, 2);
                 }),
 
-            Column::make("Presentase Terbayar (%)")
+            Column::make('Presentase Terbayar (%)')
                 ->label(function ($row) {
-                    return number_format($row->presentase_terbayar, 2) . " %";
+                    return number_format($row->presentase_terbayar, 2).' %';
                 }),
 
             Column::make('Aksi')

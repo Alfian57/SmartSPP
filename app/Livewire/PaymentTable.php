@@ -32,14 +32,14 @@ class PaymentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
+                    $builder->where('bill_student.nisn', 'like', '%'.$value.'%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari Nama siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nama', 'like', '%' . $value . '%');
+                    $builder->where('bill_student.nama', 'like', '%'.$value.'%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([

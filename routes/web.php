@@ -47,7 +47,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
 
         Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('reports/{classroom}', [ReportController::class, 'show'])->name('reports.show');
-        // Route::get('reports/{classroom}/export', [ReportController::class, 'classroomExport'])->name('reports.classroom.export');
+        Route::get('reports/bill/export', [ReportController::class, 'export'])->name('reports.classroom.export');
         // Route::get('reports/{classroom}/students/{student}/export', [ReportController::class, 'studentExport'])->name('reports.student.export');
     });
 
