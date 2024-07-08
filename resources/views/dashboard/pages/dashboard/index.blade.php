@@ -9,13 +9,13 @@
                 <img src="/logo.png" alt="Logo" class="img-fluid w-50">
             </div>
             <h4 class="text-center mt-3">{{ config('app.name') }}</h4>
-            <p class="text-center">Jl. Siliwangi, Jombor Lor, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa
-                Yogyakarta 55285
+            <p class="text-center">Jl. Kebon Agung No.88, Area Sawah, Tlogoadi, Kec. Mlati, Kabupaten Sleman, Daerah
+                Istimewa Yogyakarta.
             </p>
             <p class="text-center">
-                Email: {{ config('mail.from.address') }}
+                Email: smp.muh3mlati@gmail.com
                 <br>
-                Telp: (0274) 623310
+                Telp: (0274) 4364148
             </p>
         </x-dashboard::ui.card>
 

@@ -1,7 +1,10 @@
 <div class="app-sidebar colored">
     <div class="sidebar-header">
         <a class="header-brand" href="index.html">
-            <span class="text">{{ config('app.name') }}</span>
+            <span class="text">
+                <img src="/logo.png" alt="Logo" class="img-fluid" style="width: 35px">
+                SPP
+            </span>
         </a>
         <button type="button" class="nav-toggle"><i data-toggle="expanded"
                 class="ik ik-toggle-right toggle-icon"></i></button>

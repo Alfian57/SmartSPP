@@ -157,40 +157,40 @@ END / / DELIMITER;
 -- 3. query untuk menampilkan laporan dengan menggunakan query agregat (akan ada 2, untuk export data semua kelas dan persiswa)
 -- a. Semua kelas
 SELECT
-    c.nama AS classroom,
-    COUNT(s.id) AS number_of_students,
-    SUM(b.nominal) AS total_bills,
+    classrooms.name AS classroom,
+    COUNT(DISTINCT students.id) AS number_of_students,
+    SUM(bills.nominal) AS total_bills,
     SUM(
         CASE
-            WHEN p.status = 'tervalidasi' THEN p.nominal
+            WHEN payments.status = 'tervalidasi' THEN payments.nominal
             ELSE 0
         END
     ) AS total_validated_payments,
-    SUM(b.diskon) AS total_discounts,
-    SUM(b.nominal) - SUM(
+    SUM(bills.diskon) AS total_discounts,
+    SUM(bills.nominal) - SUM(
         CASE
-            WHEN p.status = 'tervalidasi' THEN p.nominal
+            WHEN payments.status = 'tervalidasi' THEN payments.nominal
             ELSE 0
         END
-    ) - SUM(b.diskon) AS total_remaining_bills,
+    ) - SUM(bills.diskon) AS total_remaining_bills,
     (
         SUM(
             CASE
-                WHEN p.status = 'tervalidasi' THEN p.nominal
+                WHEN payments.status = 'tervalidasi' THEN payments.nominal
                 ELSE 0
             END
-        ) / SUM(b.nominal)
+        ) / SUM(bills.nominal)
     ) * 100 AS payment_percentage
 FROM
-    kelas c
-    JOIN siswa s ON s.id_kelas = c.id
-    JOIN tagihan b ON b.id_siswa = s.id
-    LEFT JOIN pembayaran p ON p.id_tagihan = b.id
+    classrooms
+    LEFT JOIN students ON students.classroom_id = classrooms.id
+    LEFT JOIN bills ON bills.student_id = students.id
+    LEFT JOIN payments ON payments.bill_id = bills.id
 WHERE
-    b.bulan = "july" -- July Diganti bulan yang diinginkan
-    AND LEFT (b.tahun_ajaran, 4) = 2024 -- 2024 Diganti tahun yang diinginkan
+    bills.bulan = LOWER(MONTHNAME (NOW ())) -- atau gunakan bulan yang diinginkan
+    AND SUBSTRING(bills.tahun_ajaran, 1, 4) = YEAR (NOW ()) -- atau gunakan tahun yang diinginkan
 GROUP BY
-    c.nama;
+    classrooms.id;
 
 -- 
 -- 
