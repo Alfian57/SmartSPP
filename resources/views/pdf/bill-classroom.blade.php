@@ -87,26 +87,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ $classroom }}</td>
-                    <td>{{ $number_of_students }}</td>
-                    <td>@money($total_bills)</td>
-                    <td>@money($total_validated_payments)</td>
-                    <td>{{ number_format($payment_percentage, 2) }}%</td>
-                </tr>
+                @foreach ($reports as $report)
+                    <tr>
+                        <td>{{ $report['classroom'] }}</td>
+                        <td>{{ $report['number_of_students'] }}</td>
+                        <td>@money($report['total_bills'])</td>
+                        <td>@money($report['total_validated_payments'])</td>
+                        <td>{{ number_format($report['payment_percentage'], 2) }}%</td>
+                    </tr>
+                @endforeach
             </tbody>
             <tfoot>
                 <tr class="total">
-                    <td>Total Tagihan Keseluruhan:</td>
-                    <td colspan="4">@money($total_bills)</td>
+                    <td colspan="2">Total Tagihan Keseluruhan:</td>
+                    <td colspan="3">@money($totalBillsAll)</td>
                 </tr>
                 <tr class="total">
-                    <td>Total Terbayar Keseluruhan:</td>
-                    <td colspan="4">@money($total_validated_payments)</td>
+                    <td colspan="2">Total Terbayar Keseluruhan:</td>
+                    <td colspan="3">@money($totalValidatedPaymentsAll)</td>
                 </tr>
                 <tr class="total">
-                    <td>Jumlah Siswa Keseluruhan:</td>
-                    <td colspan="4">{{ $number_of_students }}</td>
+                    <td colspan="2">Jumlah Siswa Keseluruhan:</td>
+                    <td colspan="3">{{ $totalNumberOfStudentsAll }}</td>
                 </tr>
             </tfoot>
         </table>

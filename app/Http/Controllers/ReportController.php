@@ -57,51 +57,73 @@ class ReportController extends Controller
         }
 
         try {
-            // Ambil data kelas
-            $classroom = Classroom::with('students.bills.payments')
-                ->first();
+            // Ambil semua data kelas
+            $classrooms = Classroom::with('students.bills.payments')->get();
+            $reports = [];
 
-            // Inisialisasi variabel untuk menghitung total
-            $totalBills = 0;
-            $totalValidatedPayments = 0;
-            $totalDiscounts = 0;
+            // Inisialisasi variabel untuk total keseluruhan
+            $totalBillsAll = 0;
+            $totalValidatedPaymentsAll = 0;
+            $totalNumberOfStudentsAll = 0;
 
-            // Iterasi setiap siswa dalam kelas
-            foreach ($classroom->students as $student) {
-                foreach ($student->bills as $bill) {
-                    if ($bill->bulan === $month && substr($bill->tahun_ajaran, 0, 4) == $year) {
-                        $totalBills += $bill->nominal;
-                        $totalDiscounts += $bill->diskon;
+            // Iterasi setiap kelas
+            foreach ($classrooms as $classroom) {
+                // Inisialisasi variabel untuk menghitung total
+                $totalBills = 0;
+                $totalValidatedPayments = 0;
+                $totalDiscounts = 0;
 
-                        foreach ($bill->payments as $payment) {
-                            if ($payment->status === 'tervalidasi') {
-                                $totalValidatedPayments += $payment->nominal;
+                // Iterasi setiap siswa dalam kelas
+                foreach ($classroom->students as $student) {
+                    foreach ($student->bills as $bill) {
+                        if ($bill->bulan === $month && substr($bill->tahun_ajaran, 0, 4) == $year) {
+                            $totalBills += $bill->nominal;
+                            $totalDiscounts += $bill->diskon;
+
+                            foreach ($bill->payments as $payment) {
+                                if ($payment->status === 'tervalidasi') {
+                                    $totalValidatedPayments += $payment->nominal;
+                                }
                             }
                         }
                     }
                 }
+
+                $totalRemainingBills = $totalBills - $totalValidatedPayments - $totalDiscounts;
+                $paymentPercentage = $totalBills ? ($totalValidatedPayments / $totalBills) * 100 : 0;
+
+                // Tambahkan ke total keseluruhan
+                $totalBillsAll += $totalBills;
+                $totalValidatedPaymentsAll += $totalValidatedPayments;
+                $totalNumberOfStudentsAll += $classroom->students->count();
+
+                // Buat data laporan untuk kelas ini
+                $data = [
+                    'classroom' => $classroom->nama,
+                    'number_of_students' => $classroom->students->count(),
+                    'total_bills' => $totalBills,
+                    'total_validated_payments' => $totalValidatedPayments,
+                    'total_remaining_bills' => $totalRemainingBills,
+                    'payment_percentage' => $paymentPercentage,
+                ];
+
+                $reports[] = $data;
             }
 
-            $totalRemainingBills = $totalBills - $totalValidatedPayments - $totalDiscounts;
-            $paymentPercentage = $totalBills ? ($totalValidatedPayments / $totalBills) * 100 : 0;
-
-            // Buat data laporan
-            $data = [
+            // Generate PDF untuk semua laporan kelas
+            $pdf = Pdf::loadView('pdf.bill-classroom', [
+                'reports' => $reports,
                 'month' => $month,
                 'year' => $year,
-                'classroom' => $classroom->nama,
-                'number_of_students' => $classroom->students->count(),
-                'total_bills' => $totalBills,
-                'total_validated_payments' => $totalValidatedPayments,
-                'total_remaining_bills' => $totalRemainingBills,
-                'payment_percentage' => $paymentPercentage,
-            ];
+                'totalBillsAll' => $totalBillsAll,
+                'totalValidatedPaymentsAll' => $totalValidatedPaymentsAll,
+                'totalNumberOfStudentsAll' => $totalNumberOfStudentsAll,
+            ]);
 
-            $pdf = Pdf::loadView('pdf.bill-classroom', $data);
-
-            return $pdf->download('laporan-tagihan-kelas-' . $classroom->nama . '-' . $month . '-' . $year . '.pdf');
+            return $pdf->download('laporan-tagihan-semua-kelas-' . $month . '-' . $year . '.pdf');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+            return back();
         }
     }
 }
