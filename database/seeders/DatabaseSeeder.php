@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\StudentParent;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,15 +40,23 @@ class DatabaseSeeder extends Seeder
             $secondYear = now()->format('m') <= 6 ? now()->format('Y') : now()->format('Y') + 1;
 
             $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            $orphanDiscount = $student->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
             $student->bills()->create([
                 'nominal' => $student->classroom->harga_spp,
                 'bulan' => now()->format('F'),
-                'tahun_ajaran' => $firstYear.'/'.$secondYear,
+                'tahun_ajaran' => $firstYear . '/' . $secondYear,
                 'diskon' => $familyDiscount + $orphanDiscount,
                 'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
+
+            Log::info('Monthly bill generated for ' . $student->nama . ' with nominal ' . $student->classroom->harga_spp . ' and discount ' . $familyDiscount + $orphanDiscount . ' for ' . now()->format('F') . ' ' . $firstYear . '/' . $secondYear . '.');
+            Log::info($student->studentParent->students->count());
+            Log::info($familyDiscount);
+            Log::info($student->status);
+            Log::info($orphanDiscount);
+
+            $student->classroom->harga_spp - $familyDiscount - $orphanDiscount;
         });
     }
 

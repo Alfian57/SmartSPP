@@ -8,6 +8,7 @@ use App\Jobs\SendMonthlyWhatsappBill;
 use App\Mail\MonthlyBillMail;
 use App\Models\Student;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class GenerateMonthlyBill extends Command
@@ -31,12 +32,12 @@ class GenerateMonthlyBill extends Command
      */
     public function handle()
     {
-        Student::all()->each(function ($student) use (&$loop) {
+        Student::all()->each(function ($student) {
             $firstYear = now()->format('m') <= 6 ? now()->format('Y') - 1 : now()->format('Y');
             $secondYear = now()->format('m') <= 6 ? now()->format('Y') : now()->format('Y') + 1;
 
             $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            $orphanDiscount = $student->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
             $student->bills()->create([
                 'nominal' => $student->classroom->harga_spp,
@@ -45,6 +46,10 @@ class GenerateMonthlyBill extends Command
                 'diskon' => $familyDiscount + $orphanDiscount,
                 'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
+
+            Log::info('Monthly bill generated for ' . $student->nama . ' with nominal ' . $student->classroom->harga_spp . ' and discount ' . $familyDiscount + $orphanDiscount . ' for ' . now()->format('F') . ' ' . $firstYear . '/' . $secondYear . '.');
+            Log::info($familyDiscount);
+            Log::info($orphanDiscount);
 
             $price = $student->classroom->harga_spp - $familyDiscount - $orphanDiscount;
             Mail::to($student->account->email)->queue(new MonthlyBillMail($student->nama, $price));
