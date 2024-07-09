@@ -39,14 +39,14 @@ class GenerateMonthlyBill extends Command
             $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
             $student->bills()->create([
-                'nominal' => $student->classroom->spp_price,
+                'nominal' => $student->classroom->harga_spp,
                 'bulan' => now()->format('F'),
-                'tahun_ajaran' => $firstYear.'/'.$secondYear,
+                'tahun_ajaran' => $firstYear . '/' . $secondYear,
                 'diskon' => $familyDiscount + $orphanDiscount,
                 'status' => BillStatus::NOT_PAID_OFF->value,
             ]);
 
-            $price = $student->classroom->spp_price - $familyDiscount - $orphanDiscount;
+            $price = $student->classroom->harga_spp - $familyDiscount - $orphanDiscount;
             Mail::to($student->account->email)->queue(new MonthlyBillMail($student->nama, $price));
         });
 
