@@ -21,7 +21,7 @@ class MonthlyBillMail extends Mailable
      */
     public function __construct(string $name, int $nominal)
     {
-        $this->nama = $name;
+        $this->name = $name;
         $this->nominal = $nominal;
     }
 
@@ -43,7 +43,7 @@ class MonthlyBillMail extends Mailable
         return new Content(
             markdown: 'mails.monthly-bill-mail',
             with: [
-                'nama' => $this->nama,
+                'nama' => $this->name,
                 'nominal' => $this->nominal,
             ],
         );
