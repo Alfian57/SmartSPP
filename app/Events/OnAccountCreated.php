@@ -24,7 +24,7 @@ class OnAccountCreated
      */
     public function __construct($name, $email, $user, $password = null)
     {
-        $this->nama = $name;
+        $this->name = $name;
         $this->email = $email;
         $this->user = $user;
 

@@ -61,3 +61,7 @@ Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function
         Route::resource('/my-bills/{bill}/payments', MyPaymentController::class, ['as' => 'my-bills']);
     });
 });
+
+Route::get('/test', function () {
+    return config('mail.from.address');
+});

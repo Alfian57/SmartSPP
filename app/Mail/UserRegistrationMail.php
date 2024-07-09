@@ -49,7 +49,7 @@ class UserRegistrationMail extends Mailable
                 'nama' => $this->name,
                 'email' => $this->email,
                 'password' => $this->password,
-            ]
+            ],
         );
     }
 
