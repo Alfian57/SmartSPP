@@ -7,6 +7,7 @@ use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -32,14 +33,14 @@ class PaymentTable extends DataTableComponent
                     'max' => 10,
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nisn', 'like', '%'.$value.'%');
+                    $builder->where('bill_student.nisn', 'like', '%' . $value . '%');
                 }),
             TextFilter::make('Nama Siswa', 'student_name')
                 ->config([
                     'placeholder' => 'Cari Nama siswa',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('bill_student.nama', 'like', '%'.$value.'%');
+                    $builder->where('bill_student.nama', 'like', '%' . $value . '%');
                 }),
             SelectFilter::make('Status Pembayaran', 'payment_status')
                 ->options([
@@ -111,11 +112,16 @@ class PaymentTable extends DataTableComponent
                 ->secondaryHeaderFilter('payment_created_at')
                 ->collapseAlways(),
 
-            Column::make('Bukti transfer')
-                ->label(function ($row) {
-                    return $row->transfer_file;
-                })
-                ->collapseOnMobile(),
+            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
+                ->location(
+                    fn ($row) => asset('storage/' . $row->transfer_file)
+                )
+                ->attributes(fn ($row) => [
+                    'class' => 'text-danger font-weight-bold',
+                    'alt' => 'Bukti rusak. Silahkan upload ulang',
+                    'style' => 'width: 50px;',
+                ])
+                ->collapseOnTablet(),
 
             Column::make('Aksi')
                 ->label(function ($row) {

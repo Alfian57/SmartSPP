@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SendVerificationSuccessWhatsapp implements ShouldQueue
 {
@@ -44,14 +45,24 @@ class SendVerificationSuccessWhatsapp implements ShouldQueue
         - NISN          : {$this->student->nisn}
         - Nama          : {$this->student->nama}
         - Kelas         : {$this->student->classroom->nama}
-        - Bulan         : {$this->student->bills->last()->month}
-        - Tahun         : {$this->student->bills->last()->school_year}
+        - Bulan         : {$this->student->bills->last()->bulan}
+        - Tahun         : {$this->student->bills->last()->tahun_ajaran}
         - Nominal       : Rp. {$formattedNominal}
         - Sisa Tagihan  : Rp. {$formattedRemainingAmount}
 
         Terima kasih.
         EOT;
 
+        try {
+            $this->sendWhatsapp($message);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            Log::error($e);
+        }
+    }
+
+    private function sendWhatsapp(string $message): void
+    {
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://api.fonnte.com/send',
@@ -68,7 +79,7 @@ class SendVerificationSuccessWhatsapp implements ShouldQueue
                 'countryCode' => '62',
             ],
             CURLOPT_HTTPHEADER => [
-                'Authorization: '.env('FONNTE_TOKEN'),
+                'Authorization: ' . env('FONNTE_TOKEN'),
             ],
         ]);
 
