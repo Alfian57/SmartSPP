@@ -8,11 +8,11 @@
     </x-dashboard::ui.page-header>
 
     <x-dashboard::ui.card>
-        <div class="d-flex justify-content-end mb-3">
+        {{-- <div class="d-flex justify-content-end mb-3">
             <x-dashboard::ui.button href="{{ route('dashboard.admins.create') }}">
                 Tambah Admin
             </x-dashboard::ui.button>
-        </div>
+        </div> --}}
 
         <livewire:admin-table />
 

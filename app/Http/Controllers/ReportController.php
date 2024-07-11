@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
@@ -57,66 +58,38 @@ class ReportController extends Controller
         }
 
         try {
-            // Ambil semua data kelas
-            $classrooms = Classroom::with('students.bills.payments')->get();
-            $reports = [];
+            $classrooms = Classroom::query()
+                ->withCount('students')
+                ->leftJoin('siswa', 'kelas.id', '=', 'siswa.id_kelas')
+                ->leftJoin('tagihan', 'siswa.id', '=', 'tagihan.id_siswa')
+                ->leftJoin('pembayaran', 'tagihan.id', '=', 'pembayaran.id_tagihan')
+                ->addSelect([
+                    'kelas.*',
+                    DB::raw('SUM(tagihan.nominal) as total_tagihan'),
+                    DB::raw('SUM(tagihan.diskon) as total_diskon'),
+                    DB::raw('SUM(pembayaran.nominal) as total_terbayar'),
+                    // DB::raw('(SUM(pembayaran.nominal) / SUM(tagihan.nominal)) * 100 as presentase_terbayar'),
+                ])
+                ->whereYear('tagihan.created_at', $year)
+                ->where('tagihan.bulan', $month)
+                ->where('pembayaran.status', 'tervalidasi')
+                ->groupBy('kelas.id', 'kelas.nama', 'kelas.harga_spp', 'kelas.updated_at', 'kelas.created_at')
+                ->orderBy('kelas.nama', 'asc')
+                ->get();
 
-            // Inisialisasi variabel untuk total keseluruhan
-            $totalBillsAll = 0;
-            $totalValidatedPaymentsAll = 0;
-            $totalNumberOfStudentsAll = 0;
-
-            // Iterasi setiap kelas
-            foreach ($classrooms as $classroom) {
-                // Inisialisasi variabel untuk menghitung total
-                $totalBills = 0;
-                $totalValidatedPayments = 0;
-                $totalDiscounts = 0;
-
-                // Iterasi setiap siswa dalam kelas
-                foreach ($classroom->students as $student) {
-                    foreach ($student->bills as $bill) {
-                        if ($bill->bulan === $month && substr($bill->tahun_ajaran, 0, 4) == $year) {
-                            $totalBills += $bill->nominal;
-                            $totalDiscounts += $bill->diskon;
-
-                            foreach ($bill->payments as $payment) {
-                                if ($payment->status === 'tervalidasi') {
-                                    $totalValidatedPayments += $payment->nominal;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                $totalRemainingBills = $totalBills - $totalValidatedPayments - $totalDiscounts;
-                $paymentPercentage = $totalBills ? ($totalValidatedPayments / $totalBills) * 100 : 0;
-
-                // Tambahkan ke total keseluruhan
-                $totalBillsAll += $totalBills;
-                $totalValidatedPaymentsAll += $totalValidatedPayments;
-                $totalNumberOfStudentsAll += $classroom->students->count();
-
-                // Buat data laporan untuk kelas ini
-                $data = [
-                    'classroom' => $classroom->nama,
-                    'number_of_students' => $classroom->students->count(),
-                    'total_bills' => $totalBills,
-                    'total_validated_payments' => $totalValidatedPayments,
-                    'total_remaining_bills' => $totalRemainingBills,
-                    'payment_percentage' => $paymentPercentage,
-                ];
-
-                $reports[] = $data;
-            }
+            $totalBillsAll = $classrooms->sum('total_tagihan');
+            $totalValidatedPaymentsAll = $classrooms->sum('total_terbayar');
+            $totalRemainingBillsAll = $totalBillsAll - $totalValidatedPaymentsAll;
+            $totalNumberOfStudentsAll = $classrooms->sum('students_count');
 
             // Generate PDF untuk semua laporan kelas
             $pdf = Pdf::loadView('pdf.bill-classroom', [
-                'reports' => $reports,
+                'classrooms' => $classrooms,
                 'month' => $month,
                 'year' => $year,
                 'totalBillsAll' => $totalBillsAll,
                 'totalValidatedPaymentsAll' => $totalValidatedPaymentsAll,
+                'totalRemainingBillsAll' => $totalRemainingBillsAll,
                 'totalNumberOfStudentsAll' => $totalNumberOfStudentsAll,
             ]);
 

@@ -12,7 +12,7 @@
         <form action="{{ route('dashboard.payments.accept.process', $payment->id) }}" method="POST">
             @csrf
 
-            <img src="{{ asset('storage/' . $payment->transfer_file) }}" alt="Bukti rusak"
+            <img src="{{ asset('storage/' . $payment->bukti_transfer) }}" alt="Bukti rusak"
                 class="img-fluid text-danger font-weight-bold mb-5" style="width: 25%">
 
             <x-dashboard::ui.input label="Nominal" name="nominal" value="{{ old('nominal') }}"

@@ -15,22 +15,22 @@ class AdminController extends Controller
         return view('dashboard.pages.admins.index');
     }
 
-    public function create()
-    {
-        return view('dashboard.pages.admins.create');
-    }
+    // public function create()
+    // {
+    //     return view('dashboard.pages.admins.create');
+    // }
 
-    public function store(StoreAdminRequest $request)
-    {
-        DB::transaction(function () use ($request) {
-            $admin = Admin::create($request->except('email'));
-            OnAccountCreated::dispatch($request->nama, $request->email, $admin);
-        });
+    // public function store(StoreAdminRequest $request)
+    // {
+    //     DB::transaction(function () use ($request) {
+    //         $admin = Admin::create($request->except('email'));
+    //         OnAccountCreated::dispatch($request->nama, $request->email, $admin);
+    //     });
 
-        toast('Admin berhasil dibuat', 'success');
+    //     toast('Admin berhasil dibuat', 'success');
 
-        return redirect()->route('dashboard.admins.index');
-    }
+    //     return redirect()->route('dashboard.admins.index');
+    // }
 
     public function edit(Admin $admin)
     {

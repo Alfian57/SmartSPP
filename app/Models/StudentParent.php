@@ -21,7 +21,7 @@ class StudentParent extends Model
     protected static function booted(): void
     {
         static::deleted(function (StudentParent $studentParent) {
-            if ($studentParent->account->foto_profil) {
+            if ($studentParent->account?->foto_profil) {
                 Storage::delete($studentParent->account->foto_profil);
             }
 

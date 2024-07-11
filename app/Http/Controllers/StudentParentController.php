@@ -41,7 +41,8 @@ class StudentParentController extends Controller
 
     public function update(UpdateStudentParentRequest $request, StudentParent $studentParent)
     {
-        $studentParent->update($request->validated());
+        $studentParent->update($request->except('email'));
+        $studentParent->account->update($request->only('email'));
 
         toast('Orang Tua berhasil diperbarui', 'success');
 

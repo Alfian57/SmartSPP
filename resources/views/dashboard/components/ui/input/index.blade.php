@@ -16,7 +16,7 @@
     </div>
     <div class="col-12">
         <input
-            {{ $attributes->class('form-control ' . ($errors->has($name) ? ' is-invalid' : ''))->merge(['type' => 'text']) }}
+            {{ $attributes->class('form-control ' . ($errors->has($name) ? 'is-invalid' : ''))->merge(['type' => 'text']) }}
             id="{{ $id }}">
         @error($name)
             <small class="form-text text-danger">{{ $message }}</small>

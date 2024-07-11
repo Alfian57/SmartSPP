@@ -24,6 +24,7 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             'nisn' => ['required', 'size:10', Rule::unique('siswa', 'nisn')->ignore($this->student->id)],
+            'email' => ['required', 'email', Rule::unique('akun', 'email')->ignore($this->student->account->id)],
             'nama' => ['required', 'string', 'max:100'],
             'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
             'tanggal_lahir' => ['required', 'date'],

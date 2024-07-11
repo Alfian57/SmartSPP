@@ -68,16 +68,22 @@ class PaymentInformationTable extends DataTableComponent
                     ]);
                 }),
 
-            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
-                ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
-                )
-                ->attributes(fn ($row) => [
-                    'class' => 'text-danger font-weight-bold',
-                    'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
-                    'style' => 'width: 50px;',
-                ])
-                ->collapseOnTablet(),
+            // ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
+            //     ->location(
+            //         fn ($row) => asset('storage/'.$row->transfer_file)
+            //     )
+            //     ->attributes(fn ($row) => [
+            //         'class' => 'text-danger font-weight-bold',
+            //         'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
+            //         'style' => 'width: 50px;',
+            //     ])
+            //     ->collapseOnTablet(),
+
+            Column::make('Jenis')
+                ->label(function ($row) {
+                    return $row->transfer_file ? 'Online' : 'Offline';
+                })
+                ->collapseOnMobile(),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {

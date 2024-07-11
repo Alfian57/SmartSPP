@@ -47,7 +47,7 @@ class StudentController extends Controller
             $secondYear = now()->format('m') <= 6 ? now()->format('Y') : now()->format('Y') + 1;
 
             $familyDiscount = $student->studentParent->students->count() >= 2 ? config('spp.family_discount') : 0;
-            $orphanDiscount = $student->studentParent->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
+            $orphanDiscount = $student->status !== OrphanStatus::NONE->value ? config('spp.orphan_discount') : 0;
 
             $student->bills()->create([
                 'nominal' => $student->classroom->harga_spp,
@@ -80,7 +80,8 @@ class StudentController extends Controller
 
     public function update(UpdateStudentRequest $request, Student $student)
     {
-        $student->update($request->validated());
+        $student->update($request->except('email'));
+        $student->account->update($request->only('email'));
 
         toast('Siswa berhasil diperbarui', 'success');
 

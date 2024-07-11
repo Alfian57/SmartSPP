@@ -70,16 +70,23 @@ class MyPaymentTable extends DataTableComponent
                     ]);
                 }),
 
-            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
-                ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
-                )
-                ->attributes(fn ($row) => [
-                    'class' => 'text-danger font-weight-bold',
-                    'alt' => $row->nama.'Bukti rusak. Silahkan upload ulang',
-                    'style' => 'width: 50px;',
-                ])
-                ->collapseOnTablet(),
+            // ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
+            //     ->location(
+            //         fn ($row) => asset('storage/'.$row->transfer_file)
+            //     )
+            //     ->attributes(fn ($row) => [
+            //         'class' => 'text-danger font-weight-bold',
+            //         'alt' => $row->nama.'Bukti rusak. Silahkan upload ulang',
+            //         'style' => 'width: 50px;',
+            //     ])
+            //     ->collapseOnTablet(),
+
+            Column::make('Bukti Transfer')
+                ->label(function ($row) {
+                    return view('datatable.my-payments.transfer-column', [
+                        'image' => $row->transfer_file,
+                    ]);
+                }),
 
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {

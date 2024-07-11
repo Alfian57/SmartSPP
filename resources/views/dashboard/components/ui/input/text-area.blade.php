@@ -2,7 +2,7 @@
 
 @php
     $id = $id ?? Str::uuid();
-    $name = $attributes->get('nama');
+    $name = $attributes->get('name');
 @endphp
 
 <div class="row form-group">

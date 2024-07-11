@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateStudentParentRequest extends FormRequest
+class ChangeProfileFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class UpdateStudentParentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', Rule::unique('akun', 'email')->ignore($this->student_parent->account->id)],
-            'no_telepon' => ['required', 'string', 'max:25'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('akun')->ignore(auth()->id())],
         ];
     }
 }

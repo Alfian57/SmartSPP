@@ -112,15 +112,10 @@ class PaymentTable extends DataTableComponent
                 ->secondaryHeaderFilter('payment_created_at')
                 ->collapseAlways(),
 
-            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
-                ->location(
-                    fn ($row) => asset('storage/' . $row->transfer_file)
-                )
-                ->attributes(fn ($row) => [
-                    'class' => 'text-danger font-weight-bold',
-                    'alt' => 'Bukti rusak. Silahkan upload ulang',
-                    'style' => 'width: 50px;',
-                ])
+                Column::make('Jenis')
+                ->label(function ($row) {
+                    return $row->transfer_file ? 'Online' : 'Offline';
+                })
                 ->collapseOnTablet(),
 
             Column::make('Aksi')

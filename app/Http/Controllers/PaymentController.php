@@ -26,8 +26,10 @@ class PaymentController extends Controller
     {
         $data = $request->validated();
         $data['status'] = PaymentStatus::VALIDATED->value;
-        Payment::create($data);
+        $payment = Payment::create($data);
         toast('Pembayaran berhasil ditambahkan', 'success');
+
+        SendVerificationSuccessWhatsapp::dispatch($payment->bill->student, $request->nominal, $this->getRemainingAmount($payment->bill));
 
         return redirect()->route('dashboard.payments.index');
     }
@@ -81,6 +83,6 @@ class PaymentController extends Controller
             ->where('status', PaymentStatus::VALIDATED->value)
             ->sum('nominal');
 
-        return $bill->nominal - $totalPaid - $bill->discount;
+        return $bill->nominal - $totalPaid - $bill->diskon;
     }
 }

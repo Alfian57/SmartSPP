@@ -82,18 +82,23 @@
                     <th>Kelas</th>
                     <th>Jumlah Siswa</th>
                     <th>Total Tagihan (Rp)</th>
+                    <th>Total Diskon (Rp)</th>
                     <th>Total Terbayar (Rp)</th>
+                    <th>Sisa Tagihan (Rp)</th>
                     <th>Persentase Terbayar (%)</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($reports as $report)
+                @foreach ($classrooms as $classroom)
                     <tr>
-                        <td>{{ $report['classroom'] }}</td>
-                        <td>{{ $report['number_of_students'] }}</td>
-                        <td>@money($report['total_bills'])</td>
-                        <td>@money($report['total_validated_payments'])</td>
-                        <td>{{ number_format($report['payment_percentage'], 2) }}%</td>
+                        <td>{{ $classroom->nama }}</td>
+                        <td>{{ $classroom->students_count }} Siswa</td>
+                        <td>@money($classroom->total_tagihan)</td>
+                        <td>@money($classroom->total_diskon)</td>
+                        <td>@money($classroom->total_terbayar)</td>
+                        <td>@money($classroom->total_tagihan - ($classroom->total_terbayar + $classroom->total_diskon))</td>
+                        <td>{{ number_format((($classroom->total_terbayar + $classroom->total_diskon) / $classroom->total_tagihan) * 100, 2) }}%
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -105,6 +110,10 @@
                 <tr class="total">
                     <td colspan="2">Total Terbayar Keseluruhan:</td>
                     <td colspan="3">@money($totalValidatedPaymentsAll)</td>
+                </tr>
+                <tr class="total">
+                    <td colspan="2">Total Sisa Tagihan Keseluruhan:</td>
+                    <td colspan="3">@money($totalRemainingBillsAll)</td>
                 </tr>
                 <tr class="total">
                     <td colspan="2">Jumlah Siswa Keseluruhan:</td>

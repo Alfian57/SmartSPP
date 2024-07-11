@@ -22,7 +22,7 @@ class Student extends Model
     protected static function booted(): void
     {
         static::deleting(function (Student $student) {
-            if ($student->account->foto_profil) {
+            if ($student->account?->foto_profil) {
                 Storage::delete($student->account->foto_profil);
             }
 

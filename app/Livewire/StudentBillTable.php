@@ -124,7 +124,7 @@ class StudentBillTable extends DataTableComponent
             Column::make('Sisa Tagihan')
                 ->label(function ($row) {
                     return view('datatable.bills.remaining-bill-column', [
-                        'nominal' => $row->nominal - $row->total_paid - $row->discount,
+                        'nominal' => $row->nominal - $row->total_paid - $row->diskon,
                     ]);
                 }),
 

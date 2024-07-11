@@ -47,6 +47,10 @@
                             role="tab" aria-controls="pills-profile" aria-selected="false">Ganti Password</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-form-tab" data-toggle="pill" href="#profile-form"
+                            role="tab" aria-controls="pills-profile" aria-selected="false">Ganti Profil</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#profile-pic" role="tab"
                             aria-controls="pills-profile" aria-selected="false">Ganti Foto Profil</a>
                     </li>
@@ -66,6 +70,21 @@
                                     required />
 
                                 <button class="btn btn-success" type="submit">Ganti Password</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="profile-form" role="tabpanel"
+                        aria-labelledby="pills-profile-form-tab">
+                        <div class="card-body">
+                            <form action="{{ route('dashboard.change-profile-form') }}" method="post">
+                                @csrf
+                                <x-dashboard::ui.input type="email" label="Email" placeholder="Masukan email"
+                                    name="email" value="{{ auth()->user()->email }}" required />
+                                <x-dashboard::ui.input type="text" label="Nama" placeholder="Masukan nama"
+                                    name="name" value="{{ auth()->user()->accountable->nama }}" required />
+
+
+                                <button class="btn btn-success" type="submit">Ganti Profile</button>
                             </form>
                         </div>
                     </div>

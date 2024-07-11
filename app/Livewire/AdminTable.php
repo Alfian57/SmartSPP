@@ -66,12 +66,12 @@ class AdminTable extends DataTableComponent
             Column::make('Email', 'account.email')
                 ->sortable(),
 
-            Column::make('Aksi')
-                ->label(function ($row) {
-                    return view('datatable.admins.action-column', [
-                        'id' => $row->id,
-                    ]);
-                }),
+            // Column::make('Aksi')
+            //     ->label(function ($row) {
+            //         return view('datatable.admins.action-column', [
+            //             'id' => $row->id,
+            //         ]);
+            //     }),
         ];
     }
 }

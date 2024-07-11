@@ -223,3 +223,81 @@ ORDER BY
     tagihan.created_at DESC
 LIMIT
     1;
+
+-- 
+-- 
+-- 
+-- 4. query store procedure untuk update table admin dan table akun secara bersamaan
+--
+DELIMITER / / CREATE PROCEDURE update_admin_account (
+    IN p_admin_id CHAR(36),
+    IN p_new_name VARCHAR(100),
+    IN p_new_email VARCHAR(100),
+    IN p_new_password VARCHAR(255)
+) BEGIN DECLARE v_akun_id CHAR(36);
+
+-- Find the related account ID based on the admin ID
+SELECT
+    id INTO v_akun_id
+FROM
+    akun
+WHERE
+    accountable_id = p_admin_id
+    AND accountable_type = 'App\Models\Admin'
+LIMIT
+    1;
+
+-- Update the admin's name
+UPDATE admin
+SET
+    nama = p_new_name
+WHERE
+    id = p_admin_id;
+
+-- Update the related account's email and password
+UPDATE akun
+SET
+    email = p_new_email,
+    password = p_new_password
+WHERE
+    id = v_akun_id;
+
+END / / DELIMITER;
+
+-- Sebelum call store procedure, jalankan command dibawah ini terlebih dahulu
+-- Change collation for 'admin' table
+ALTER TABLE admin CONVERT TO CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Change collation for columns in 'admin' table
+ALTER TABLE admin MODIFY nama VARCHAR(100) CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Change collation for 'akun' table
+ALTER TABLE akun CONVERT TO CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Change collation for columns in 'akun' table
+ALTER TABLE akun MODIFY email VARCHAR(100) CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci,
+    MODIFY password VARCHAR(255) CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci,
+    MODIFY accountable_id CHAR(36) CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci,
+    MODIFY accountable_type VARCHAR(255) CHARACTER
+SET
+    utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Ini untuk call store procedurenya (Namun bisa juga excecute sendiri seperti diatas)
+CALL update_admin_account (
+    '9c7f9c0d-0a7d-4154-b3a9-24a8141f9106',
+    'Alfian Gading 2',
+    'test.admin@gmail.com',
+    '$2y$12$sgjy2SMtndyJTroULaZ.WO2cufMD41KTV/AOWDsZUEs1E2UCAbn8e'
+);

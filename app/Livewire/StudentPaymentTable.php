@@ -68,15 +68,12 @@ class StudentPaymentTable extends DataTableComponent
                     ]);
                 }),
 
-            ImageColumn::make('Bukti Trasfer', 'bukti_transfer')
-                ->location(
-                    fn ($row) => asset('storage/'.$row->transfer_file)
-                )
-                ->attributes(fn ($row) => [
-                    'class' => 'text-danger font-weight-bold',
-                    'alt' => 'Bukti rusak. Silahkan minta pihak terkait untuk upload ulang',
-                    'style' => 'width: 50px;',
-                ])
+            Column::make('Bukti Pembayaran')
+                ->label(function ($row) {
+                    return view('datatable.payments.image-column', [
+                        'image' => $row->transfer_file,
+                    ]);
+                })
                 ->collapseOnTablet(),
 
             Column::make('Status Pembayaran', 'status')

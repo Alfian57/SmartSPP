@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\BillStatus;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ChangeProfileFormRequest;
 use App\Http\Requests\ChangeProfileRequest;
 use App\Models\Bill;
 use App\Models\Classroom;
@@ -62,6 +63,20 @@ class DashboardController extends Controller
 
         toast('Profil telah diupdate', 'success');
 
+        return redirect()->route('dashboard.profile');
+    }
+
+    public function changeProfileForm(ChangeProfileFormRequest $request)
+    {
+        /** @var \App\Models\Account $user * */
+        $user = Auth::user();
+
+        $user->update($request->only('email'));
+        $user->accountable->update([
+            'nama' => $request->name,
+        ]);
+
+        toast('Profil telah diupdate', 'success');
         return redirect()->route('dashboard.profile');
     }
 }
