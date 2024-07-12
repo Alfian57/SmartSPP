@@ -12,14 +12,14 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Admin::create([
-            'nama' => 'Alfian Gading Saputra',
-        ]);
+        // $admin = Admin::create([
+        //     'nama' => 'Alfian Gading Saputra',
+        // ]);
 
-        $admin->account()->create([
-            'email' => 'alfian.admin@gmail.com',
-            'password' => 'password',
-        ]);
+        // $admin->account()->create([
+        //     'email' => 'alfian.admin@gmail.com',
+        //     'password' => 'password',
+        // ]);
 
 
         $admin = Admin::create([
