@@ -4,8 +4,6 @@
             Lihat Bukti
         </a>
     @else
-        <button class="btn btn-primary" disabled>
-            Aksi Tidak Tersedia
-        </button>
+        -
     @endif
 </div>
