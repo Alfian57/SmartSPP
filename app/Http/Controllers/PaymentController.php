@@ -40,6 +40,12 @@ class PaymentController extends Controller
             'status' => PaymentStatus::UNVALIDATED->value,
         ]);
 
+        if ($this->checkBillStatus($payment->bill) > 0) {
+            $payment->bill->update([
+                'status' => BillStatus::NOT_PAID_OFF->value
+            ]);
+        }
+
         toast('Berhasil menolak pembayaran', 'success');
 
         return redirect()->route('dashboard.payments.index');
