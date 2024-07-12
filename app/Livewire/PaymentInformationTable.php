@@ -79,12 +79,6 @@ class PaymentInformationTable extends DataTableComponent
             //     ])
             //     ->collapseOnTablet(),
 
-            Column::make('Jenis')
-                ->label(function ($row) {
-                    return $row->transfer_file ? 'Online' : 'Offline';
-                })
-                ->collapseOnMobile(),
-
             Column::make('Status Pembayaran', 'status')
                 ->format(function ($value) {
                     return view('datatable.payments.status-column', [
