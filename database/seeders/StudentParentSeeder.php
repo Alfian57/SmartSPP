@@ -26,5 +26,20 @@ class StudentParentSeeder extends Seeder
         Student::factory()->count(2)->create([
             'id_orang_tua' => $studentParent->id,
         ]);
+
+
+        $studentParent = StudentParent::create([
+            'nama' => 'Orang Tua Dummy',
+            'no_telepon' => '0895363116378',
+        ]);
+
+        $studentParent->account()->create([
+            'email' => 'parent@parent.com',
+            'password' => 'password',
+        ]);
+
+        Student::factory()->count(2)->create([
+            'id_orang_tua' => $studentParent->id,
+        ]);
     }
 }

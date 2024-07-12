@@ -20,5 +20,15 @@ class AdminSeeder extends Seeder
             'email' => 'alfian.admin@gmail.com',
             'password' => 'password',
         ]);
+
+
+        $admin = Admin::create([
+            'nama' => 'Admin',
+        ]);
+
+        $admin->account()->create([
+            'email' => 'admin@admin.com',
+            'password' => 'password',
+        ]);
     }
 }

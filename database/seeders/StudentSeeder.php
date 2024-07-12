@@ -44,5 +44,24 @@ class StudentSeeder extends Seeder
         //     'id_siswa' => $student->id,
         //     'diskon' => $familyDiscount + $orphanDiscount,
         // ]);
+
+
+        $student = Student::create([
+            'nama' => 'Siswa Dummy',
+            'nisn' => '1234567899',
+            'jenis_kelamin' => Gender::MALE->value,
+            'tanggal_lahir' => '1990-01-01',
+            'agama' => Religion::ISLAM->value,
+            'status' => OrphanStatus::NONE->value,
+            'no_telepon' => '0895363116378',
+            'alamat' => '123 Main St',
+            'id_kelas' => Classroom::inRandomOrder()->first()->id,
+            'id_orang_tua' => StudentParent::inRandomOrder()->first()->id,
+        ]);
+
+        $student->account()->create([
+            'email' => 'student@student.com',
+            'password' => 'password',
+        ]);
     }
 }

@@ -73,8 +73,8 @@ class MyPaymentController extends Controller
 
     public function destroy(Bill $bill, Payment $payment)
     {
-        Gate::authorize('delete', $bill);
-        Gate::authorize('delete', $payment);
+        // Gate::authorize('delete', $bill);
+        // Gate::authorize('delete', $payment);
 
         if ($payment->bukti_transfer) {
             Storage::delete($payment->bukti_transfer);

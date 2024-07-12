@@ -40,7 +40,7 @@ class PaymentController extends Controller
             'status' => PaymentStatus::UNVALIDATED->value,
         ]);
 
-        if ($this->checkBillStatus($payment->bill) > 0) {
+        if ($this->getRemainingAmount($payment->bill) > 0) {
             $payment->bill->update([
                 'status' => BillStatus::NOT_PAID_OFF->value
             ]);
@@ -89,6 +89,7 @@ class PaymentController extends Controller
             ->where('status', PaymentStatus::VALIDATED->value)
             ->sum('nominal');
 
-        return $bill->nominal - $totalPaid - $bill->diskon;
+        $totalPaid = (int)$totalPaid;
+        return $bill->nominal - $totalPaid- $bill->diskon;
     }
 }
