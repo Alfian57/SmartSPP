@@ -33,30 +33,22 @@ class ReportDetailTable extends DataTableComponent
     public function builder(): Builder
     {
         return Student::query()
-            ->where('id_kelas', $this->classroom->id)
-            ->with('bills', 'bills.payments')
-            ->leftJoin('tagihan', function ($join) {
-                $join->on('siswa.id', '=', 'tagihan.id_siswa')
-                    ->whereYear('tagihan.created_at', '=', $this->year)
-                    ->where('tagihan.bulan', '=', $this->month);
-            })
-            ->leftJoin('pembayaran', function ($join) {
-                $join->on('tagihan.id', '=', 'pembayaran.id_tagihan')
-                    ->where('pembayaran.status', '=', 'tervalidasi')
-                    ->whereYear('pembayaran.created_at', '=', $this->year)
-                    ->where('pembayaran.created_at', '=', $this->month);
-            })
-            ->addSelect([
-                'siswa.id',
-                'siswa.nama',
-                'siswa.created_at',
-                DB::raw('SUM(tagihan.nominal) as total_tagihan'),
-                DB::raw('SUM(tagihan.diskon) as total_diskon'),
-                DB::raw('SUM(pembayaran.nominal) as total_terbayar'),
-                DB::raw('(SUM(pembayaran.nominal) / SUM(tagihan.nominal)) * 100 as presentase_terbayar'),
-            ])
-            ->groupBy('siswa.id', 'siswa.nama', 'siswa.created_at')
-            ->latest('siswa.created_at');
+        ->leftJoin('kelas', 'kelas.id', '=', 'siswa.id_kelas')
+        ->leftJoin('tagihan', 'siswa.id', '=', 'tagihan.id_siswa')
+        ->leftJoin('pembayaran', 'tagihan.id', '=', 'pembayaran.id_tagihan')
+        ->addSelect([
+            'siswa.id',
+            'siswa.nama',
+            DB::raw('SUM(tagihan.nominal) as total_tagihan'),
+            DB::raw('SUM(tagihan.diskon) as total_diskon'),
+            DB::raw('SUM(pembayaran.nominal) as total_terbayar'),
+            // DB::raw('(SUM(pembayaran.nominal) / SUM(tagihan.nominal)) * 100 as presentase_terbayar'),
+        ])
+        ->whereYear('tagihan.created_at', $this->year)
+        ->where('tagihan.bulan', $this->month)
+        ->where('pembayaran.status', 'tervalidasi')
+        ->groupBy('siswa.id', 'siswa.nama')
+        ->orderBy('siswa.nama', 'asc');
     }
 
     public function downloadPdf($studentId)
